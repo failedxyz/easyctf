@@ -1,11 +1,13 @@
 #!/bin/bash
 
 echo "Updating system..."
-apt-get -y update
-apt-get -y upgrade
+sudo apt-get -y update
+sudo apt-get -y upgrade
 
 echo "Installing dependencies..."
-apt-get -y install python-pip
+sudo apt-get -y install python-pip
 
 echo "Installing pip dependencies..."
-pip install -r scripts/requirements.txt
+sudo pip install -r scripts/requirements.txt
+
+echo 'PATH=$PATH:/vagrant' >> /etc/profile

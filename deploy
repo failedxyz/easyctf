@@ -4,5 +4,5 @@ echo "Stopping the server..."
 pkill gunicorn
 
 echo "Starting the server..."
-cd server
+cd /home/vagrant/server
 gunicorn --bind 0.0.0.0:8000 -w 1 "app:app"
