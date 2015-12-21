@@ -1,5 +1,5 @@
 #EasyCTF 2016
-The easyctf website for the 2016 competition.
+The EasyCTF website for the 2016 competition.
 
 **Back End** : Flask (Python)
 
