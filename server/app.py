@@ -1,7 +1,9 @@
 from flask import Flask
 import sys
+import config
 
 app = Flask(__name__)
+app.secret_key = config.SECRET
 
 #Home Page
 @app.route("/")

@@ -1,4 +1,5 @@
 .vagrant
+.secret_key
 
 # Object files
 *.o
