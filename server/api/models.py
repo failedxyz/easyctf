@@ -1,5 +1,5 @@
 from flask.ext.sqlalchemy import SQLAlchemy
-import api.utils
+import utils
 
 db = SQLAlchemy()
 
@@ -17,4 +17,4 @@ class Users(db.Model):
 		self.username = username
 		self.username_lower = username.lower()
 		self.email = email.lower()
-		self.password = api.utils.hash_password(password)
+		self.password = utils.hash_password(password)

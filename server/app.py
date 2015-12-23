@@ -3,12 +3,16 @@ from flask import Flask
 
 import config
 import json
+import api
+
+from api.api import api as api_blueprint
 
 app = Flask(__name__)
 app.secret_key = config.SECRET
+app.register_blueprint(api_blueprint)
 
 @app.route("/api")
-def api():
+def api_main():
 	return json.dumps({ "success": 1, "message": "The API is online." })
 
 if __name__ == "__main__":
@@ -26,6 +30,7 @@ if __name__ == "__main__":
 		from api.models import db
 		db.init_app(app)
 		db.create_all()
-		print db
+
+		app.register_blueprint(api.user.blueprint, url_prefix="/api/user")
 
 		app.run(host="0.0.0.0", port=8000)
