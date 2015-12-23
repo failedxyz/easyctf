@@ -5,7 +5,6 @@ import config
 import json
 import sys
 
-from api.api import api
 from flask import Flask
 
 app = Flask(__name__)
