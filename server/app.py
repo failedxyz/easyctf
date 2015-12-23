@@ -4,8 +4,11 @@ from flask import Flask
 import config
 import json
 
+from api.api import api
+
 app = Flask(__name__)
 app.secret_key = config.SECRET
+app.register_blueprint(api)
 
 @app.route("/api")
 def api():
