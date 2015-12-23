@@ -1,75 +1,32 @@
+from argparse import ArgumentParser
 from flask import Flask
-import sys
+
 import config
+import json
+import sys
 
 app = Flask(__name__)
 app.secret_key = config.SECRET
 
-#Home Page
-@app.route("/")
-def hello_world():
-	return "Hello, EasyCTF!"
-#Login Page
-@app.route('/login')
-def login():
-	return "EasyCTF Login"
-#Registration Page
-@app.route('/register')
-def register():
-	return "EasyCTF Register"
-#Scoreboard Page
-@app.route('/scoreboard')
-def scoreboard():
-	return "EasyCTF Scoreboard"
-#Problems Page
-@app.route('/problems')
-def problems():
-	return "EasyCTF Problems"
-#Account Page
-@app.route('/account')
-def account():
-	return "EasyCTF Account"
-#Programming Page
-@app.route('/programming')
-def programming():
-	return "EasyCTF Programming"
-#Chat Page
-@app.route('/chat')
-def chat():
-	return "EasyCTF Chat"
-#About Page
-@app.route('/about')
-def about():
-	return "EasyCTF About"
-#Forgot Password Page
-@app.route('/forgot_password')
-def forgot_password():
-	return "EasyCTF Forgot Password"
-#Logout Page
-@app.route('/logout')
-def logout():
-	return "EasyCTF Logout"
-#Rules Page
-@app.route('/rules')
-def rules():
-	return "EasyCTF Rules"
-#Team Page
-@app.route('/team')
-def team():
-	return "EasyCTF Team"
-#Shell Page
-@app.route('/shell')
-def shell():
-	return "EasyCTF Shell"
-#Updates Page
-@app.route('/updates')
-def updates():
-	return "EasyCTF Updates"
-#Reset Password Page
-@app.route('/reset_password')
-def reset_password():
-	return "EasyCTF Reset"
+@app.route("/api")
+def api():
+	return json.dumps({ "success": 1, "message": "The API is online." })
 
 if __name__ == "__main__":
-    app.debug = "--debug" in sys.argv
-    app.run(port=8000)
+	with app.app_context():
+		parser = ArgumentParser(description="EasyCTF Server Configuration")
+		parser.add_argument("-d", "--debug", action="store_true", help="Run the server in debug mode.", default=False)
+		args = parser.parse_args()
+		keyword_args, _ = dict(args._get_kwargs()), args._get_args()
+
+		app.debug = keyword_args["debug"]
+
+		app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:i_hate_passwords@localhost/easyctf"
+		app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+		from api.models import db
+		db.init_app(app)
+		db.create_all()
+		print db
+
+		app.run(host="0.0.0.0", port=8000)

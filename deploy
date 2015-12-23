@@ -2,7 +2,9 @@
 
 echo "Stopping the server..."
 pkill gunicorn
+sudo service nginx stop
 
 echo "Starting the server..."
 cd /home/vagrant/server
+sudo service nginx start
 gunicorn --bind 0.0.0.0:8000 -w 1 "app:app"
