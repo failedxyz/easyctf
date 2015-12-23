@@ -1,6 +1,9 @@
-from flask import Flask
 import sys
+
 import config
+
+from api.api import api
+from flask import Flask
 
 app = Flask(__name__)
 app.secret_key = config.SECRET
@@ -8,68 +11,69 @@ app.secret_key = config.SECRET
 #Home Page
 @app.route("/")
 def hello_world():
-	return "Hello, EasyCTF!"
+    return "Hello, EasyCTF!"
 #Login Page
 @app.route('/login')
 def login():
-	return "EasyCTF Login"
+    return "EasyCTF Login"
 #Registration Page
 @app.route('/register')
 def register():
-	return "EasyCTF Register"
+    return "EasyCTF Register"
 #Scoreboard Page
 @app.route('/scoreboard')
 def scoreboard():
-	return "EasyCTF Scoreboard"
+    return "EasyCTF Scoreboard"
 #Problems Page
 @app.route('/problems')
 def problems():
-	return "EasyCTF Problems"
+    return "EasyCTF Problems"
 #Account Page
 @app.route('/account')
 def account():
-	return "EasyCTF Account"
+    return "EasyCTF Account"
 #Programming Page
 @app.route('/programming')
 def programming():
-	return "EasyCTF Programming"
+    return "EasyCTF Programming"
 #Chat Page
 @app.route('/chat')
 def chat():
-	return "EasyCTF Chat"
+    return "EasyCTF Chat"
 #About Page
 @app.route('/about')
 def about():
-	return "EasyCTF About"
+    return "EasyCTF About"
 #Forgot Password Page
 @app.route('/forgot_password')
 def forgot_password():
-	return "EasyCTF Forgot Password"
+    return "EasyCTF Forgot Password"
 #Logout Page
 @app.route('/logout')
 def logout():
-	return "EasyCTF Logout"
+    return "EasyCTF Logout"
 #Rules Page
 @app.route('/rules')
 def rules():
-	return "EasyCTF Rules"
+    return "EasyCTF Rules"
 #Team Page
 @app.route('/team')
 def team():
-	return "EasyCTF Team"
+    return "EasyCTF Team"
 #Shell Page
 @app.route('/shell')
 def shell():
-	return "EasyCTF Shell"
+    return "EasyCTF Shell"
 #Updates Page
 @app.route('/updates')
 def updates():
-	return "EasyCTF Updates"
+    return "EasyCTF Updates"
 #Reset Password Page
 @app.route('/reset_password')
 def reset_password():
-	return "EasyCTF Reset"
+    return "EasyCTF Reset"
 
 if __name__ == "__main__":
+    app.register_blueprint(api)
     app.debug = "--debug" in sys.argv
     app.run(port=8000)
