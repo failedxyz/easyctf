@@ -1,20 +1,8 @@
 import datetime
-import MySQLdb
 import random
 import string
 
 from werkzeug.security import generate_password_hash, check_password_hash
-
-host = "localhost"
-user = "root"
-
-conn = MySQLdb.connect()
-
-def get_connection():
-    global conn
-    if not conn:
-        conn = MySQLdb.connect(host=host, user=user)
-    return conn
 
 def hash_password(s):
     return generate_password_hash(s)
