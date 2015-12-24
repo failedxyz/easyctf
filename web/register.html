@@ -22,15 +22,15 @@
     <hr style="margin-left: 10em; margin-right: 10em;">
     <br>
     <form id="registration-form" action="return false;">
+        <select name="gender" class="ui dropdown" id="select" style="width: 50em;">
+            <option value="1">Student (U.S. High School or Middle School)</option>
+            <option value="2">Teacher (U.S. High School or Middle School)</option>
+            <option value="3">Other (Observer, Parent, Foreigner, etc.)</option>
+        </select>
+        <br><br>
         <div class="ui input">
             <input id="name" type="text" placeholder="Name"  id="name" style="width:50em;">
         </div>
-        <br><br>
-        <select name="gender" class="ui dropdown" id="select" style="width: 50em;">
-            <option value="1">US Middle/High School Student</option>
-            <option value="2">US Middle/High School Teacher</option>
-            <option value="3">Non-US/Non-Student/Observer</option>
-        </select>
         <br><br>
         <div class="ui input">
             <input id="username" type="text" placeholder="Username" style="width:50em;">
@@ -49,10 +49,9 @@
         </div>
         <br><br>
         <div class="g-recaptcha" data-sitekey="6Lc4xhMTAAAAAIaiF3yEWGbHRaGgMg4FHor61p1G"></div>
-        <br><br>
-        <button class="ui primary button" style="width:25em">
-            Submit
-        </button>
+        <br>
+        <p>Don't worry, you can make or join a team after you register.</p>
+        <button class="ui primary button" style="width:25em">Submit</button>
     </form>
   </center>
   <div id="status">
