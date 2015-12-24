@@ -1,54 +1,15 @@
-<div class="ui inverted menu" style="margin: -0.1em; background-color: #FA6900;">
-	<a class="item" href="./">Home</a>
-	<a class="item" href="./about.html">About</a>
-	<a class="item" href="./register.html">Register</a>
-	<div class="right menu">
-		<a class="item" href="./login.html">Login</a>
-		<a class="item" href="./account.html">Account</a>
+<h1 class="ui dividing header">Register</h1>
+<form class="ui form">
+	<div class="field">
+		<div class="two fields">
+			<div class="field">
+				<label>Name</label>
+				<input type="text" name="name" id="name" autocomplete="off" autofocus placeholder="Name">
+			</div>
+			<div class="field">
+				<label>Email</label>
+				<input type="email" name="email" id="email" autocomplete="off" placeholder="Email">
+			</div>
+		</div>
 	</div>
-</div>
-<center>
-	<h1 style="color: #69D2E7; font-size: 75px;">Register Yourself</h1>
-	<hr style="margin-left: 10em; margin-right: 10em;">
-	<br>
-	<form id="registration-form" action="return false;">
-		<select name="gender" class="ui dropdown" id="select" style="width: 50em;">
-			<option value="1">Student (U.S. High School or Middle School)</option>
-			<option value="2">Teacher (U.S. High School or Middle School)</option>
-			<option value="3">Other (Observer, Parent, Foreigner, etc.)</option>
-		</select>
-		<br>
-		<br>
-		<div class="ui input">
-			<input id="name" type="text" placeholder="Name" id="name" style="width:50em;">
-		</div>
-		<br>
-		<br>
-		<div class="ui input">
-			<input id="username" type="text" placeholder="Username" style="width:50em;">
-		</div>
-		<br>
-		<br>
-		<div class="ui input">
-			<input id="email" type="email" placeholder="Email" style="width:50em;">
-		</div>
-		<br>
-		<br>
-		<div class="ui input">
-			<input id="password" type="password" placeholder="Password" style="width:50em;">
-		</div>
-		<br>
-		<br>
-		<div class="ui input">
-			<input id="password_confirm" type="password" placeholder="Confirm Password" style="width:50em;">
-		</div>
-		<br>
-		<br>
-		<div class="g-recaptcha" data-sitekey="6Lc4xhMTAAAAAIaiF3yEWGbHRaGgMg4FHor61p1G"></div>
-		<br>
-		<p>Don't worry, you can make or join a team after you register.</p>
-		<button class="ui primary button" style="width:25em">Submit</button>
-	</form>
-</center>
-<div id="status">
 </div>

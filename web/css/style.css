@@ -1,94 +1,24 @@
 h1 {
-    font-size: 75px;
+	font-size: 75px;
 }
 ::-webkit-input-placeholder {
-    color: #999999;
+	 color: #999999;
 }
-:-moz-placeholder {
-    color: #999999;
+
+:-moz-placeholder { /* Firefox 18- */
+	 color: #999999;  
 }
-::-moz-placeholder {
-    color: #999999;
+
+::-moz-placeholder {  /* Firefox 19+ */
+	 color: #999999;  
 }
+
 :-ms-input-placeholder {
-    color: #999999;
+	 color: #999999;  
 }
 .intro {
-    text-align: center;
+	text-align: center;
 }
-#aa {
-    background-color: #EEEEEE;
-}
-#bb {
-    margin: -0.1em;
-    background-color: #FA6900;
-}
-#cc {
-    margin-left: 10em;
-    margin-right: 10em;
-}
-#dd {
-    color: #69D2E7;
-    font-size: 75px;
-}
-#ee {
-    font-size: 2.5em;
-}
-#ff {
-    font-size: 1.2em;
-}
-#gg {
-    background-color: #FFFEEA;
-    color: #FF4D4D;
-}
-#hh {
-    font-size: 1.2em;
-    text-align: left;
-}
-#ii {
-    text-decoration: underline;
-}
-#jj {
-    background-color: #F0F0F0;
-}
-.ui.menu .item img.logo {
-    margin-right: 1.5em;
-}
-.main.container {
-    margin-top: 7em;
-}
-.wireframe {
-    margin-top: 2em;
-}
-.ui.footer.segment {
-    margin: 5em 0em 0em;
-    padding: 5em 0em;
-}
-#kk {
-    background-color: #EEEEEE;
-}
-#ll {
-    margin: -0.1em;
-    background-color: #FA6900;
-}
-#mm {
-    margin-left: 10em;
-    margin-right: 10em;
-}
-#nn {
-    color: #69D2E7;
-    font-size: 75px;
-}
-#oo {
-    color: #69D2E7;
-    font-size: 50px;
-}
-#pp {
-    width: 15em
-}
-#qq {
-    width: 25em;
-}
-#rr {
-    width: 50em;
+.column {
+	max-width: 450px;
 }
