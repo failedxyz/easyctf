@@ -4,6 +4,8 @@ from flask import current_app as app
 from models import db, Users
 from utils import api_wrapper
 
+import utils
+
 blueprint = Blueprint("user", __name__)
 
 @blueprint.route("/register", methods=["POST"])
@@ -38,13 +40,20 @@ def user_register():
 @blueprint.route("/logout", methods=["POST"])
 @api_wrapper
 def user_logout():
-    # session.clear()
-    pass
+    session.clear()
 
 @blueprint.route("/login", methods=["POST"])
 @api_wrapper
 def user_login():
-    pass
+    username = request.form["username"]
+    password = request.form["password"]
+    user = Users.query.filter_by(username=username).first()
+    if utils.check_password(user.password, password):
+        session["username"] = username
+        session["admin"] = user.admin
+        return { "success": 1, "message": "Success!" }
+    else:
+        return { "success": 0, "message": "Invalid credentials." }
 
 def add_user(name, username, email, password):
     user = Users(name, username, email, password)
