@@ -16,39 +16,39 @@ h1 {
 .intro {
     text-align: center;
 }
-body#aa {
+#aa {
     background-color: #EEEEEE;
 }
-div#bb {
+#bb {
     margin: -0.1em;
     background-color: #FA6900;
 }
-center#cc {
+#cc {
     margin-left: 10em;
     margin-right: 10em;
 }
-h1#dd {
+#dd {
     color: #69D2E7;
     font-size: 75px;
 }
-h2#ee {
+#ee {
     font-size: 2.5em;
 }
-p#ff {
+#ff {
     font-size: 1.2em;
 }
-code#gg {
+#gg {
     background-color: #FFFEEA;
     color: #FF4D4D;
 }
-ol#hh {
+#hh {
     font-size: 1.2em;
     text-align: left;
 }
-span#ii {
+#ii {
     text-decoration: underline;
 }
-body#jj {
+#jj {
     background-color: #F0F0F0;
 }
 .ui.menu .item img.logo {
@@ -64,10 +64,10 @@ body#jj {
     margin: 5em 0em 0em;
     padding: 5em 0em;
 }
-body.kk {
+#kk {
     background-color: #EEEEEE;
 }
-div#ll {
+#ll {
     margin: -0.1em;
     background-color: #FA6900;
 }
@@ -75,15 +75,15 @@ div#ll {
     margin-left: 10em;
     margin-right: 10em;
 }
-h1#nn {
+#nn {
     color: #69D2E7;
     font-size: 75px;
 }
-h2#oo {
+#oo {
     color: #69D2E7;
     font-size: 50px;
 }
-button#pp {
+#pp {
     width: 15em
 }
 #qq {
