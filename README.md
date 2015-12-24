@@ -21,6 +21,7 @@ If you have any issues during installation, file an issue.
 Do not worry if you see "ERROR: Invalid domain for site key", the reCAPTCHA expects to be hosted on the domain "easyctf.com" and will not function properly until it is.
 
 Site Key: *6Lc4xhMTAAAAAIaiF3yEWGbHRaGgMg4FHor61p1G*
+
 Secret Key: *6Lc4xhMTAAAAACFaG2NyuKoMdZQtSa_1LI76BCEu*
 
 **Resources** : Flask, MySQL
