@@ -17,7 +17,7 @@ def user_register():
     password_confirm = request.form["password_confirm"]
     email = request.form["email"]
 
-    username_exists = Users.query.add_columns("name", "uid").filter_by(username=username).first()
+    username_exists = Users.query.add_columns("name", "uid").filter_by(username_lower=username.lower()).first()
     email_exists = Users.query.add_columns("name", "uid").filter_by(email=email).first()
 
     if password != password_confirm:
