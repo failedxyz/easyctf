@@ -6,10 +6,12 @@ import json
 import api
 
 from api.api import api as api_blueprint
+from api.user import blueprint as user_blueprint
 
 app = Flask(__name__)
 app.secret_key = config.SECRET
 app.register_blueprint(api_blueprint)
+app.register_blueprint(user_blueprint)
 
 @app.route("/api")
 def api_main():
