@@ -11,7 +11,7 @@ from api.user import blueprint as user_blueprint
 app = Flask(__name__)
 app.secret_key = config.SECRET
 app.register_blueprint(api_blueprint)
-app.register_blueprint(user_blueprint)
+app.register_blueprint(user_blueprint, url_prefix="/api/user")
 
 @app.route("/api")
 def api_main():
@@ -32,7 +32,5 @@ if __name__ == "__main__":
 		from api.models import db
 		db.init_app(app)
 		db.create_all()
-
-		app.register_blueprint(api.user.blueprint, url_prefix="/api/user")
 
 		app.run(host="0.0.0.0", port=8000)
