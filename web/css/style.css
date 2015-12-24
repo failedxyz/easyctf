@@ -1,21 +1,94 @@
 h1 {
-  font-size: 75px;
+    font-size: 75px;
 }
 ::-webkit-input-placeholder {
-   color: #999999;
+    color: #999999;
 }
-
-:-moz-placeholder { /* Firefox 18- */
-   color: #999999;  
+:-moz-placeholder {
+    color: #999999;
 }
-
-::-moz-placeholder {  /* Firefox 19+ */
-   color: #999999;  
+::-moz-placeholder {
+    color: #999999;
 }
-
 :-ms-input-placeholder {
-   color: #999999;  
+    color: #999999;
 }
 .intro {
-  text-align: center;
+    text-align: center;
+}
+body#aa {
+    background-color: #EEEEEE;
+}
+div#bb {
+    margin: -0.1em;
+    background-color: #FA6900;
+}
+center#cc {
+    margin-left: 10em;
+    margin-right: 10em;
+}
+h1#dd {
+    color: #69D2E7;
+    font-size: 75px;
+}
+h2#ee {
+    font-size: 2.5em;
+}
+p#ff {
+    font-size: 1.2em;
+}
+code#gg {
+    background-color: #FFFEEA;
+    color: #FF4D4D;
+}
+ol#hh {
+    font-size: 1.2em;
+    text-align: left;
+}
+span#ii {
+    text-decoration: underline;
+}
+body#jj {
+    background-color: #F0F0F0;
+}
+.ui.menu .item img.logo {
+    margin-right: 1.5em;
+}
+.main.container {
+    margin-top: 7em;
+}
+.wireframe {
+    margin-top: 2em;
+}
+.ui.footer.segment {
+    margin: 5em 0em 0em;
+    padding: 5em 0em;
+}
+body.kk {
+    background-color: #EEEEEE;
+}
+div#ll {
+    margin: -0.1em;
+    background-color: #FA6900;
+}
+#mm {
+    margin-left: 10em;
+    margin-right: 10em;
+}
+h1#nn {
+    color: #69D2E7;
+    font-size: 75px;
+}
+h2#oo {
+    color: #69D2E7;
+    font-size: 50px;
+}
+button#pp {
+    width: 15em
+}
+#qq {
+    width: 25em;
+}
+#rr {
+    width: 50em;
 }
