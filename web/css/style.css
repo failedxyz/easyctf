@@ -19,3 +19,6 @@ h1 {
 .intro {
 	text-align: center;
 }
+.column {
+	max-width: 450px;
+}
