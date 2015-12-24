@@ -20,14 +20,15 @@ If you have any issues during installation, file an issue.
 
 
 Main Pages:
-- login.html
-- register.html
+- <b>index.html</b>
+- <b>login.html</b>
+- <b>register.html</b>
+- <b>about.html</b>
 - scoreboard.html
 - problems.html
 - account.html
 - programming.html
 - chat.html
-- about.html
 - forgot_password.html
 - logout.html
 - rules.html
