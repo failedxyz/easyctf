@@ -1,4 +1,7 @@
-marquee {
-    background-color: black;
-    color:white;
+h1 {
+  font-size: 75px;
+}
+
+.intro {
+  text-align: center;
 }
