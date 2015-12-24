@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Register</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="js/semantic.min.js"></script>
     <link type="text/css" rel="stylesheet" href="css/semantic.min.css">
     <script src='https://www.google.com/recaptcha/api.js'></script>
@@ -13,48 +14,54 @@
     <a class="item" href="./register.html">Register</a>
     <div class="right menu">
       <a class="item" href="./login.html">Login</a>
+      <a class="item" href="./account.html">Account</a>
     </div>
   </div>
   <center>
     <h1 style="color: #69D2E7; font-size: 75px;">Register Yourself</h1>
     <hr style="margin-left: 10em; margin-right: 10em;">
     <br>
-    <div class="ui input">
-        <input type="text" placeholder="Name"  id="name" style="width:50em;">
-    </div>
-    <br><br>
-    <select name="gender" class="ui dropdown" id="select" style="width: 50em;">
-      <option value="1">US Middle/High School Student</option>
-      <option value="2">US Middle/High School Teacher</option>
-      <option value="3">Non-US/Non-Student/Observer</option>
-    </select>
-    <br><br>
-    <div class="ui input">
-      <input type="text" placeholder="Username" style="width:50em;">
-    </div>
-    <br><br>
-    <div class="ui input">
-        <input type="email" placeholder="Email" style="width:50em;">
-    </div>
-    <br><br>
-    <div class="ui input">
-      <input type="password" placeholder="Password" style="width:50em;">
-    </div>
-    <br><br>
-    <div class="ui input">
-      <input type="password" placeholder="Confirm Password" style="width:50em;">
-    </div>
-    <br><br>
-    <div class="g-recaptcha" data-sitekey="6Lc4xhMTAAAAAIaiF3yEWGbHRaGgMg4FHor61p1G"></div>
-    <br><br>
-    <button class="ui primary button" style="width:25em">
-      Submit
-    </button>
+    <form id="registration-form" action="return false;">
+        <div class="ui input">
+            <input id="name" type="text" placeholder="Name"  id="name" style="width:50em;">
+        </div>
+        <br><br>
+        <select name="gender" class="ui dropdown" id="select" style="width: 50em;">
+            <option value="1">US Middle/High School Student</option>
+            <option value="2">US Middle/High School Teacher</option>
+            <option value="3">Non-US/Non-Student/Observer</option>
+        </select>
+        <br><br>
+        <div class="ui input">
+            <input id="username" type="text" placeholder="Username" style="width:50em;">
+        </div>
+        <br><br>
+        <div class="ui input">
+            <input id="email" type="email" placeholder="Email" style="width:50em;">
+        </div>
+        <br><br>
+        <div class="ui input">
+            <input id="password" type="password" placeholder="Password" style="width:50em;">
+        </div>
+        <br><br>
+        <div class="ui input">
+            <input id="password_confirm" type="password" placeholder="Confirm Password" style="width:50em;">
+        </div>
+        <br><br>
+        <div class="g-recaptcha" data-sitekey="6Lc4xhMTAAAAAIaiF3yEWGbHRaGgMg4FHor61p1G"></div>
+        <br><br>
+        <button class="ui primary button" style="width:25em">
+            Submit
+        </button>
+    </form>
   </center>
+  <div id="status">
+  </div>
 </body>
 <script>
 $('#select')
   .dropdown()
 ;
 </script>
+<script src="js/register.js"></script>
 <html>

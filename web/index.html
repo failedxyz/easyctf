@@ -1,14 +1,16 @@
-<html ng-app="myApp" ng-controller="myCtrl">
+<html ng-app="easyctf">
 	<head>
 		<title>EasyCTF 2016</title>
 		<link type="text/css" rel="stylesheet" href="css/style.css">
+		<script src="https://code.jquery.com/jquery-2.1.4.min.js" integrity="sha384-R4/ztc4ZlRqWjqIuvf6RX5yb/v90qNGx6fS48N0tRxiGkqveZETq72KgDVJCp2TC" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js" integrity="sha384-r1y8TJcloKTvouxnYsi4PJAx+nHNr90ibsEn3zznzDzWBN9X3o3kbHLSgcIPtzAp" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-route.min.js" integrity="sha384-9MZDoFf10trgrfsQOs9GJhf/mP/sh5weVp3FDSi8h/4TEaV6dloEDkpxGTaOmAs6" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/semantic.min.js" integrity="sha384-raqmvMx1osRCvgOKS+pn3feCjT4fwsgIgSfQLadfxqEKU49Gk8yWzQnGsBCYYjLz" crossorigin="anonymous"></script>
 		<script src="js/ascript.js"></script>
-		<script src="js/semantic.min.js"></script>
-		<link type="text/css" rel="stylesheet" href="css/semantic.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/semantic.min.css" integrity="sha384-MkMf11Odtq01GxtmoywADPd87cCCjYkAUcFiuOytgpBP16Ei82+ulJraHrxcTl/m" crossorigin="anonymous">
 		<style>
 			body {
-				background-color: #FFFFFF;
+				background-color: #F0F0F0;
 			}
 			.ui.menu .item img.logo {
 				margin-right: 1.5em;
@@ -25,26 +27,21 @@
 			}
 		</style>
 	</head>
-	<body style="background-color: #EEEEEE;">
-		<div class="ui inverted menu" style="background-color:#FA6900;">
+	<body ng-controller="mainController">
+		<div class="ui inverted menu">
 			<div class="ui container">
-				<a href="#" class="header item">
+				<a href="#/" class="header item">
 					<img class="logo" src="http://placehold.it/40x40">
 					EasyCTF
 				</a>
-				<a class="item" href="./">Home</a>
-				<a class="item" href="./about.html">About</a>
-				<a class="item" href="./register.html">Register</a>
+				<a class="item" href="#/">Home</a>
+				<a class="item" href="#/about">About</a>
 				<div class="right menu">
-					<a class="item" href="./login.html">Login</a>
+					<a class="item" href="#/register">Register</a>
+					<a class="item" href="#/login">Login</a>
 				</div>
 			</div>
 		</div>
-		<div class="intro">
-			<center>
-				<h1 style="margin-bottom:-0.4em; font-size:75px; color:#69D2E7;">EasyCTF</h1>
-				<h2 style="color:#A7DBDB;">Coming 2016</h2>
-			</center>
-		</div>
+		<div id="mainContent" ng-view class="ui container"></div>
 	</body>
 </html>

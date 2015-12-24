@@ -1,7 +1,22 @@
-var app = angular.module('myApp', []);
-app.controller('myCtrl', function($scope) {
-    $scope.test = "Successful!";
-    if($scope.test == "Successful!") {
-        document.getElementById("result").style.color="#00FF00";
-    }
+var app = angular.module("easyctf", [ "ngRoute" ]);
+app.config(function($routeProvider) {
+	$routeProvider.when("/", {
+		templateUrl: "pages/home.html",
+		controller: "mainController"
+	})
+	.when("/about", {
+		templateUrl: "pages/about.html",
+		controller: "mainController"
+	})
+	.when("/register", {
+		templateUrl: "pages/register.html",
+		controller: "mainController"
+	})
+	.when("/login", {
+		templateUrl: "pages/login.html",
+		controller: "mainController"
+	})
+});
+app.controller("mainController", function($scope) {
+
 });
