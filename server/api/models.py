@@ -13,9 +13,8 @@ class Users(db.Model):
     password = db.Column(db.String(128))
     admin = db.Column(db.Boolean)
 
-    def __init__(self, name, tid, username, email, password):
+    def __init__(self, name, username, email, password):
         self.name = name
-        self.tid = tid
         self.username = username
         self.username_lower = username.lower()
         self.email = email.lower()
@@ -25,7 +24,7 @@ class Teams(db.Model):
     tid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     join_code = db.Column(db.String(128), unique=True)
-    school = db.Column(db.String)
+    school = db.Column(db.Text)
     size = db.Column(db.Integer)
     score = db.Column(db.Integer)
     observer = db.Column(db.Boolean)
