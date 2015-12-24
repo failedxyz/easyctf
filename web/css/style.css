@@ -1,7 +1,21 @@
 h1 {
   font-size: 75px;
 }
+::-webkit-input-placeholder {
+   color: #999999;
+}
 
+:-moz-placeholder { /* Firefox 18- */
+   color: #999999;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #999999;  
+}
+
+:-ms-input-placeholder {
+   color: #999999;  
+}
 .intro {
   text-align: center;
 }
