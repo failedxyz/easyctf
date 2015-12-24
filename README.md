@@ -16,6 +16,10 @@ If you have any issues during installation, file an issue.
 
 ## Notes
 
+####reCAPTCHA
+Site Key: *6Lc4xhMTAAAAAIaiF3yEWGbHRaGgMg4FHor61p1G*
+Secret Key: *6Lc4xhMTAAAAACFaG2NyuKoMdZQtSa_1LI76BCEu*
+
 **Resources** : Flask, MySQL
 
 
