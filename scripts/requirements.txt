@@ -3,3 +3,4 @@ mysql-python
 Flask-SQLAlchemy
 SQLAlchemy
 gunicorn
+requests

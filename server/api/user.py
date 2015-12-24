@@ -4,6 +4,7 @@ from flask import current_app as app
 from models import db, Users
 from utils import api_wrapper
 
+import requests
 import utils
 
 blueprint = Blueprint("user", __name__)
@@ -11,6 +12,9 @@ blueprint = Blueprint("user", __name__)
 @blueprint.route("/register", methods=["POST"])
 @api_wrapper
 def user_register():
+    if not validate_captcha(request.form):
+        return { "success": 0, "message": "Please do the captcha." }
+
     name = request.form["name"]
     username = request.form["username"]
     password = request.form["password"]
@@ -59,3 +63,13 @@ def add_user(name, username, email, password):
     user = Users(name, username, email, password)
     db.session.add(user)
     db.session.commit()
+
+def validate_captcha(form):
+    if "captcha_response" not in form:
+        return False
+    captcha_response = form["captcha_response"]
+    data = {"secret": "6Lc4xhMTAAAAACFaG2NyuKoMdZQtSa_1LI76BCEu", "response": captcha_response}
+    response = requests.post("https://www.google.com/recaptcha/api/siteverify", data=data)
+    if response.json()["success"]:
+        return True
+    return False
