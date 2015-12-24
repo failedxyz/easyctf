@@ -31,6 +31,7 @@ if __name__ == "__main__":
 		db.init_app(app)
 		db.create_all()
 
+		app.register_blueprint(api.admin.blueprint, url_prefix="/api/admin")
 		app.register_blueprint(api.user.blueprint, url_prefix="/api/user")
 
 		app.run(host="0.0.0.0", port=8000)
