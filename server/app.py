@@ -15,7 +15,7 @@ with app.app_context():
 	db.init_app(app)
 	db.create_all()
 
-app.secret_key = config.SECRET
+app.secret_key = config.SECRET_KEY
 app.config["SQLALCHEMY_DATABASE_URI"] = config.SQLALCHEMY_DATABASE_URI
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = config.SQLALCHEMY_TRACK_MODIFICATIONS
 

@@ -1,15 +1,16 @@
 import os
 
-with open(".secret_key", "a+") as secret:
-    if not secret.read():
-        secret.seek(0)
-        key = os.urandom(128)
-        secret.write(key)
-        secret.flush()
-    else:
-        key = secret.read()
+secret = open(".secret_key", "a+b")
+contents = secret.read()
+if not contents:
+    key = os.urandom(128)
+    secret.write(key)
+    secret.flush()
+else:
+    key = contents
+secret.close()
 
-SECRET = key
+SECRET_KEY = key
 
 SQLALCHEMY_DATABASE_URI = "mysql://root:i_hate_passwords@localhost/easyctf"
 SQLALCHEMY_TRACK_MODIFICATIONS = False

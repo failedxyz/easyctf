@@ -1,5 +1,7 @@
 <h1 class="ui dividing header">Register</h1>
-<form class="ui form">
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="js/register.js"></script>
+<form id="registration-form" class="ui form">
 	<div class="field">
 		<div class="two fields">
 			<div class="field">
@@ -11,5 +13,27 @@
 				<input type="email" name="email" id="email" autocomplete="off" placeholder="Email">
 			</div>
 		</div>
+                <div class="two fields">
+			<div class="field">
+				<label>Username</label>
+				<input type="text" name="username" id="username" autocomplete="off" placeholder="Username">
+			</div>
+			<div class="field">
+				<label>Password</label>
+				<input type="password" name="password" id="password" autocomplete="off" placeholder="Password">
+			</div>
+                </div>
+                <div class="two fields">
+		    <div class="field">
+			<label>Password</label>
+			<input type="password" name="password_confirm" id="password_confirm" autocomplete="off" placeholder="Confirm Password">
+		    </div>
+                    <div class="field">
+                        <label>Captcha</label>
+                        <div class="g-recaptcha" data-sitekey="6Lc4xhMTAAAAAIaiF3yEWGbHRaGgMg4FHor61p1G"></div>
+                    </div>
+                </div>
 	</div>
-</div>
+        <div id="status"></div>
+        <input type="submit" class="ui fluid large teal submit button" value="Register">
+</form>
