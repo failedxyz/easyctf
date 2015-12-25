@@ -49,11 +49,14 @@ def user_logout():
 @blueprint.route("/login", methods=["POST"])
 @api_wrapper
 def user_login():
-    username = request.form["username"]
+    email = request.form["email"]
     password = request.form["password"]
-    user = Users.query.filter_by(username=username).first()
+    user = Users.query.filter_by(email=email).first()
+    if user is None:
+        return { "success": 0, "message": "Invalid credentials." }
+
     if utils.check_password(user.password, password):
-        session["username"] = username
+        session["username"] = user.username
         session["admin"] = user.admin
         return { "success": 1, "message": "Success!" }
     else:
