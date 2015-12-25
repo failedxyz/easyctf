@@ -1,53 +1,32 @@
 <html ng-app="easyctf">
-
-<head>
-	<title>EasyCTF 2016</title>
-	<link type="text/css" rel="stylesheet" href="css/style.css">
-	<script src="https://code.jquery.com/jquery-2.1.4.min.js" integrity="sha384-R4/ztc4ZlRqWjqIuvf6RX5yb/v90qNGx6fS48N0tRxiGkqveZETq72KgDVJCp2TC" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js" integrity="sha384-r1y8TJcloKTvouxnYsi4PJAx+nHNr90ibsEn3zznzDzWBN9X3o3kbHLSgcIPtzAp" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-route.min.js" integrity="sha384-9MZDoFf10trgrfsQOs9GJhf/mP/sh5weVp3FDSi8h/4TEaV6dloEDkpxGTaOmAs6" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/semantic.min.js" integrity="sha384-raqmvMx1osRCvgOKS+pn3feCjT4fwsgIgSfQLadfxqEKU49Gk8yWzQnGsBCYYjLz" crossorigin="anonymous"></script>
-	<script src="js/ascript.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/semantic.min.css" integrity="sha384-MkMf11Odtq01GxtmoywADPd87cCCjYkAUcFiuOytgpBP16Ei82+ulJraHrxcTl/m" crossorigin="anonymous">
-	<style>
-		body {
-			background-color: #F0F0F0;
-		}
-
-		.ui.menu .item img.logo {
-			margin-right: 1.5em;
-		}
-
-		.main.container {
-			margin-top: 7em;
-		}
-
-		.wireframe {
-			margin-top: 2em;
-		}
-
-		.ui.footer.segment {
-			margin: 5em 0em 0em;
-			padding: 5em 0em;
-		}
-	</style>
-</head>
-
-<body ng-controller="mainController">
-	<div class="ui inverted menu">
-		<div class="ui container">
-			<a href="#/" class="header item">
-				<img class="logo" src="http://placehold.it/40x40"> EasyCTF
-			</a>
-			<a class="item" href="#/">Home</a>
-			<a class="item" href="#/about">About</a>
-			<div class="right menu">
-				<a class="item" href="#/register">Register</a>
-				<a class="item" href="#/login">Login</a>
+	<head>
+		<meta charset="utf-8">
+		<title>EasyCTF 2016</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/semantic.min.css" integrity="sha384-MkMf11Odtq01GxtmoywADPd87cCCjYkAUcFiuOytgpBP16Ei82+ulJraHrxcTl/m" crossorigin="anonymous">
+		<link type="text/css" rel="stylesheet" href="css/style.css">
+		<base href="/">
+	</head>
+	<body ng-controller="mainController">
+		<div class="ui inverted menu">
+			<div class="ui container">
+				<a href="/" class="header item">
+					<img class="logo" src="http://placehold.it/40x40"> EasyCTF
+				</a>
+				<a class="item" href="/">Home</a>
+				<a class="item" href="/about">About</a>
+				<div class="right menu">
+					<a class="item" href="/register">Register</a>
+					<a class="item" href="/login">Login</a>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div id="mainContent" ng-view class="ui container"></div>
-</body>
-
+		<div id="mainContent" class="ui container">
+			<div ng-view></div>
+		</div>
+		<script src="https://code.jquery.com/jquery-2.1.4.min.js" integrity="sha384-R4/ztc4ZlRqWjqIuvf6RX5yb/v90qNGx6fS48N0tRxiGkqveZETq72KgDVJCp2TC" crossorigin="anonymous"></script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/semantic.min.js" integrity="sha384-raqmvMx1osRCvgOKS+pn3feCjT4fwsgIgSfQLadfxqEKU49Gk8yWzQnGsBCYYjLz" crossorigin="anonymous"></script> -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js" integrity="sha384-r1y8TJcloKTvouxnYsi4PJAx+nHNr90ibsEn3zznzDzWBN9X3o3kbHLSgcIPtzAp" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-route.min.js" integrity="sha384-9MZDoFf10trgrfsQOs9GJhf/mP/sh5weVp3FDSi8h/4TEaV6dloEDkpxGTaOmAs6" crossorigin="anonymous"></script>
+		<script src="js/easyctf.js"></script>
+	</body>
 </html>

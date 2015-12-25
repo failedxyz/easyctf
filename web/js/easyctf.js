@@ -1,5 +1,5 @@
 var app = angular.module("easyctf", [ "ngRoute" ]);
-app.config(function($routeProvider) {
+app.config(function($routeProvider, $locationProvider) {
 	$routeProvider.when("/", {
 		templateUrl: "pages/home.html",
 		controller: "mainController"
@@ -15,7 +15,8 @@ app.config(function($routeProvider) {
 	.when("/login", {
 		templateUrl: "pages/login.html",
 		controller: "mainController"
-	})
+	});
+	$locationProvider.html5Mode(true);
 });
 app.controller("mainController", function($scope) {
 
