@@ -40,17 +40,28 @@ body {
 	padding: 5em 0em;
 }
 h1 {
-	color: #F38630;
+	color: #ee953b;
 }
 li {
 	transition-duration: 0.5s;
 }
 li:hover {
-	background-color: #96c5c5;
+	background-color: #32bcd0;
 }
 tr {
 	transition-duration: 0.5s;
 }
 tr:hover {
 	background-color: #DDDDDD;
+}
+li a, .navbar-brand {
+	color: white !important;
+}
+table {
+	color: #29d257;
+}
+textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
+    border-color: #29d257;
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075) inset, 0 0 8px #29d257;
+    outline: 0 none;
 }

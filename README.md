@@ -32,17 +32,18 @@ Main Pages:
 - <b>login.html</b>
 - <b>register.html</b>
 - <b>about.html</b>
-- scoreboard.html
-- problems.html
+- <b>scoreboard.html</b>
+- <b>problems.html</b>
 - account.html
-- programming.html
-- chat.html
+- <b>programming.html</b>
+- <b>chat.html</b>
 - forgot_password.html
 - logout.html
 - rules.html
 - team.html
-- shell.html
-- updates.html
+- <b>shell.html</b>
+- <b>updates.html</b>
 - resetpassword.html
 
-Color Scheme: &#35;69D2E7 | &#35;A7DBDB | &#35;E0E4CC | &#35;F38630 | &#35;FA6900
+<del>Color Scheme: &#35;69D2E7 | &#35;A7DBDB | &#35;E0E4CC | &#35;F38630 | &#35;FA6900</del>
+(undecided.)

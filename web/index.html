@@ -7,8 +7,8 @@
 		<base href="/">
 	</head>
 	<body ng-controller="mainController">
-		<nav class="navbar navbar-default">
-		  <div class="container-fluid" style="background-color: #A7DBDB; margin: -0.1em;">
+		<nav class="navbar navbar-default navbar-fixed-top">
+		  <div class="container-fluid" style="background-color: #5954dd; margin: -0.1em;">
 		    <div class="navbar-header">
 		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 		        <span class="sr-only">Toggle navigation</span>
@@ -27,12 +27,16 @@
 						<li><a href="/scoreboard">Scoreboard</a></li>
 		      </ul>
 		      <ul class="nav navbar-nav navbar-right">
+						<li><a href="/programming">Programming</a></li>
+						<li><a href="/shell">Shell</a></li>
+						<li><a href="/problems">Problems</a></li>
 		        <li><a href="/login">Login</a></li>
 						<li><a href="/register">Register</a></li>
 		      </ul>
 		    </div>
 		  </div>
 		</nav>
+		<br><br>
 		<div id="mainContent" class="ui container">
 			<div ng-view></div>
 		</div>

@@ -24,6 +24,18 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: "pages/updates.html",
 		controller: "mainController"
 	})
+	.when("/problems", {
+		templateUrl: "pages/problems.html",
+		controller: "mainController"
+	})
+	.when("/programming", {
+		templateUrl: "pages/programming.html",
+		controller: "mainController"
+	})
+	.when("/shell", {
+		templateUrl: "pages/shell.html",
+		controller: "mainController"
+	})
 	.when("/scoreboard", {
 		templateUrl: "pages/scoreboard.html",
 		controller: "mainController"
