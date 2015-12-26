@@ -13,7 +13,7 @@ server {
 	# }
 
 	# Put all the pages here so Angular doesn't fail.
-	location ~^/(about|login|register|scoreboard)$ {
+	location ~^/(about|login|register|scoreboard|chat|updates)$ {
 		default_type text/html;
 		try_files /index.html /index.html;
 	}
