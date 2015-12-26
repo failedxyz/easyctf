@@ -1,33 +1,15 @@
-<div class="ui middle aligned center aligned grid">
-	<div class="column">
-		<h2 class="ui teal image header">
-			<img src="assets/images/logo.png" class="image">
-			<div class="content">Log-in to your account</div>
-		</h2>
-		<form id="login-form" class="ui large form">
-			<div class="ui stacked segment">
-				<div class="field">
-					<div class="ui left icon input">
-						<i class="user icon"></i>
-						<input type="text" id="email" name="email" placeholder="E-mail address">
-					</div>
-				</div>
-				<div class="field">
-					<div class="ui left icon input">
-						<i class="lock icon"></i>
-						<input type="password" id="password" name="password" placeholder="Password">
-					</div>
-				</div>
-                <input type="submit" class="ui fluid large teal submit button" value="Login">
-			</div>
-
-			<div class="ui error message"></div>
-		</form>
-                <div id="status"></div>
-		<div class="ui message">
-			<a href="#register" class="item">Register</a>
-			<a href="#forgot_password" class="item">Forgot Password?</a>
-		</div>
-	</div>
+<center>
+<h1>Log-in</h1>
+<div class="input-group">
+	<form id="login-form">
+		<input type="text" class="form-control" placeholder="Email" id="email">
+		<input type="password" id="password" name="password" placeholder="Password" class="form-control">
+		<input type="submit" class="btn btn-lg btn-success" value="Login">
+	</form>
 </div>
+<div id="status"></div>
+<a href="#register" class="item">Register</a>
+ |
+<a href="#forgot_password" class="item">Forgot Password</a>
+</center>
 <script src="js/login.js"></script>
