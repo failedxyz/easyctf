@@ -15,6 +15,10 @@ app.config(function($routeProvider, $locationProvider) {
 	.when("/login", {
 		templateUrl: "pages/login.html",
 		controller: "mainController"
+	})
+	.when("/scoreboard", {
+		templateUrl: "pages/scoreboard.html",
+		controller: "mainController"
 	});
 	$locationProvider.html5Mode(true);
 });

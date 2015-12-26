@@ -6,15 +6,15 @@ h1 {
 }
 
 :-moz-placeholder { /* Firefox 18- */
-	color: #999999;  
+	color: #999999;
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
-	color: #999999;  
+	color: #999999;
 }
 
 :-ms-input-placeholder {
-	color: #999999;  
+	color: #999999;
 }
 .intro {
 	text-align: center;
@@ -38,4 +38,19 @@ body {
 .ui.footer.segment {
 	margin: 5em 0em 0em;
 	padding: 5em 0em;
+}
+h1 {
+	color: #F38630;
+}
+li {
+	transition-duration: 0.5s;
+}
+li:hover {
+	background-color: #96c5c5;
+}
+tr {
+	transition-duration: 0.5s;
+}
+tr:hover {
+	background-color: #DDDDDD;
 }
