@@ -2,29 +2,47 @@
 	<head>
 		<meta charset="utf-8">
 		<title>EasyCTF 2016</title>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/semantic.min.css" integrity="sha384-MkMf11Odtq01GxtmoywADPd87cCCjYkAUcFiuOytgpBP16Ei82+ulJraHrxcTl/m" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<link type="text/css" rel="stylesheet" href="css/style.css">
 		<base href="/">
+		<style>
+			h1 {
+				color: #69D2E7;
+			}
+			input {
+				margin-bottom: 1em !important;
+			}
+		</style>
 	</head>
 	<body ng-controller="mainController">
-		<div class="ui inverted menu">
-			<div class="ui container">
-				<a href="/" class="header item">
-					<img class="logo" src="http://placehold.it/40x40"> EasyCTF
-				</a>
-				<a class="item" href="/">Home</a>
-				<a class="item" href="/about">About</a>
-				<div class="right menu">
-					<a class="item" href="/register">Register</a>
-					<a class="item" href="/login">Login</a>
-				</div>
-			</div>
-		</div>
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <a class="navbar-brand" href="/">EasyCTF</a>
+		    </div>
+
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      <ul class="nav navbar-nav navbar-fixed">
+		        <li><a href="/about">About</a></li>
+		      </ul>
+		      <ul class="nav navbar-nav navbar-right">
+		        <li><a href="/login">Login</a></li>
+						<li><a href="/register">Register</a></li>
+		      </ul>
+		    </div>
+		  </div>
+		</nav>
 		<div id="mainContent" class="ui container">
 			<div ng-view></div>
 		</div>
 		<script src="https://code.jquery.com/jquery-2.1.4.min.js" integrity="sha384-R4/ztc4ZlRqWjqIuvf6RX5yb/v90qNGx6fS48N0tRxiGkqveZETq72KgDVJCp2TC" crossorigin="anonymous"></script>
-		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/semantic.min.js" integrity="sha384-raqmvMx1osRCvgOKS+pn3feCjT4fwsgIgSfQLadfxqEKU49Gk8yWzQnGsBCYYjLz" crossorigin="anonymous"></script> -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js" integrity="sha384-r1y8TJcloKTvouxnYsi4PJAx+nHNr90ibsEn3zznzDzWBN9X3o3kbHLSgcIPtzAp" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-route.min.js" integrity="sha384-9MZDoFf10trgrfsQOs9GJhf/mP/sh5weVp3FDSi8h/4TEaV6dloEDkpxGTaOmAs6" crossorigin="anonymous"></script>
 		<script src="js/easyctf.js"></script>
