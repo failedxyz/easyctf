@@ -11,6 +11,8 @@ server {
 	# location / {
 	# 	try_files $uri $uri/ =404;
 	# }
+
+	# Put all the pages here so Angular doesn't fail.
 	location ~^/(about|login|register)$ {
 		default_type text/html;
 		try_files /index.html /index.html;
