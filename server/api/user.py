@@ -23,7 +23,7 @@ def user_register():
 	email = request.form["email"]
 
 	username_exists = Users.query.add_columns("name", "uid").filter_by(username_lower=username.lower()).first()
-	email_exists = Users.query.add_columns("name", "uid").filter_by(email=email).first()
+	email_exists = Users.query.add_columns("name", "uid").filter_by(email=email.lower()).first()
 
 	if password != password_confirm:
 		return { "success": 0, "message": "Passwords do not match." }
