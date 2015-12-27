@@ -39,7 +39,7 @@ Main Pages:
 - <b>chat.html</b>
 - forgot_password.html
 - logout.html
-- rules.html
+- <b>rules.html</b>
 - team.html
 - <b>shell.html</b>
 - <b>updates.html</b>

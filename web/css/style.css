@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Exo+2);
+
 h1 {
 	font-size: 75px;
 }
@@ -40,13 +42,17 @@ body {
 	padding: 5em 0em;
 }
 h1 {
-	color: #ee953b;
+	color: #62AC5B;
+	font-family: "Exo 2";
+}
+h2 {
+	color: #226C1B;
 }
 li {
 	transition-duration: 0.5s;
 }
 li:hover {
-	background-color: #32bcd0;
+	background-color: #0066cc;
 }
 tr {
 	transition-duration: 0.5s;
@@ -58,10 +64,10 @@ li a, .navbar-brand {
 	color: white !important;
 }
 table {
-	color: #29d257;
+	color: #226C1B;
 }
-textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
-    border-color: #29d257;
+/*textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
+    border-color: #62AC5B;
     box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075) inset, 0 0 8px #29d257;
     outline: 0 none;
-}
+}*/
