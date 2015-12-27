@@ -24,20 +24,3 @@ def unix_time_millis(dt):
 
 def get_time_since_epoch():
 	return unix_time_millis(datetime.datetime.now())
-
-def api_wrapper(f):
-	@wraps(f)
-	def wrapper(*args, **kwds):
-		web_result = {}
-		response = 200
-		try:
-			web_result = f(*args, **kwds)
-		except WebException as error:
-			response = 200
-			web_result = { "success": 0, "message": str(error) }
-		except Exception as error:
-			response = 200
-			traceback.print_exc()
-			web_result = { "success": 0, "message": "Something went wrong! Please notify us about this immediately.", error: traceback.format_exc() }
-		return json.dumps(web_result), response, { "Content-Type": "application/json; charset=utf-8" }
-	return wrapper

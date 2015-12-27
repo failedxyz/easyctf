@@ -2,7 +2,7 @@ from flask import Blueprint, session, request
 from flask import current_app as app
 
 from models import db, Users
-from utils import api_wrapper
+from decorators import api_wrapper
 
 import logging
 import requests

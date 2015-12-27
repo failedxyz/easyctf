@@ -5,9 +5,6 @@ import config
 import json
 import api
 
-from api.api import api as api_blueprint
-from api.user import blueprint as user_blueprint
-
 app = Flask(__name__)
 
 with app.app_context():
