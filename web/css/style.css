@@ -66,7 +66,10 @@ li a, .navbar-brand {
 table {
 	color: #226C1B;
 }
-
+#fileupload {
+	margin-right:auto;
+	padding-left:2em;
+}
 @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
