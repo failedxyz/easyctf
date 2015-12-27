@@ -1,0 +1,98 @@
+<html ng-app="easyctf" class="ng-scope">
+
+<head>
+    <style type="text/css">
+        @charset "UTF-8";
+        [ng\:cloak],
+        [ng-cloak],
+        [data-ng-cloak],
+        [x-ng-cloak],
+        .ng-cloak,
+        .x-ng-cloak,
+        .ng-hide:not(.ng-hide-animate) {
+            display: none !important;
+        }
+
+        ng\:form {
+            display: block;
+        }
+
+        .ng-animate-shim {
+            visibility: hidden;
+        }
+
+        .ng-anchor {
+            position: absolute;
+        }
+    </style>
+    <meta charset="utf-8">
+    <title>EasyCTF 2016</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="../css/style.css">
+    <base href="/">
+</head>
+
+<body ng-controller="mainController" class="ng-scope" waid71fa0d88-5390-4b5b-a2f4-e45fa93d85e2="SA password protect entry checker">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid" style="background-color: #0080FF; margin: -0.1em;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">EasyCTF</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-fixed">
+                    <li><a href="../pages/about">About</a></li>
+                    <li><a href="../pages/rules">Rules</a></li>
+                    <li><a href="../pages/updates">Updates</a></li>
+                    <li><a href="../pages/chat">Chat</a></li>
+                    <li><a href="../pages/scoreboard">Scoreboard</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../pages/programming">Programming</a></li>
+                    <li><a href="../pages/shell">Shell</a></li>
+                    <li><a href="../pages/problems">Problems</a></li>
+                    <li><a href="../pages/login">Login</a></li>
+                    <li><a href="../pages/register">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <div id="mainContent" class="ui container">
+        <!-- ngView:  -->
+        <div>
+            <center class="fade_in ng-scope">
+                <h1>Problems</h1>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" contenteditable="true">Insert Title Text... Format: "Problem Name | Category"</h3>
+                    </div>
+                    <div class="panel-body">
+                        <h3 contenteditable="true">Insert Question Text</h3>
+                        <div class="input-group" style="margin-left:10em;margin-right:10em;">
+                            <input type="text" class="form-control" placeholder="Insert Correct Flag Here">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button">Submit!</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </center>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js" integrity="sha384-R4/ztc4ZlRqWjqIuvf6RX5yb/v90qNGx6fS48N0tRxiGkqveZETq72KgDVJCp2TC" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js" integrity="sha384-r1y8TJcloKTvouxnYsi4PJAx+nHNr90ibsEn3zznzDzWBN9X3o3kbHLSgcIPtzAp" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-route.min.js" integrity="sha384-9MZDoFf10trgrfsQOs9GJhf/mP/sh5weVp3FDSi8h/4TEaV6dloEDkpxGTaOmAs6" crossorigin="anonymous"></script>
+    <script src="../js/easyctf.js"></script>
+</body>
+
+</html>
