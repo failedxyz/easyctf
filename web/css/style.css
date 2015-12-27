@@ -66,8 +66,22 @@ li a, .navbar-brand {
 table {
 	color: #226C1B;
 }
-/*textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
-    border-color: #62AC5B;
-    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075) inset, 0 0 8px #29d257;
-    outline: 0 none;
-}*/
+
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.fade_in {
+	 opacity: 0;
+   -webkit-animation: fadeIn ease-in-out 1;
+   -moz-animation: fadeIn ease-in-out 1;
+   animation: fadeIn ease-in-out 1;
+
+   -webkit-animation-fill-mode: forwards;
+   -moz-animation-fill-mode: forwards;
+   animation-fill-mode: forwards;
+
+   -webkit-animation-duration: 1s;
+   -moz-animation-duration: 1s;
+   animation-duration: 1s;
+}
