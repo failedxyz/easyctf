@@ -1,9 +1,9 @@
 from argparse import ArgumentParser
 from flask import Flask
 
+import api
 import config
 import json
-import api
 
 app = Flask(__name__)
 
@@ -18,6 +18,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = config.SQLALCHEMY_TRACK_MODIFICAT
 
 app.register_blueprint(api.admin.blueprint, url_prefix="/api/admin")
 app.register_blueprint(api.user.blueprint, url_prefix="/api/user")
+api.logger.initialize_logs()
 
 @app.route("/api")
 def api_main():

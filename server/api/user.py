@@ -4,7 +4,7 @@ from flask import current_app as app
 from models import db, Users
 from decorators import api_wrapper
 
-import logging
+import logger
 import requests
 import utils
 
@@ -39,8 +39,7 @@ def user_register():
 		return { "success": 0, "message": "Email has already been used." }
 
 	add_user(name, username, email, password)
-	logger = logging.getLogger("regs")
-	logger.warn("[{0}] {1} registered with {2}".format(time.strftime("%m/%d/%Y %X"), name.encode("utf-8"), email.encode("utf-8")))
+	logger.log("registrations", logger.INFO, "%s registered with %s" % (name.encode("utf-8"), email.encode("utf-8")))
 
 	return { "success": 1, "message": "Success!" }
 

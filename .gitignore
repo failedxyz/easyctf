@@ -1,6 +1,7 @@
 .vagrant
 .secret_key
 .bundle/config
+logs/
 
 # Object files
 *.o
