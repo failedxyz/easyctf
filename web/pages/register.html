@@ -1,55 +1,63 @@
 <center class="fade_in">
-<h1 class="ui dividing header">Register</h1>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script src="js/register.js"></script>
-<div class="input-group">
-	<form id="registration-form">
-		<div class="row">
+	<h1 class="ui dividing header">Register</h1>
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	<script src="js/register.js"></script>
+	<div class="input-group">
+		<form id="registration-form">
+			<div class="row">
 
-			<div class="col-md-6">
-				<label>Name</label>
+				<div class="col-md-6">
+					<br>
+					<label>Name</label>
+					<br>
+					<input type="text" name="name" id="name" autocomplete="off" autofocus placeholder="Name" class="form-control">
+				</div>
+
+				<div class="col-md-6">
+					<br>
+					<label>Email</label>
+					<br>
+					<input type="email" name="email" id="email" autocomplete="off" placeholder="Email" class="form-control">
+				</div>
+
+				<div class="col-md-6">
+					<br>
+					<label>Username</label>
+					<br>
+					<input type="text" name="username" id="username" autocomplete="off" placeholder="Username" class="form-control">
+				</div>
+
+				<div class="col-md-6">
+					<br>
+					<label>Password</label>
+					<br>
+					<input type="password" name="password" id="password" autocomplete="off" placeholder="Password" class="form-control">
+				</div>
+
+				<div class="col-md-12">
+					<br>
+					<label>Password</label>
+					<br>
+					<input type="password" name="password_confirm" id="password_confirm" autocomplete="off" placeholder="Confirm Password" class="form-control">
+				</div>
+
 				<br>
-				<input type="text" name="name" id="name" autocomplete="off" autofocus placeholder="Name" class="form-control">
-			</div>
 
-			<div class="col-md-6">
-				<label>Email</label>
+				<div class="col-md-12">
+					<br>
+					<label>Captcha</label>
+					<br>
+					<div class="g-recaptcha" data-sitekey="6Lc4xhMTAAAAAIaiF3yEWGbHRaGgMg4FHor61p1G"></div>
+					<br>
+				</div>
+
+				<div id="status"></div>
+				<label>I have read and I agree to <a href="/rules" target="_blank">EasyCTF Rules</a>.</label>
+				<br><br>
+				<input type="checkbox" class="form-control" value="didRead" style="margin: 0px 0px 0px 0px;padding: 0px 0px 0px 0px;">
 				<br>
-				<input type="email" name="email" id="email" autocomplete="off" placeholder="Email" class="form-control">
+				<input type="submit" class="btn btn-lg btn-success" value="Register" style="margin-top:1em;">
 			</div>
-
-			<div class="col-md-6">
-				<label>Username</label>
-				<br>
-				<input type="text" name="username" id="username" autocomplete="off" placeholder="Username" class="form-control">
-			</div>
-
-			<div class="col-md-6">
-				<label>Password</label>
-				<br>
-				<input type="password" name="password" id="password" autocomplete="off" placeholder="Password" class="form-control">
-			</div>
-
-			<div class="col-md-12">
-				<label>Password</label>
-				<br>
-				<input type="password" name="password_confirm" id="password_confirm" autocomplete="off" placeholder="Confirm Password" class="form-control">
-			</div>
-
-			<br>
-
-			<div class="col-md-12">
-				<label>Captcha</label>
-				<br>
-	    	<div class="g-recaptcha" data-sitekey="6Lc4xhMTAAAAAIaiF3yEWGbHRaGgMg4FHor61p1G"></div>
-			</div>
-
-			<div id="status"></div>
-
-			<label>Read and agree to follow <a href="/rules" target="_blank">the rules</a></label><br>
-			<label>I have read it:</label><input type="checkbox" class="form-control" value="didRead" style="margin-left:49%;"><br>
-			<input type="submit" class="btn btn-lg btn-success" value="Register" style="margin-top:1em;">
-		</div>
-	</form>
-</div>
+		</form>
+	</div>
 </center>
