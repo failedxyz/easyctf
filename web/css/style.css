@@ -16,6 +16,15 @@ h1 {
 :-ms-input-placeholder {
     color: #999999;
 }
+#question-text {
+    height: 4em;
+}
+#question-title {
+    background-color:#D9EDF7;
+    text-align:center;
+    padding:0px 0px 0px 0px;
+    font-size:1.2em;
+}
 .intro {
     text-align: center;
 }
@@ -63,7 +72,7 @@ li a, .navbar-brand {
 table {
     color: #226C1B;
 }
-#fileupload {
+#imp-files {
     margin-right: auto;
     padding-left: 2em;
 }

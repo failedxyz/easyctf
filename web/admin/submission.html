@@ -1,5 +1,5 @@
 <html ng-app="easyctf" class="ng-scope">
-
+<script src="js/submission.js"></script>
 <head>
     <style type="text/css">
         @charset "UTF-8";
@@ -71,25 +71,28 @@
             <center class="fade_in ng-scope">
                 <h1>Problems</h1>
                 <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h3 class="panel-title" contenteditable="true">Insert Title Text... Format: "Problem Name | Category"</h3>
-                    </div>
-                    <div class="panel-body">
-                        <h3 contenteditable="true">Insert Question Text</h3>
-                        <div class="input-group" style="margin-left:10em;margin-right:10em;">
-                            <input type="text" class="form-control" placeholder="Insert Correct Flag Here">
-                            <span class="input-group-btn">
-                                <button class="btn btn-success" type="button">Submit!</button>
-                            </span>
+                    <form id="submission-form">
+                        <div class="panel-heading">
+                            <input type="text" name="question-title" id="question-title" autocomplete="on" placeholder="Question_Title | CTF Category" class="form-control">
                         </div>
-                    </div>
-                    <div class="panel-footer">
-                        <h4>These are important files!</h4>
-                        <hr>
-                        <div class="row">
-                            <input type="file" name="files" multiple="true" id="fileupload">
+                        <div class="panel-body">
+                            <textarea type="text" name="question-text" id="question-text" autocomplete="on" placeholder="Pertinent_Information_Regarding_Question" class="form-control"></textarea>
+                            <br><br>
+                            <div class="input-group" style="margin-left:10em;margin-right:10em;">
+                                <input type="text" name="correct-flag" id="correct-flag" autocomplete="off" placeholder="EasyCTF{insert_correct_flag_here}" class="form-control">
+                                <span class="input-group-btn">
+                                    <input type="submit" class="btn btn-success" value="Submit">
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                        <div class="panel-footer">
+                            <h4>These are important files!</h4>
+                            <hr>
+                            <div class="row">
+                                <input type="file" name="imp-files" id="imp-files" multiple="true">
+                            </div>
+                        </div>
+                    </form>
                 </div>
         </div>
     </div>
