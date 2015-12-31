@@ -7,8 +7,6 @@ import traceback
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 
-class WebException(Exception): pass
-
 def hash_password(s):
 	return generate_password_hash(s)
 

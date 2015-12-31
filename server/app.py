@@ -7,17 +7,19 @@ import json
 
 app = Flask(__name__)
 
+app.config["SQLALCHEMY_DATABASE_URI"] = config.SQLALCHEMY_DATABASE_URI
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = config.SQLALCHEMY_TRACK_MODIFICATIONS
+
 with app.app_context():
 	from api.models import db
 	db.init_app(app)
 	db.create_all()
 
 app.secret_key = config.SECRET_KEY
-app.config["SQLALCHEMY_DATABASE_URI"] = config.SQLALCHEMY_DATABASE_URI
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = config.SQLALCHEMY_TRACK_MODIFICATIONS
 
 app.register_blueprint(api.admin.blueprint, url_prefix="/api/admin")
 app.register_blueprint(api.user.blueprint, url_prefix="/api/user")
+app.register_blueprint(api.problem.blueprint, url_prefix="/api/problem")
 api.logger.initialize_logs()
 
 @app.route("/api")

@@ -1,5 +1,10 @@
+import json
+import traceback
+
 from functools import wraps
 from flask import session
+
+class WebException(Exception): pass
 
 def login_required(f):
     @wraps(f)
@@ -33,6 +38,6 @@ def api_wrapper(f):
         except Exception as error:
             response = 200
             traceback.print_exc()
-            web_result = { "success": 0, "message": "Something went wrong! Please notify us about this immediately.", error: traceback.format_exc() }
+            web_result = { "success": 0, "message": "Something went wrong! Please notify us about this immediately.", str(error): traceback.format_exc() }
         return json.dumps(web_result), response, { "Content-Type": "application/json; charset=utf-8" }
     return wrapper
