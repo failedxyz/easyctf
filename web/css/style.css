@@ -9,6 +9,10 @@ h1 {
     /* Firefox 18- */
     color: #999999;
 }
+img#icn {
+    position:relative;
+    bottom:1px;
+}
 ::-moz-placeholder {
     /* Firefox 19+ */
     color: #999999;
