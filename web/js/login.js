@@ -13,7 +13,7 @@ function login(email, password) {
             display_message("status", "success", "Success!", function() {$("#login").removeAttr("disabled");});
             // wait then redirect or whatever
         } else {
-            display_message("status", "warning", data.message, function() {$("#login").removeAttr("disabled");});
+            display_message("status", "danger", data.message, function() {$("#login").removeAttr("disabled");});
         }
     });
 }
