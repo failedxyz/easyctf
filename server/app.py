@@ -11,7 +11,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = config.SQLALCHEMY_DATABASE_URI
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = config.SQLALCHEMY_TRACK_MODIFICATIONS
 
 with app.app_context():
-	from api.models import db
+	from api.models import db, Teams, Problems, Solves, Users
 	db.init_app(app)
 	db.create_all()
 
