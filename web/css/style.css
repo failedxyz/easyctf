@@ -7,6 +7,18 @@
 ::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder {
     color: #999999;
 }
+#fholder {
+    text-align:center;
+}
+.probfile {
+    display:inline;
+    color:#62AC5B;
+    margin-right:1em;
+    margin-left:1em;
+}
+.filelink, .filelink:hover {
+    text-decoration:none;
+}
 #style1 {
     background-color: #0080FF;
     margin: -0.1em;
