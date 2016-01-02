@@ -7,6 +7,12 @@
 ::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder {
     color: #999999;
 }
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover, .dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover {
+    background-color:#0066CC;
+}
+#menubox {
+    border:none;
+}
 .pointvalue {
     float:right;
 }
