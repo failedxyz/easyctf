@@ -11,6 +11,9 @@
     background-color: #0080FF;
     margin: -0.1em;
 }
+#style1 .dropdown-menu {
+    background-color: #1a8dff;
+}
 #email, #password {
     margin-bottom: 1em;
 }
