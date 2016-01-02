@@ -1,5 +1,6 @@
 import hashlib
 import logger
+import os
 
 from flask import Blueprint, session, request
 from flask import current_app as app
@@ -27,8 +28,9 @@ def problem_add():
 
     problem = Problems(name, category, description, hint, flag, value)
     db.session.add(problem)
+    db.session.commit()
 
-    files = request.files["imp-files"]
+    files = request.files.getlist("files[]")
     for _file in files:
         filename = secure_filename(_file.filename)
 
@@ -36,11 +38,11 @@ def problem_add():
             continue
 
         folder = problem.name.replace(" ", "-")
-        folder_path = os.path.join(os.path.normpath(app["UPLOAD_FOLDER"], folder))
-        if not folder_path:
+        folder_path = os.path.join(os.path.normpath(app.config["UPLOAD_FOLDER"]), folder)
+        if not os.path.exists(folder_path):
             os.makedirs(folder_path)
 
-        file_path = os.path.join(path, filename)
+        file_path = os.path.join(folder_path, filename)
         _file.save(file_path)
         db_file = Files(problem.pid, file_path)
         db.session.add(db_file)
