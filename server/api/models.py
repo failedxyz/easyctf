@@ -11,7 +11,7 @@ class Users(db.Model):
     username_lower = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(64), unique=True)
     password = db.Column(db.String(128))
-    admin = db.Column(db.Boolean)
+    admin = db.Column(db.Boolean, default=False)
 
     def __init__(self, name, username, email, password):
         self.name = name
@@ -41,9 +41,9 @@ class Problems(db.Model):
     description = db.Column(db.Text)
     hint = db.Column(db.Text)
     flag = db.Column(db.Text)
-    disabled = db.Column(db.Boolean)
+    disabled = db.Column(db.Boolean, default=False)
     value = db.Column(db.Integer)
-    solves = db.Column(db.Integer)
+    solves = db.Column(db.Integer, default=0)
 
     def __init__(self, name, category, description, hint, flag, value):
         self.name = name
