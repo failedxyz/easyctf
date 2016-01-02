@@ -1,9 +1,11 @@
+import hashlib
 import logger
 
 from flask import Blueprint, session, request
 from flask import current_app as app
+from werkzeug import secure_filename
 
-from models import db, Problems, Solves, Teams
+from models import db, Files, Problems, Solves, Teams
 from decorators import admins_only, api_wrapper, login_required
 
 blueprint = Blueprint("problem", __name__)
@@ -20,12 +22,29 @@ def problem_add():
     value = request.form["value"]
 
     name_exists = Problems.query.filter_by(name=name).first()
-
     if name_exists:
         return { "success":0, "message": "Problem name already taken." }
 
     problem = Problems(name, category, description, hint, flag, value)
     db.session.add(problem)
+
+    files = request.files["imp-files"]
+    for _file in files:
+        filename = secure_filename(_file.filename)
+
+        if len(filename) == 0:
+            continue
+
+        folder = problem.name.replace(" ", "-")
+        folder_path = os.path.join(os.path.normpath(app["UPLOAD_FOLDER"], folder))
+        if not folder_path:
+            os.makedirs(folder_path)
+
+        file_path = os.path.join(path, filename)
+        _file.save(file_path)
+        db_file = Files(problem.pid, file_path)
+        db.session.add(db_file)
+
     db.session.commit()
 
     return { "success": 1, "message": "Success!" }

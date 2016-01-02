@@ -53,6 +53,15 @@ class Problems(db.Model):
         self.flag = flag
         self.value = value
 
+class Files(db.Model):
+    fid = db.Column(db.Integer, primary_key=True)
+    pid = db.Column(db.Integer)
+    location = db.Column(db.Text)
+
+    def __init__(self, pid, location):
+        self.pid = pid
+        self.location = location
+
 class Solves(db.Model):
     sid = db.Column(db.Integer, primary_key=True)
     pid = db.Column(db.Integer)
