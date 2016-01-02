@@ -37,6 +37,7 @@ class Teams(db.Model):
 class Problems(db.Model):
     pid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
+    category = db.Column(db.String(128))
     description = db.Column(db.Text)
     hint = db.Column(db.Text)
     flag = db.Column(db.Text)
@@ -44,8 +45,9 @@ class Problems(db.Model):
     value = db.Column(db.Integer)
     solves = db.Column(db.Integer)
 
-    def __init__(self, name, description, hint, flag, value):
+    def __init__(self, name, category, description, hint, flag, value):
         self.name = name
+        self.category = category
         self.description = description
         self.hint = hint
         self.flag = flag
