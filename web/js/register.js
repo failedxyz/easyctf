@@ -4,6 +4,7 @@ $("#registration-form").on("submit", function(e) {
 });
 
 function register(name, username, password, password_confirm, email, captcha_response) {
+    $("#register").attr("disabled", "disabled");
     $.post("/api/user/register", {
         name: name,
         username: username,
@@ -14,8 +15,10 @@ function register(name, username, password, password_confirm, email, captcha_res
     }, function(data) {
         $("#status").text(data.message);
         if (data.success == 1) {
+            display_message("status", "success", "Success!", function() {$("#register").removeAttr("disabled")});
             // wait then redirect or whatever
         } else {
+            display_message("status", "danger", data.message, function() {$("#register").removeAttr("disabled")});
             grecaptcha.reset();
         }
     });
