@@ -59,7 +59,8 @@ def user_login():
 
     if utils.check_password(user.password, password):
         session["username"] = user.username
-        session["admin"] = user.admin
+        if user.admin:
+            session["admin"] = True
         session["logged_in"] = True
         return { "success": 1, "message": "Success!" }
     else:

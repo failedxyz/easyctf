@@ -4,7 +4,7 @@ from flask import Blueprint, session, request
 from flask import current_app as app
 
 from models import db, Problems, Solves, Teams
-from decorators import admins_only, api_wrapper, login_required
+from decorators import admins_only, api_wrapper
 
 blueprint = Blueprint("problem", __name__)
 
@@ -72,7 +72,6 @@ def problem_update():
 
 @blueprint.route("/submit", methods=["POST"])
 @api_wrapper
-@login_required
 def problem_submit():
     pid = request.form["pid"]
     flag = request.form["flag"]

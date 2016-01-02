@@ -6,24 +6,13 @@ from flask import session
 
 class WebException(Exception): pass
 
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        return f(*args, **kwargs)
-    return decorated_function
-
 def admins_only(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
+        if "admin" not in session and not session["admin"]:
+            return { "success": 0, "message": "Not authorized." }
         return f(*args, **kwargs)
     return decorated_function
-
-def check_csrf(f):
-    @wraps(f)
-    @login_required
-    def wrapper(*args, **kwds):
-        return f(*args, **kwds)
-    return wrapper
 
 def api_wrapper(f):
     @wraps(f)
