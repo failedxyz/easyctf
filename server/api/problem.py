@@ -11,6 +11,7 @@ blueprint = Blueprint("problem", __name__)
 @api_wrapper
 def problem_add():
     name = request.form["name"]
+    category = request.form["category"]
     description = request.form["description"]
     hint = request.form["hint"]
     flag = request.form["flag"]
@@ -21,7 +22,7 @@ def problem_add():
     if name_exists:
         return { "success":0, "message": "Problem name already taken." }
 
-    problem = Problems(name, description, hint, flag, value)
+    problem = Problems(name, category, description, hint, flag, value)
     db.session.add(problem)
     db.session.commit()
 
