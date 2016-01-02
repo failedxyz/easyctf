@@ -55,8 +55,8 @@ function display_message(containerId, alertType, message, callback) {
     $("#" + containerId).hide().slideDown("fast", "swing", function() {
         window.setTimeout(function () {
             $("#" + containerId).slideUp("fast", "swing", callback);
-        });
-    }, 2000);
+        }, message.length * 75);
+    });
 }
 
 function load_navbar() {

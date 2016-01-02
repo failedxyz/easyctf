@@ -15,8 +15,10 @@ function register(name, username, password, password_confirm, email, captcha_res
     }, function(data) {
         $("#status").text(data.message);
         if (data.success == 1) {
-            display_message("status", "success", "Success!", function() {$("#register").removeAttr("disabled")});
-            // wait then redirect or whatever
+            display_message("status", "success", "Success!", function() {
+                $("#register").removeAttr("disabled");
+                window.location = "#/login";
+            });
         } else {
             display_message("status", "danger", data.message, function() {$("#register").removeAttr("disabled")});
             grecaptcha.reset();

@@ -10,8 +10,10 @@ function login(email, password) {
         password: password
     }, function(data) {
         if (data.success == 1) {
-            display_message("status", "success", "Success!", function() {$("#login").removeAttr("disabled");});
-            // wait then redirect or whatever
+            display_message("status", "success", "Success!", function() {
+                $("#login").removeAttr("disabled");
+                window.location = "#/account";
+            });
         } else {
             display_message("status", "danger", data.message, function() {$("#login").removeAttr("disabled");});
         }
