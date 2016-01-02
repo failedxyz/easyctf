@@ -4,6 +4,22 @@
     color: #62AC5B !important;
     font-family: "Exo 2" !important;
 }
+.charts {
+    width:100%;
+    border:4px double black;
+}
+.charted {
+    width:5em;
+    height:5em;
+}
+#map {
+    height:45em;
+    background-image: url(../images/placeholdermap.jpg);
+    background-size: cover;
+    width:97%;
+    margin-right:auto;
+    margin-left:auto;
+}
 ::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder {
     color: #999999;
 }
