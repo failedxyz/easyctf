@@ -48,5 +48,4 @@ Main Pages:
 Misc Pages:
 - <b>Admin/submission page</b>
 
-<del>Color Scheme: &#35;69D2E7 | &#35;A7DBDB | &#35;E0E4CC | &#35;F38630 | &#35;FA6900</del>
-(undecided.)
+Color Scheme: &#35;#62AC5B | &#35;#0080FF
