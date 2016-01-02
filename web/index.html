@@ -1,50 +1,84 @@
 <html ng-app="easyctf">
-	<head>
-		<meta charset="utf-8">
-		<title>EasyCTF 2016</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-		<link type="text/css" rel="stylesheet" href="css/style.css">
-		<base href="/">
-	</head>
-	<body ng-controller="mainController">
-		<nav class="navbar navbar-default navbar-fixed-top">
-		  <div class="container-fluid" style="background-color: #0080FF; margin: -0.1em;">
-		    <div class="navbar-header">
-		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		      </button>
-		      <a class="navbar-brand" href="/">EasyCTF</a>
-		    </div>
 
-		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		      <ul class="nav navbar-nav navbar-fixed">
-		        <li><a href="/about"><img src="images/info.png" id="icn" alt="information icon">&nbsp;&nbsp;About</a></li>
-						<li><a href="/rules"><img src="images/rules.png" id="icn" alt="">&nbsp;&nbsp;Rules</a></li>
-						<li><a href="/updates"><img src="images/updates.png" id="icn" alt="">&nbsp;&nbsp;Updates</a></li>
-						<li><a href="/chat"><img src="images/chat.png" id="icn" alt="">&nbsp;&nbsp;Chat</a></li>
-						<li><a href="/scoreboard"><img src="images/scoreboard.png" id="icn" alt="">&nbsp;&nbsp;Scoreboard</a></li>
-		      </ul>
-		      <ul class="nav navbar-nav navbar-right">
-						<li><a href="/programming"><img src="images/programming.png" id="icn" alt="programming icon">&nbsp;&nbsp;Programming</a></li>
-						<li><a href="/shell"><img src="images/terminal.png" id="icn" alt="shell icon">&nbsp;&nbsp;Shell</a></li>
-						<li><a href="/problems"><img src="images/problems.png" id="icn" alt="problems icon">&nbsp;&nbsp;Problems</a></li>
-		        <li><a href="/login"><img src="images/login.png" id="icn" alt="login icon">&nbsp;&nbsp;Login</a></li>
-						<li><a href="/register"><img src="images/register.png" id="icn" alt="register icon">&nbsp;&nbsp;Register</a></li>
-		      </ul>
-		    </div>
-		  </div>
-		</nav>
-		<br><br>
-		<div id="mainContent" class="ui container">
-			<div ng-view></div>
+<head>
+	<meta charset="utf-8">
+	<title>EasyCTF 2016</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link type="text/css" rel="stylesheet" href="css/style.css">
+	<base href="/">
+</head>
+
+<body ng-controller="mainController" class="mainbody">
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div id="style1" class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/">EasyCTF</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-fixed">
+					<li>
+						<a href="/about">
+							<img src="images/info.png" class="icn" alt="information icon">&nbsp;&nbsp;About</a>
+					</li>
+					<li>
+						<a href="/rules">
+							<img src="images/rules.png" class="icn" alt="">&nbsp;&nbsp;Rules</a>
+					</li>
+					<li>
+						<a href="/updates">
+							<img src="images/updates.png" class="icn" alt="">&nbsp;&nbsp;Updates</a>
+					</li>
+					<li>
+						<a href="/chat">
+							<img src="images/chat.png" class="icn" alt="">&nbsp;&nbsp;Chat</a>
+					</li>
+					<li>
+						<a href="/scoreboard">
+							<img src="images/scoreboard.png" class="icn" alt="">&nbsp;&nbsp;Scoreboard</a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="/programming">
+							<img src="images/programming.png" class="icn" alt="programming icon">&nbsp;&nbsp;Programming</a>
+					</li>
+					<li>
+						<a href="/shell">
+							<img src="images/terminal.png" class="icn" alt="shell icon">&nbsp;&nbsp;Shell</a>
+					</li>
+					<li>
+						<a href="/problems">
+							<img src="images/problems.png" class="icn" alt="problems icon">&nbsp;&nbsp;Problems</a>
+					</li>
+					<li>
+						<a href="/login">
+							<img src="images/login.png" class="icn" alt="login icon">&nbsp;&nbsp;Login</a>
+					</li>
+					<li>
+						<a href="/register">
+							<img src="images/register.png" class="icn" alt="register icon">&nbsp;&nbsp;Register</a>
+					</li>
+				</ul>
+			</div>
 		</div>
-		<script src="https://code.jquery.com/jquery-2.1.4.min.js" integrity="sha384-R4/ztc4ZlRqWjqIuvf6RX5yb/v90qNGx6fS48N0tRxiGkqveZETq72KgDVJCp2TC" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js" integrity="sha384-r1y8TJcloKTvouxnYsi4PJAx+nHNr90ibsEn3zznzDzWBN9X3o3kbHLSgcIPtzAp" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-route.min.js" integrity="sha384-9MZDoFf10trgrfsQOs9GJhf/mP/sh5weVp3FDSi8h/4TEaV6dloEDkpxGTaOmAs6" crossorigin="anonymous"></script>
-		<script src="js/easyctf.js"></script>
-	</body>
+	</nav>
+	<br>
+	<br>
+	<div id="mainContent" class="ui container">
+		<div ng-view></div>
+	</div>
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js" integrity="sha384-R4/ztc4ZlRqWjqIuvf6RX5yb/v90qNGx6fS48N0tRxiGkqveZETq72KgDVJCp2TC" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js" integrity="sha384-r1y8TJcloKTvouxnYsi4PJAx+nHNr90ibsEn3zznzDzWBN9X3o3kbHLSgcIPtzAp" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-route.min.js" integrity="sha384-9MZDoFf10trgrfsQOs9GJhf/mP/sh5weVp3FDSi8h/4TEaV6dloEDkpxGTaOmAs6" crossorigin="anonymous"></script>
+	<script src="js/easyctf.js"></script>
+</body>
+
 </html>

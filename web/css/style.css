@@ -1,33 +1,42 @@
 @import url(https://fonts.googleapis.com/css?family=Exo+2);
-h1 {
-    font-size: 75px;
+.heading1 {
+    font-size: 75px !important;
+    color: #62AC5B !important;
+    font-family: "Exo 2" !important;
 }
-::-webkit-input-placeholder {
+::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder {
     color: #999999;
 }
-:-moz-placeholder {
-    /* Firefox 18- */
-    color: #999999;
+#style1 {
+    background-color: #0080FF;
+    margin: -0.1em;
 }
-img#icn {
-    position:relative;
-    bottom:1px;
+#email, #password {
+    margin-bottom: 1em;
 }
-::-moz-placeholder {
-    /* Firefox 19+ */
-    color: #999999;
+.style4 {
+    margin-left: 10em;
+    margin-right: 10em;
 }
-:-ms-input-placeholder {
-    color: #999999;
+.icn {
+    position: relative;
+    bottom: 1px;
+}
+.style2 {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+.style3 {
+    margin-top: 1em;
 }
 #question-text {
     height: 4em;
 }
 #question-title {
-    background-color:#D9EDF7;
-    text-align:center;
-    padding:0px 0px 0px 0px;
-    font-size:1.2em;
+    background-color: #D9EDF7;
+    text-align: center;
+    padding: 0px 0px 0px 0px;
+    font-size: 1.2em;
 }
 .intro {
     text-align: center;
@@ -35,7 +44,7 @@ img#icn {
 .column {
     max-width: 450px;
 }
-body {
+.mainbody {
     background-color: #F0F0F0;
 }
 .ui.menu .item img.logo {
@@ -51,11 +60,7 @@ body {
     margin: 5em 0em 0em;
     padding: 5em 0em;
 }
-h1 {
-    color: #62AC5B;
-    font-family: "Exo 2";
-}
-h2 {
+.heading2, table {
     color: #226C1B;
 }
 li {
@@ -72,9 +77,6 @@ tr:hover {
 }
 li a, .navbar-brand {
     color: white !important;
-}
-table {
-    color: #226C1B;
 }
 #imp-files {
     margin-right: auto;
