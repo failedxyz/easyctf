@@ -13,6 +13,15 @@
 .panel.panel-info {
     margin: 2.5em;
 }
+.paragraph {
+    width:50em;
+    text-align: justify;
+    margin-left:auto;
+    margin-right:auto;
+}
+.prizes {
+    width:100%;
+}
 #hint {
     background:#0080FF;
     border-color:#0180FF;
