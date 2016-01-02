@@ -10,6 +10,16 @@
 .pointvalue {
     float:right;
 }
+.panel.panel-info {
+    margin: 2.5em;
+}
+#hint {
+    background:#0080FF;
+    border-color:#0180FF;
+}
+#check {
+    border-color:#449D44;
+}
 .probfile {
     display:inline;
     color:#62AC5B;
