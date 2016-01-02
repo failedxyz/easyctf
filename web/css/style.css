@@ -7,6 +7,9 @@
 ::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder {
     color: #999999;
 }
+.pointvalue {
+    float:right;
+}
 .probfile {
     display:inline;
     color:#62AC5B;
