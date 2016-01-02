@@ -58,3 +58,27 @@ function display_message(containerId, alertType, message, callback) {
         });
     }, 2000);
 }
+
+function load_navbar() {
+    $.post("/api/user/status", {
+    },
+    function(data) {
+        if (data.logged_in) {
+            $("#logout").show();
+            $("#account_link").show();
+        } else {
+            $("#login_link").show();
+            $("#register_link").show();
+        }
+    });
+}
+
+$("#logout").click(function(e) {
+    e.preventDefault();
+    $.post("/api/user/logout", {
+    }, function (data) {
+        window.location = "/";
+    });
+})
+
+$(document).ready( load_navbar() );

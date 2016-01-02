@@ -1,4 +1,4 @@
-from flask import Blueprint, session, request
+from flask import Blueprint, session, request, redirect, url_for
 from flask import current_app as app
 
 from models import db, Users
@@ -65,6 +65,22 @@ def user_login():
         return { "success": 1, "message": "Success!" }
     else:
         return { "success": 0, "message": "Invalid credentials." }
+
+@blueprint.route("/status", methods=["POST"])
+@api_wrapper
+def user_status():
+    status = {
+        "logged_in": is_logged_in(),
+        "admin": is_admin(),
+        "username": session["username"] if is_logged_in() else "",
+    }
+    return status
+
+def is_logged_in():
+    return "logged_in" in session and session["logged_in"]
+
+def is_admin():
+    return "admin" in session and session["admin"]
 
 def add_user(name, username, email, password):
     user = Users(name, username, email, password)
