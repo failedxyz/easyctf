@@ -27,15 +27,15 @@ function render_problems() {
             <br><br>
             <div class="row">
                 <div class="col-md-6">
-                <input type="text" name="flag" placeholder="Flag" autocomplete="off" class="form-control">
+                <input type="text" name="flag" placeholder="Flag" autocomplete="off" class="form-control" value="` + data[i]["flag"] + `">
                 </div>
                 <div class="col-md-6">
-                <input type="text" name="hint" placeholder="Hint" autocomplete="off" class="form-control">
+                <input type="text" name="hint" placeholder="Hint" autocomplete="off" class="form-control" value="` + data[i]["hint"] + `">
                 </div>
             </div>
             <br>
             <div class="row">
-                <input type="number" name="value" placeholder="Value" autocomplete="off" class="form-control-number">
+                <input type="number" name="value" placeholder="Value" autocomplete="off" class="form-control-number" value="` + data[i]["value"] + `">
         <label><input type="checkbox" name="disabled" value="1"` + checked + `>Disabled</label>
             </div>
         </div>

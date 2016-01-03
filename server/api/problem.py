@@ -80,6 +80,7 @@ def problem_update():
     problem = Problems.query.filter_by(pid=pid).first()
     if problem:
         problem.name = name
+        problem.category = category
         problem.description = description
         problem.hint = hint
         problem.flag = flag
