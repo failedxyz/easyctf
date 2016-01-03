@@ -16,11 +16,13 @@ apt-get -y install python-pip
 apt-get -y install python-dev libmysqlclient-dev
 apt-get -y install nginx
 apt-get -y install mysql-server
+apt-get -y install tmux
 
 echo "Installing pip dependencies..."
 pip install -r /vagrant/scripts/requirements.txt
 
 echo "PATH=$PATH:/vagrant" >> /etc/profile
+source /etc/profile
 cp /vagrant/ctf.nginx /etc/nginx/sites-enabled/ctf
 rm /etc/nginx/sites-*/default
 
