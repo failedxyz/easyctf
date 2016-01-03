@@ -3,9 +3,9 @@
 echo "Stopping the server..."
 pkill gunicorn
 sudo service nginx stop
-tmux kill-session -t ctf
+tmux kill-session -t ctf 2> /dev/null
 
 echo "Starting the server..."
-cd /home/vagrant/server
+cd /home/pi/easyctf/server
 sudo service nginx start
-tmux new-session -s ctf -d 'gunicorn "app:app" -c /home/vagrant/scripts/gunicorn.py.ini'
+tmux new-session -s ctf -d 'gunicorn "app:app" -c /home/pi/easyctf/gunicorn.py.ini'
