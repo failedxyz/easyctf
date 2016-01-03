@@ -13,8 +13,8 @@ blueprint = Blueprint("user", __name__)
 @blueprint.route("/register", methods=["POST"])
 @api_wrapper
 def user_register():
-    if not validate_captcha(request.form):
-        return { "success": 0, "message": "Please do the captcha." }
+    # if not validate_captcha(request.form):
+    #     return { "success": 0, "message": "Please do the captcha." }
 
     name = request.form["name"]
     username = request.form["username"]
