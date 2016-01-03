@@ -70,10 +70,11 @@ def problem_delete():
 def problem_update():
     pid = request.form["pid"]
     name = request.form["name"]
+    category = request.form["category"]
     description = request.form["description"]
     hint = request.form["hint"]
     flag = request.form["flag"]
-    disabled = request.form["disabled"]
+    disabled = request.form.get("disabled", 0)
     value = request.form["value"]
 
     problem = Problems.query.filter_by(pid=pid).first()
