@@ -1,0 +1,44 @@
+<center class="fade_in ng-scope">
+    <h1>Problems</h1>
+    <div class="status"></div>
+    <div class="panel panel-info">
+        <form id="add-form" method="POST" action="/api/problem/add" enctype="multipart/form-data">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="text" name="name" id="name" autocomplete="on" placeholder="Name" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" name="category" id="category" autocomplete="on" placeholder="Category" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <textarea type="text" name="description" id="description" autocomplete="on" placeholder="Description" class="form-control"></textarea>
+                <br><br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="text" name="flag" id="flag" autocomplete="off" placeholder="EasyCTF{insert_correct_flag_here}" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" name="hint" id="hint" autocomplete="off" placeholder="Hint" class="form-control">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <input type="number" name="value" id="value" autocomplete="off" placeholder="Value" class="form-control-number">
+                </div>
+            </div>
+            <div class="panel-footer">
+                <h4>These are important files!</h4>
+                <hr>
+                <div class="row">
+                    <input type="file" name="files[]" id="files" multiple="true">
+                </div>
+            </div>
+            <input type="submit" class="btn btn-success" id="add-problem" value="Add Problem">
+        </form>
+    </div>
+    <div id="problems"></div>
+    <script src="js/admin/problems.js"></script>
+</center>
