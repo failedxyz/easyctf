@@ -18,10 +18,12 @@ apt-get -y install nginx
 apt-get -y install mysql-server
 
 echo "Installing pip dependencies..."
-pip install -r scripts/requirements.txt
+pip install -r /vagrant/scripts/requirements.txt
 
 echo "PATH=$PATH:/vagrant" >> /etc/profile
 cp /vagrant/ctf.nginx /etc/nginx/sites-enabled/ctf
 rm /etc/nginx/sites-*/default
 
-echo "$MYSQL_ROOT_PASSWORD" | mysql -u root -p -e "CREATE DATABASE easyctf;"
+sudo service nginx restart
+
+mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE easyctf;"
