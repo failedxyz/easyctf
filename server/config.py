@@ -12,7 +12,7 @@ secret.close()
 
 SECRET_KEY = key
 
-SQLALCHEMY_DATABASE_URI = "mysql://root:@localhost/easyctf"
+SQLALCHEMY_DATABASE_URI = "mysql://root:i_hate_passwords@localhost/easyctf"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 UPLOAD_FOLDER = os.path.normpath("files")
