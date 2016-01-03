@@ -43,6 +43,10 @@ app.config(function($routeProvider, $locationProvider) {
     .when("/scoreboard", {
         templateUrl: "pages/scoreboard.html",
         controller: "mainController"
+    })
+    .when("/admin/problems", {
+        templateUrl: "pages/admin/problems.html",
+        controller: "mainController"
     });
     $locationProvider.html5Mode(true);
 });
@@ -69,6 +73,9 @@ function load_navbar() {
         } else {
             $("#login_link").show();
             $("#register_link").show();
+        }
+        if (data.admin) {
+            $("#admin_dropdown").show();
         }
     });
 }

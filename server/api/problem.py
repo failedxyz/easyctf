@@ -2,7 +2,7 @@ import hashlib
 import logger
 import os
 
-from flask import Blueprint, session, request
+from flask import Blueprint, jsonify, session, request
 from flask import current_app as app
 from werkzeug import secure_filename
 
@@ -120,3 +120,16 @@ def problem_submit():
 
     else:
         return { "success": 0, "message": "Problem does not exist!" }
+
+@blueprint.route("/data", methods=["POST"])
+#@api_wrapper # Disable atm due to json serialization issues: will fix
+@login_required
+def problem_data():
+    problems = Problems.query.add_columns("pid", "name", "category", "description", "hint", "value", "solves").order_by(Problems.value).filter_by(disabled=False).all()
+    jason = []
+
+    for problem in problems:
+        problem_files = [ str(_file.location) for _file in Files.query.filter_by(pid=int(problem.pid)).all() ]
+        jason.append({"pid": problem[1], "name": problem[2] ,"category": problem[3], "description": problem[4], "hint": problem[5], "value": problem[6], "solves": problem[7], "files": problem_files})
+
+    return jsonify(data=jason)
