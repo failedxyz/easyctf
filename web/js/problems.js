@@ -4,11 +4,11 @@ function render_problems() {
         data = data["data"];
         for (var i = 0; i < data.length; i++) {
             files = data[i]["files"];
-            problem = 
+            problem =
 `<div class=\"panel panel-info\">
     <div class=\"panel-heading\">
-        <h3 class=\"panel-title\">` + data[i]["name"] + ` | ` + data[i]["category"] + `</h3>
-    </div> 
+        <h3 class=\"panel-title\">` + data[i]["name"] + ` | ` + data[i]["category"] + `<span style=\"float: right\">` + data[i]["value"] + ` points</span></h3>
+    </div>
     <div class=\"panel-body\">
        <p>` + data[i]["description"]  + `</p>
         <div class=\"input-group\">
@@ -23,12 +23,12 @@ function render_problems() {
 
             for (var j = 0; j < files.length; j++) {
                 file_name = files[j].split("/").pop();
-                problem += 
+                problem +=
 `<a href=\"` + files[j] + `\" class=\"filelink\" target=\"_blank\">
     <h4 class=\"probfile\">` + file_name + `</h4>
 </a>`
             }
-       
+
             problem += `<br>
         <div id=\"hint_` + data[i]["pid"] + `\" style=\"display:none\">` + data[i]["hint"] + `</div>
 </div></div>`
