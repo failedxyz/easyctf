@@ -37,14 +37,9 @@ def problem_add():
         if len(filename) == 0:
             continue
 
-        folder = problem.name.replace(" ", "-")
-        folder_path = os.path.join(os.path.normpath(app.config["UPLOAD_FOLDER"]), folder)
-        if not os.path.exists(folder_path):
-            os.makedirs(folder_path)
-
-        file_path = os.path.join(folder_path, filename)
+        file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
         _file.save(file_path)
-        db_file = Files(problem.pid, file_path)
+        db_file = Files(problem.pid, "/".join(file_path.split("/")[2:]))
         db.session.add(db_file)
 
     db.session.commit()

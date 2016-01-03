@@ -2,7 +2,7 @@
 .secret_key
 .bundle/config
 logs/
-uploads/
+files/
 
 # Object files
 *.o
