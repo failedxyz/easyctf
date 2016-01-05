@@ -52,7 +52,8 @@ function render_problems() {
             problem += `<br>
         <div id="hint_` + data[i]["pid"] + `" style="display:none">` + data[i]["hint"] + `</div>
 <div class="row" id="status_` + data[i]["pid"] + `"></div><br>
-<input class="btn btn-success" type="submit" name="update" value="Update!">
+<input class="btn btn-success" type="submit" name="update" value="Update">
+<input class="btn btn-danger" name="delete-modal" type="button" data-toggle="modal" data-target="#delete-modal" value="Delete">
 </div></form></div>`
             $("#problems").append(problem);
         }
@@ -68,10 +69,18 @@ function render_problems() {
             var disabled = $("input[name=disabled]", problem).prop("checked") ? 1 : 0;
             update_problem(pid, name, category, description, hint, flag, disabled, value);
         });
+        $("[name=delete-modal]").click(function(e) {
+            var problem = $(this).parents("form:first");
+            var pid = $("input[name=pid]", problem).val();
+            var div = $(this).closest("div.panel");
+            $("#delete").off().click(function(e) {
+                delete_problem(pid, div);
+            });
+        });
     });
 }
 
-function update_problem (pid, name, category, description, hint, flag, disabled, value) {
+function update_problem(pid, name, category, description, hint, flag, disabled, value) {
     $.post("/api/problem/update", {
         pid: pid,
         name: name,
@@ -87,7 +96,24 @@ function update_problem (pid, name, category, description, hint, flag, disabled,
         } else {
             display_message("status_" + pid, "danger", data.message, function() {});
         }
-    })
+    });
+}
+
+function delete_problem(pid, div) {
+    $.post("/api/problem/delete", {
+        pid: pid
+    }, function(data) {
+        if (data.success == 1) {
+            display_message("delete_status", "success", data.message, function() {
+                div.slideUp("normal", function() {
+                    $(this).remove();
+                    $("#delete-modal").modal("hide");
+                } );
+            });
+        } else {
+            display_message("delete_status", "warning", data.message, function() {});
+        }
+    });
 }
 
 $(function() {

@@ -18,7 +18,7 @@ def problem_add():
     name = request.form["name"]
     category = request.form["category"]
     description = request.form["description"]
-    hint = request.form["hint"]
+    hint = request.form["problem-hint"]
     flag = request.form["flag"]
     value = request.form["value"]
 
@@ -54,7 +54,7 @@ def problem_delete():
     problem = Problems.query.filter_by(pid=pid).first()
     if problem:
         Solves.query.filter_by(pid=pid).delete()
-        Challenges.query.filter_by(pid=pid).delete()
+        Problems.query.filter_by(pid=pid).delete()
         db.session.commit()
         return { "success": 1, "message": "Success!" }
     return { "success": 0, "message": "Problem does not exist!" }
