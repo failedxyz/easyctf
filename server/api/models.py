@@ -12,6 +12,7 @@ class Users(db.Model):
 	username_lower = db.Column(db.String(64), unique=True)
 	email = db.Column(db.String(64), unique=True)
 	password = db.Column(db.String(128))
+	admin = db.Column(db.Boolean)
 	utype = db.Column(db.Integer)
 
 	def __init__(self, name, username, email, password, utype=1):
@@ -21,6 +22,7 @@ class Users(db.Model):
 		self.email = email.lower()
 		self.password = utils.hash_password(password)
 		self.utype = utype
+		self.admin = False
 
 class Teams(db.Model):
 	tid = db.Column(db.Integer, primary_key=True)

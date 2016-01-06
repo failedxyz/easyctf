@@ -38,17 +38,20 @@ def user_register():
 		db.session.add(user)
 		db.session.commit()
 
-		logger.log("registrations", logger.INFO, "%s registered with %s" % (name.encode("utf-8"), email.encode("utf-8")))
-		login_user(username, password)
+	logger.log("registrations", logger.INFO, "%s registered with %s" % (name.encode("utf-8"), email.encode("utf-8")))
+	login_user(username, password)
 
-		return { "success": 1, "message": "Success!" }
+	return { "success": 1, "message": "Success!" }
 
 @blueprint.route("/logout", methods=["GET", "POST"])
 @api_wrapper
 def user_logout():
 	sid = session["sid"]
 	username = session["username"]
-	LoginTokens.query.filter_by(sid=sid, username=username).delete()
+	with app.app_context():
+		expired = LoginTokens.query.filter_by(username=username).all()
+		for expired_token in expired: db.session.delete(expired_token)
+		db.session.commit()
 	session.clear()
 
 @blueprint.route("/login", methods=["POST"])
@@ -111,18 +114,18 @@ UserSchema = Schema({
 }, extra=True)
 
 def get_user(username=None, username_lower=None, email=None, uid=None):
+	match = {}
+	if username != None:
+		match.update({ "username": username })
+	elif username_lower != None:
+		match.update({ "username_lower": username_lower })
+	elif uid != None:
+		match.update({ "uid": uid })
+	elif email != None:
+		match.update({ "email": email })
+	# elif api.auth.is_logged_in():
+	# 	match.update({ "uid": api.auth.get_uid() })
 	with app.app_context():
-		match = {}
-		if username != None:
-			match.update({ "username": username })
-		elif username_lower != None:
-			match.update({ "username_lower": username_lower })
-		elif uid != None:
-			match.update({ "uid": uid })
-		elif email != None:
-			match.update({ "email": email })
-		# elif api.auth.is_logged_in():
-		# 	match.update({ "uid": api.auth.get_uid() })
 		result = Users.query.filter_by(**match)
 		return result
 
@@ -134,16 +137,20 @@ def login_user(username, password):
 
 	useragent = request.headers.get("User-Agent")
 	ip = request.remote_addr
-	token = LoginTokens(user.uid, user.username, ua=useragent, ip=ip)
+
 	with app.app_context():
+		expired = LoginTokens.query.filter_by(username=username).all()
+		for expired_token in expired: db.session.delete(expired_token)
+
+		token = LoginTokens(user.uid, user.username, ua=useragent, ip=ip)
 		db.session.add(token)
 		db.session.commit()
-		
+			
 		session["sid"] = token.sid
 		session["username"] = token.username
 		session["admin"] = user.utype == 0
 
-		return True
+	return True
 
 def is_logged_in():
 	sid = session["sid"]
