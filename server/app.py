@@ -4,12 +4,16 @@ from flask import Flask
 import api
 import config
 import json
+import os
 
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = config.SQLALCHEMY_DATABASE_URI
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = config.SQLALCHEMY_TRACK_MODIFICATIONS
 app.config["UPLOAD_FOLDER"] = config.UPLOAD_FOLDER
+
+if not os.path.exists(app.config["UPLOAD_FOLDER"]):
+    os.makedirs(app.config["UPLOAD_FOLDER"])
 
 with app.app_context():
 	from api.models import db, Files, Teams, Problems, Solves, Users

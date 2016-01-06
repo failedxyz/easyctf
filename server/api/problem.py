@@ -24,8 +24,7 @@ def problem_add():
 
     name_exists = Problems.query.filter_by(name=name).first()
     if name_exists:
-        return { "success":0, "message": "Problem name already taken." }
-
+        return { "success": 0, "message": "Problem name already taken." }
     problem = Problems(name, category, description, hint, flag, value)
     db.session.add(problem)
     db.session.commit()
@@ -38,6 +37,7 @@ def problem_add():
             continue
 
         file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+
         _file.save(file_path)
         db_file = Files(problem.pid, "/".join(file_path.split("/")[2:]))
         db.session.add(db_file)
