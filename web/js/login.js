@@ -1,9 +1,4 @@
-$("#login-form").on("submit", function(e) {
-    e.preventDefault();
-    login($("#email").val(), $("#password").val());
-});
-
-function login(email, password) {
+function login_form(email, password) {
     $("#login").attr("disabled", "disabled");
     $.post("/api/user/login", {
         email: email,

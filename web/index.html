@@ -8,15 +8,16 @@
 	<script src="js/d3.v3.min.js" charset="utf-8"></script>
 	<script src="js/c3.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-	<link type="text/css" rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" integrity="sha384-yNuQMX46Gcak2eQsUzmBYgJ3eBeWYNKhnjyiBqLd1vvtE9kuMtgw6bjwN8J0JauQ" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/css/bootstrap-select.css" integrity="sha384-X6BCz/5YN8CudtAN21w+htVJP5lJNqXP0VBfbGzrX7A/FhjpPIoMtiRRHxRYiKU6" crossorigin="anonymous">
+	<link rel="stylesheet" href="/css/easyctf.css" />
 </head>
 
-<body ng-controller="mainController" class="mainbody">
-	<nav class="navbar navbar-default navbar-fixed-top">
-		<div id="style1" class="container-fluid">
+<body ng-controller="mainController">
+	<nav class="navbar navbar-default">
+		<div class="container">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="main-navbar" aria-expanded="false">
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
@@ -24,90 +25,45 @@
 				</button>
 				<a class="navbar-brand" href="/">EasyCTF</a>
 			</div>
-
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav navbar-fixed">
-					<li>
-						<a href="/about">
-							<span class="fa fa-info-circle"></span>&nbsp;&nbsp;About</a>
-					</li>
-					<li>
-						<a href="/rules">
-							<span class="fa fa-book"></span>&nbsp;&nbsp;Rules</a>
-					</li>
-					<li>
-						<a href="/updates">
-							<span class="fa fa-bullhorn"></span>&nbsp;&nbsp;Updates</a>
-					</li>
-					<li>
-						<a href="/chat">
-							<span class="fa fa-comments"></span>&nbsp;&nbsp;Chat</a>
-					</li>
-					<li>
-						<a href="/scoreboard">
-							<span class="fa fa-trophy"></span>&nbsp;&nbsp;Scoreboard</a>
-					</li>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="/about">About</a></li>
+					<li><a href="/scoreboard">Scoreboard</a></li>
+					<li><a href="/learn">Learn</a></li>
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Problems <span class="caret"></span></a>
-						<ul class="dropdown-menu" id="menubox">
-							<li>
-								<a href="/problems">
-									<span class="fa fa-pencil"></span>&nbsp;&nbsp;Problems</a>
-							</li>
-							<li>
-								<a href="/programming">
-									<span class="fa fa-code"></span>&nbsp;&nbsp;Programming</a>
-							</li>
-							<li>
-								<a href="/shell">
-									<span class="fa fa-terminal"></span>&nbsp;&nbsp;Shell</a>
-							</li>
-						</ul>
-					</li>
-					<li id="login_link" style="display:none">
-						<a href="/login">
-							<span class="fa fa-sign-in"></span>&nbsp;&nbsp;Login</a>
-					</li>
-					<li id="register_link" style="display:none">
-						<a href="/register">
-							<span class="fa fa-pencil"></span>&nbsp;&nbsp;Register</a>
-					</li>
-					<li id="account_link" style="display:none">
-						<a href="/account">
-							<span class="fa fa-pencil"></span>&nbsp;&nbsp;Account</a>
-					</li>
-					<li id="logout" style="display:none">
-						<a href="/api/user/logout">
-							<span class="fa fa-pencil"></span>&nbsp;&nbsp;Logout</a>
-					</li>
-					<li id="admin_dropdown" style="display:none">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Admin<span class="caret"></span></a>
-						<ul class="dropdown-menu" id="menubox">
-							<li>
-								<a href="/admin/problems">
-									<span class="fa fa-pencil"></span>&nbsp;&nbsp;Problems</a>
-							</li>
-							<li>
-								<a href="/admin/teams">
-									<span class="fa fa-code"></span>&nbsp;&nbsp;Teams</a>
-							</li>
+				<ul class="nav navbar-nav navbar-right" ng-show="config.navbar['logged_in']==false">
+					<li><a href="/register">Register</a></li>
+					<li><a href="/login">Login</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right" ng-show="config.navbar['logged_in']==true">
+					<div ng-show="config.navbar['competition_started']==true">
+					</div>
+					<li><a href="/chat">Chat</a></li>
+					<li class="dropdown">
+						<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ config.navbar["username"] }} <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="/profile">Profile</a></li>
+							<li><a href="/team">Team</a></li>
+							<li><a href="/help">Help</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="/settings">Settings</a></li>
+							<li><a href="/logout">Logout</a></li>
 						</ul>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	<br>
-	<br>
+
 	<div id="mainContent" class="ui container">
 		<div ng-view></div>
 	</div>
+
 	<script src="https://code.jquery.com/jquery-2.1.4.min.js" integrity="sha384-R4/ztc4ZlRqWjqIuvf6RX5yb/v90qNGx6fS48N0tRxiGkqveZETq72KgDVJCp2TC" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js" integrity="sha384-r1y8TJcloKTvouxnYsi4PJAx+nHNr90ibsEn3zznzDzWBN9X3o3kbHLSgcIPtzAp" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-route.min.js" integrity="sha384-9MZDoFf10trgrfsQOs9GJhf/mP/sh5weVp3FDSi8h/4TEaV6dloEDkpxGTaOmAs6" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/js/bootstrap-select.min.js" integrity="sha384-1qZEXZBmj54fSiiWT8bZQGEpCumJWDrAoEqMdg6N5bTTLCkU5RXoNeUsKWekRYob" crossorigin="anonymous"></script>
 	<script src="js/easyctf.js"></script>
 </body>
 
