@@ -5,6 +5,8 @@ pkill gunicorn
 sudo service nginx stop
 tmux kill-session -t ctf 2> /dev/null
 
+sudo cp /vagrant/ctf.nginx /etc/nginx/sites-enabled/ctf
+
 echo "Starting the server..."
 cd /home/vagrant/server
 sudo service nginx start

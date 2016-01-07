@@ -6,6 +6,8 @@ import config
 import json
 import os
 
+from api.decorators import api_wrapper
+
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = config.SQLALCHEMY_DATABASE_URI
@@ -28,8 +30,9 @@ app.register_blueprint(api.problem.blueprint, url_prefix="/api/problem")
 api.logger.initialize_logs()
 
 @app.route("/api")
+@api_wrapper
 def api_main():
-	return json.dumps({ "success": 1, "message": "The API is online." })
+	return { "success": 1, "message": "The API is online." }
 
 if __name__ == "__main__":
 	with app.app_context():

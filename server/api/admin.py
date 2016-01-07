@@ -1,19 +1,26 @@
 from flask import Blueprint, jsonify
-from decorators import admins_only, api_wrapper, login_required
+from decorators import admins_only, api_wrapper
 from models import db, Problems, Files
+
+import json
 
 blueprint = Blueprint("admin", __name__)
 
-@blueprint.route("/problem/data", methods=["POST"])
-#@api_wrapper # Disable atm due to json serialization issues: will fix
+@blueprint.route("/problems/list", methods=["POST"])
+@api_wrapper
 @admins_only
-@login_required
 def problem_data():
-    problems = Problems.query.add_columns("pid", "name", "category", "description", "hint", "value", "solves", "disabled", "flag").order_by(Problems.value).all()
-    jason = []
-
-    for problem in problems:
-        problem_files = [ str(_file.location) for _file in Files.query.filter_by(pid=int(problem.pid)).all() ]
-        jason.append({"pid": problem[1], "name": problem[2] ,"category": problem[3], "description": problem[4], "hint": problem[5], "value": problem[6], "solves": problem[7], "disabled": problem[8], "flag": problem[9], "files": problem_files})
-
-    return jsonify(data=jason)
+	problems = Problems.query.order_by(Problems.value).all()
+	problems_return = [ ]
+	for problem in problems:
+		problems_return.append({
+			"pid": problem.pid,
+			"name": problem.name,
+			"category": problem.category,
+			"description": problem.description,
+			"hint": problem.hint,
+			"value": problem.value,
+			"threshold": problem.threshold,
+			"weightmap": json.loads(problem.weightmap)
+		})
+	return { "success": 1, "problems": problems_return }

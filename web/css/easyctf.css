@@ -1,0 +1,23 @@
+@font-face {
+	font-family: "Proxima Nova";
+	src: url("/fonts/ProximaNova.woff2");
+}
+@font-face {
+	font-family: "Proxima Nova";
+	src: url("/fonts/ProximaNovaBold.woff2");
+	font-weight: bold;
+}
+
+* {
+	font-family: "Proxima Nova";
+}
+
+.tab-content {
+	padding: 10px;
+	> .tab-pane {
+		display: none;
+	}
+	> .active {
+		display: block;
+	}
+}
