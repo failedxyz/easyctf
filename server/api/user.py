@@ -6,6 +6,7 @@ from models import db, LoginTokens, Users
 from decorators import api_wrapper, WebException
 from schemas import verify_to_schema, check
 
+import datetime
 import logger
 import re
 import requests
@@ -43,7 +44,7 @@ def user_register():
 
 	return { "success": 1, "message": "Success!" }
 
-@blueprint.route("/logout", methods=["GET", "POST"])
+@blueprint.route("/logout", methods=["POST"])
 @api_wrapper
 def user_logout():
 	sid = session["sid"]
@@ -79,6 +80,36 @@ def user_status():
 		"username": session["username"] if logged_in else "",
 	}
 	return result
+
+@blueprint.route("/info", methods=["POST"])
+@api_wrapper
+def user_info():
+	logged_in = is_logged_in()
+	username = utils.flat_multi(request.form).get("username")
+	if username is None:
+		if logged_in:
+			username = session["username"]
+	if username is None:
+		raise WebException("No user specified.")
+	me = username.lower() == session["username"].lower()
+	user = get_user(username_lower=username.lower()).first()
+	if user is None:
+		raise WebException("User not found.")
+
+	show_email = me if logged_in else False
+	userdata = {
+		"user_found": True,
+		"name": user.name,
+		"username": user.username,
+		"type": ["Student", "Instructor", "Observer"][user.utype - 1],
+		"admin": user.admin,
+		"registertime": datetime.datetime.fromtimestamp(user.registertime).isoformat() + "Z",
+		"me": me,
+		"show_email": show_email
+	}
+	if show_email:
+		userdata["email"] = user.email
+	return { "success": 1, "user": userdata }
 
 ##################
 # USER FUNCTIONS #
@@ -148,7 +179,7 @@ def login_user(username, password):
 			
 		session["sid"] = token.sid
 		session["username"] = token.username
-		session["admin"] = user.utype == 0
+		session["admin"] = user.admin == True
 
 	return True
 

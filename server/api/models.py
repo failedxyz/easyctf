@@ -1,5 +1,5 @@
 from flask.ext.sqlalchemy import SQLAlchemy
-import datetime
+import time
 import utils
 
 db = SQLAlchemy()
@@ -14,6 +14,8 @@ class Users(db.Model):
 	password = db.Column(db.String(128))
 	admin = db.Column(db.Boolean)
 	utype = db.Column(db.Integer)
+	tid = db.Column(db.Integer)
+	registertime = db.Column(db.Integer)
 
 	def __init__(self, name, username, email, password, utype=1):
 		self.name = name
@@ -23,6 +25,7 @@ class Users(db.Model):
 		self.password = utils.hash_password(password)
 		self.utype = utype
 		self.admin = False
+		self.registertime = int(time.time())
 
 class Teams(db.Model):
 	tid = db.Column(db.Integer, primary_key=True)
@@ -90,11 +93,11 @@ class LoginTokens(db.Model):
 	ua = db.Column(db.String(128))
 	ip = db.Column(db.String(16))
 
-	def __init__(self, uid, username, expiry=datetime.datetime.utcnow(), active=True, ua=None, ip=None):
+	def __init__(self, uid, username, expiry=int(time.time()), active=True, ua=None, ip=None):
 		self.sid = utils.generate_string()
 		self.uid = uid
 		self.username = username
-		self.issued = datetime.datetime.utcnow()
+		self.issued = int(time.time())
 		self.expiry = expiry
 		self.active = active
 		self.ua = ua

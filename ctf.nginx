@@ -17,6 +17,10 @@ server {
 		default_type text/html;
 		try_files /index.html /index.html;
 	}
+	location ~^/admin/(problems)$ {
+		default_type text/html;
+		try_files /index.html /index.html;
+	}
 
 	location ~ /api {
 		proxy_set_header Host $host;
