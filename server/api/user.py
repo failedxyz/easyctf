@@ -91,7 +91,7 @@ def user_info():
 			username = session["username"]
 	if username is None:
 		raise WebException("No user specified.")
-	me = username.lower() == session["username"].lower()
+	me = False if not("username" in session) else username.lower() == session["username"].lower()
 	user = get_user(username_lower=username.lower()).first()
 	if user is None:
 		raise WebException("User not found.")
@@ -184,6 +184,7 @@ def login_user(username, password):
 	return True
 
 def is_logged_in():
+	if not("sid" in session and "username" in session): return False
 	sid = session["sid"]
 	username = session["username"]
 	token = LoginTokens.query.filter_by(sid=sid).first()

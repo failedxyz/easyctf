@@ -8,33 +8,41 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: "pages/about.html",
 		controller: "mainController"
 	})
-	.when("/scoreboard", {
-		templateUrl: "pages/scoreboard.html",
+	.when("/chat", {
+		templateUrl: "pages/chat.html",
 		controller: "mainController"
 	})
 	.when("/learn", {
 		templateUrl: "pages/learn.html",
 		controller: "mainController"
 	})
-	.when("/chat", {
-		templateUrl: "pages/chat.html",
-		controller: "mainController"
-	})
-	.when("/register", {
-		templateUrl: "pages/register.html",
-		controller: "mainController"
-	})
 	.when("/login", {
 		templateUrl: "pages/login.html",
 		controller: "mainController"
+	})
+	.when("/logout", {
+		templateUrl: "pages/blank.html",
+		controller: "logoutController"
 	})
 	.when("/profile", {
 		templateUrl: "pages/profile.html",
 		controller: "profileController"
 	})
-	.when("/logout", {
-		templateUrl: "pages/blank.html",
-		controller: "logoutController"
+	.when("/profile/:username", {
+		templateUrl: "pages/profile.html",
+		controller: "profileController"
+	})
+	.when("/register", {
+		templateUrl: "pages/register.html",
+		controller: "mainController"
+	})
+	.when("/scoreboard", {
+		templateUrl: "pages/scoreboard.html",
+		controller: "mainController"
+	})
+	.when("/settings", {
+		templateUrl: "pages/settings.html",
+		controller: "mainController"
 	})
 	.when("/admin/problems", {
 		templateUrl: "pages/admin/problems.html",
@@ -70,9 +78,11 @@ app.controller("logoutController", function() {
 	});
 });
 
-app.controller("profileController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
+app.controller("profileController", ["$controller", "$scope", "$http", "$routeParams", function($controller, $scope, $http, $routeParams) {
+	var data = { };
+	if ("username" in $routeParams) data["username"] = $routeParams["username"];
 	$controller("mainController", { $scope: $scope });
-	$.post("/api/user/info", function(result) {
+	$.post("/api/user/info", data, function(result) {
 		if (result["success"] == 1) {
 			$scope.user = result["user"];
 		}
