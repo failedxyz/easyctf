@@ -62,6 +62,7 @@ app.controller("mainController", ["$scope", "$http", function($scope, $http) {
 			$scope.config.navbar.logged_in = result["logged_in"];
 			$scope.config.navbar.username = result["username"];
 			$scope.config.navbar.admin = result["admin"];
+			$scope.$emit("adminStatus");
 		} else {
 			$scope.config.navbar.logged_in = false;
 		}
@@ -91,8 +92,22 @@ app.controller("profileController", ["$controller", "$scope", "$http", "$routePa
 	});
 }]);
 
-app.controller("adminProblemsController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
+app.controller("adminController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
 	$controller("mainController", { $scope: $scope });
+	$scope.$on("adminStatus", function() {
+		if ($scope.config["navbar"].logged_in != true) {
+			location.href = "/login";
+			return;
+		}
+		if ($scope.config["navbar"].admin != true) {
+			location.href = "/profile";
+			return;
+		}
+	});
+}]);
+
+app.controller("adminProblemsController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
+	$controller("adminController", { $scope: $scope });
 	$.post("/api/admin/problems/list", function(result) {
 		if (result["success"] == 1) {
 			$scope.problems = result["problems"];

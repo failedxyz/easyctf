@@ -2,6 +2,13 @@
 	<h1>Problem Editor</h1>
 </div>
 
+<style>
+.ace_editor {
+	width: 100%;
+	height: 200px;
+}
+</style>
+
 <ul class="nav nav-tabs" role="tablist">
 	<li role="presentation" class="active"><a href="#problems" aria-controls="problems" role="tab" data-toggle="tab">Problems</a></li>
 	<li role="presentation"><a href="#filesystem" aria-controls="filesystem" role="tab" data-toggle="tab">Filesystem</a></li>
@@ -42,12 +49,12 @@
 									<div id="register_msg"></div>
 								</fieldset>
 								<fieldset class="container-fluid">
-									<p>Be sure you are familiar with guidelines to writing problems before you submit!</p>
+									<p>Be sure you are familiar with guidelines to writing problems before you submit! Problem unlocking and other options will be available after you submit your problem.</p>
 									<div class="row">
 										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="name"><small>Problem Title</small></label>
+											<label class="col-sm-12" for="name"><small>Title</small></label>
 											<div class="col-sm-12">
-												<input class="form-control" type="text" required name="name" placeholder="Problem Title" autocomplete="off" />
+												<input class="form-control" type="text" required name="name" placeholder="Title" autocomplete="off" />
 											</div>
 										</div>
 									</div>
@@ -72,26 +79,48 @@
 									</div>
 									<div class="row">
 										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="value"><small>Problem Value</small></label>
+											<label class="col-sm-12" for="value"><small>Value</small></label>
 											<div class="col-sm-12">
-												<input class="form-control" type="number" required name="value" placeholder="Problem Value" autocomplete="off" value="10" />
+												<input class="form-control" type="number" required name="value" placeholder="Value" autocomplete="off" value="10" />
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="description"><small>Problem Description</small></label>
+											<label class="col-sm-12" for="description"><small>Description</small></label>
 											<div class="col-sm-12">
-												<textarea id="new-description" name="description"></textarea>
+												<textarea id="new_description" name="description"></textarea>
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="hint"><small>Problem Hint</small></label>
+											<label class="col-sm-12" for="hint"><small>Hint</small></label>
 											<div class="col-sm-12">
-												<input class="form-control" type="text" required name="hint" placeholder="Problem Hint" autocomplete="off" />
+												<input class="form-control" type="text" required name="hint" placeholder="Hint" autocomplete="off" />
 											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 form-group">
+											<label class="col-sm-12" for="grader"><small>Grader</small></label>
+											<div class="col-sm-12">
+												<div id="new_grader" class="ace_editor">def grade(key, tid):
+	""" Grade this problem. """
+	flag = "easyctf{a_flag}"
+	case_sensitive = True
+	if (key.find(flag) >= 0) if case_sensitive \
+	  else (key.lower().find(flag.lower()) >= 0):
+		return { "success": 1, "message": "Correct!" }
+	return { "success": 0, "message": "Sorry, try again." }</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 form-group">
+											<center>
+												<input type="submit" class="btn btn-primary btn-lg" value="Create" />
+											</center>
 										</div>
 									</div>
 								</fieldset>
@@ -115,12 +144,15 @@
 	$(".selectpicker").selectpicker();
 	var config = {
 		toolbar: [
-			{ name: "basicstyles", items: [ "Bold", "Italic", "Underline", "-", "RemoveFormat" ] },
+			{ name: "basicstyles", items: [ "Bold", "Italic", "Underline" ] },
 			{ name: "links", items: [ "Link" ] },
 			{ name: "paragraph", items: [ "NumberedList", "BulletedList", "-", "Outdent", "Indent", "-", "Blockquote" ] },
 			{ name: "tools", items: [ "Maximize" ] },
 			{ name: "document", items: [ "Source" ] },
 		]
 	};
-	CKEDITOR.replace("new-description", config);
+	CKEDITOR.replace("new_description", config);
+	var new_grader = ace.edit("new_grader");
+	new_grader.setTheme("ace/theme/tomorrow");
+	new_grader.getSession().setMode("ace/mode/python");
 </script>
