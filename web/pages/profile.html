@@ -52,5 +52,8 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("ul[role=tablist]").tab();
+		$("a[role=tab]").click(function(e) {
+			e.preventDefault();
+		});
 	});
 </script>

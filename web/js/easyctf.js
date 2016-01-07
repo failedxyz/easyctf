@@ -93,6 +93,12 @@ app.controller("profileController", ["$controller", "$scope", "$http", "$routePa
 
 app.controller("adminProblemsController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
 	$controller("mainController", { $scope: $scope });
+	$.post("/api/admin/problems/list", function(result) {
+		if (result["success"] == 1) {
+			$scope.problems = result["problems"];
+		}
+		$scope.$apply();
+	});
 }]);
 
 function display_message(containerId, alertType, message, callback) {

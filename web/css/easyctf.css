@@ -9,7 +9,7 @@
 }
 
 * {
-	font-family: "Proxima Nova";
+	font-family: "Proxima Nova", Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
 .tab-content {
@@ -20,4 +20,8 @@
 	> .active {
 		display: block;
 	}
+}
+
+.NO_HOVER_UNDERLINE_DAMMIT:hover, .NO_HOVER_UNDERLINE_DAMMIT:focus, .NO_HOVER_UNDERLINE_DAMMIT:active {
+	text-decoration:none;
 }
