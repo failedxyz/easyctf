@@ -57,7 +57,7 @@ app.config(function($routeProvider, $locationProvider) {
 
 app.controller("mainController", ["$scope", "$http", function($scope, $http) {
 	$scope.config = { navbar: { } };
-	$.post("/api/user/status", function(result) {
+	$.get("/api/user/status", function(result) {
 		if (result["success"] == 1) {
 			$scope.config.navbar.logged_in = result["logged_in"];
 			$scope.config.navbar.username = result["username"];
@@ -74,7 +74,7 @@ app.controller("mainController", ["$scope", "$http", function($scope, $http) {
 }]);
 
 app.controller("logoutController", function() {
-	$.post("/api/user/logout", function(result) {
+	$.get("/api/user/logout", function(result) {
 		location.href = "/";
 	});
 });
@@ -83,7 +83,7 @@ app.controller("profileController", ["$controller", "$scope", "$http", "$routePa
 	var data = { };
 	if ("username" in $routeParams) data["username"] = $routeParams["username"];
 	$controller("mainController", { $scope: $scope });
-	$.post("/api/user/info", data, function(result) {
+	$.get("/api/user/info", data, function(result) {
 		if (result["success"] == 1) {
 			$scope.user = result["user"];
 		}
@@ -108,7 +108,7 @@ app.controller("adminController", ["$controller", "$scope", "$http", function($c
 
 app.controller("adminProblemsController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
 	$controller("adminController", { $scope: $scope });
-	$.post("/api/admin/problems/list", function(result) {
+	$.get("/api/admin/problems/list", function(result) {
 		if (result["success"] == 1) {
 			$scope.problems = result["problems"];
 		}
@@ -147,12 +147,16 @@ $.fn.serializeObject = function() {
 var register_form = function() {
 	var input = "#register_form input";
 	var data = $("#register_form").serializeObject();
+	data["csrf_token"] = $.cookie("csrf_token");
 	$.post("/api/user/register", data, function(result) {
 		if (result["success"] == 1) {
 			location.href = "/profile";
 		} else {
-			display_message("register_msg", "danger", result["message"])
+			display_message("register_msg", "danger", result["message"]);
 		}
+	}).fail(function(jqXHR, status, error) {
+		var result = JSON.parse(jqXHR["responseText"]);
+		display_message("register_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"]);
 	});
 };
 
@@ -161,11 +165,15 @@ var register_form = function() {
 var login_form = function() {
 	var input = "#login_form input";
 	var data = $("#login_form").serializeObject();
+	data["csrf_token"] = $.cookie("csrf_token");
 	$.post("/api/user/login", data, function(result) {
 		if (result["success"] == 1) {
 			location.href = "/profile";
 		} else {
-			display_message("login_msg", "danger", result["message"])
+			display_message("login_msg", "danger", result["message"]);
 		}
+	}).fail(function(jqXHR, status, error) {
+		var result = JSON.parse(jqXHR["responseText"]);
+		display_message("login_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"]);
 	});
 };

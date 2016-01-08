@@ -1,4 +1,4 @@
-from flask import Blueprint, session, request, redirect, url_for
+from flask import Blueprint, make_response, session, request, redirect, url_for
 from flask import current_app as app
 from voluptuous import Schema, Length, Required
 
@@ -44,7 +44,7 @@ def user_register():
 
 	return { "success": 1, "message": "Success!" }
 
-@blueprint.route("/logout", methods=["POST"])
+@blueprint.route("/logout", methods=["GET"])
 @api_wrapper
 def user_logout():
 	sid = session["sid"]
@@ -69,7 +69,7 @@ def user_login():
 
 	return { "success": 1, "message": "Success!" }
 
-@blueprint.route("/status", methods=["POST"])
+@blueprint.route("/status", methods=["GET"])
 @api_wrapper
 def user_status():
 	logged_in = is_logged_in()
@@ -79,9 +79,10 @@ def user_status():
 		"admin": is_admin(),
 		"username": session["username"] if logged_in else "",
 	}
+
 	return result
 
-@blueprint.route("/info", methods=["POST"])
+@blueprint.route("/info", methods=["GET"])
 @api_wrapper
 def user_info():
 	logged_in = is_logged_in()
