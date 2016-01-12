@@ -25,7 +25,9 @@ def initialize_logs():
     if not os.path.exists(log_path):
         os.mkdir(log_path)
 
-    logs = [os.path.join(log_path, "registrations.log"), os.path.join(log_path, "logins.log"), os.path.join(log_path, "submissions.log")]
+    # logs = [os.path.join(log_path, "registrations.log"), os.path.join(log_path, "logins.log"), os.path.join(log_path, "submissions.log")]
+    logs = map(lambda x: os.path.join(log_path, x + ".log"), \
+        [ "registrations", "logins", "submissions", "create_team" ])
 
     registration_log = logging.handlers.RotatingFileHandler(logs[0], maxBytes=10000)
     login_log = logging.handlers.RotatingFileHandler(logs[1], maxBytes=10000)

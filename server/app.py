@@ -25,8 +25,9 @@ with app.app_context():
 app.secret_key = config.SECRET_KEY
 
 app.register_blueprint(api.admin.blueprint, url_prefix="/api/admin")
-app.register_blueprint(api.user.blueprint, url_prefix="/api/user")
 app.register_blueprint(api.problem.blueprint, url_prefix="/api/problem")
+app.register_blueprint(api.team.blueprint, url_prefix="/api/team")
+app.register_blueprint(api.user.blueprint, url_prefix="/api/user")
 api.logger.initialize_logs()
 
 @app.route("/api")

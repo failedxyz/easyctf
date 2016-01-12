@@ -13,9 +13,17 @@ def api_wrapper(f):
 	@wraps(f)
 	def wrapper(*args, **kwds):
 		if request.method == "POST":
-			token = session.pop("csrf_token")
-			if not token or token != request.form.get("csrf_token"):
-				return make_response(json.dumps({ "success": 0, "message": "Token has been tampered with." }), 403, response_header)
+			try:
+				token = str(session.pop("csrf_token"))
+				provided_token = str(request.form.get("csrf_token"))
+				if not token or token != provided_token:
+					raise Exception
+			except Exception, e:
+				response = make_response(json.dumps({ "success": 0, "message": "Token has been tampered with." }), 403, response_header)
+				token = utils.generate_string()
+				response.set_cookie("csrf_token", token)
+				session["csrf_token"] = token
+				return response
 
 		web_result = {}
 		response = 200
@@ -29,11 +37,11 @@ def api_wrapper(f):
 			traceback.print_exc()
 			web_result = { "success": 0, "message": "Something went wrong! Please notify us about this immediately.", "error": [ str(error), traceback.format_exc() ] }
 		result = (json.dumps(web_result), response, response_header)
+		response = make_response(result)
 
 		# Setting CSRF token
 		if "token" not in session:
 			token = utils.generate_string()
-			response = make_response(result)
 			response.set_cookie("csrf_token", token)
 			session["csrf_token"] = token
 		

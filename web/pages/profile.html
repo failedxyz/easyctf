@@ -39,7 +39,12 @@
 							<h4 class="panel-title">Team Information</h4>
 						</div>
 						<div class="panel-body">
-							Hi.
+							<div ng-show="user['in_team']==true">
+							</div>
+							<div ng-show="user['in_team']!=true">
+								<p>{{ user['me']==true ? "You're" : "This user is" }} not a part of a team.</p>
+								<a href="/team" class="btn btn-primary" ng-show="user['me']==true">Join or create one now &raquo;</a>
+							</div>
 						</div>
 					</div>
 					<div class="panel panel-default">
@@ -73,7 +78,7 @@
 		</div>
 	</div>
 </div>
-<div ng-show="user['user_found']==false">
+<div ng-show="user['user_found']!=true">
 	<div class="page-header">
 		<h1>User Not Found</h1>
 	</div>

@@ -1,12 +1,16 @@
 import datetime
 import json
 import random
+import re
 import string
 import traceback
 import unicodedata
 
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
+
+__check_email_format = lambda email: re.match(".+@.+\..{2,}", email) is not None
+__check_ascii = lambda s: all(c in string.printable for c in s)
 
 def hash_password(s):
 	return generate_password_hash(s)
@@ -28,5 +32,5 @@ def flat_multi(multidict):
 	flat = {}
 	for key, values in multidict.items():
 		value = values[0] if type(values) == list and len(values) == 1 else values
-		flat[key] = unicodedata.normalize("NFKD", value).encode("ascii", "ignore")
+		flat[key] = value.encode("utf-8")
 	return flat

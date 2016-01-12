@@ -6,7 +6,7 @@ import json
 
 blueprint = Blueprint("admin", __name__)
 
-@blueprint.route("/problems/list", methods=["POST"])
+@blueprint.route("/problems/list", methods=["GET"])
 @api_wrapper
 @admins_only
 def problem_data():

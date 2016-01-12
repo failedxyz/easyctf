@@ -7,6 +7,7 @@ server {
 	index index.html index.htm;
 
 	server_name localhost;
+	error_page 404 /404;
 
 	# location / {
 	# 	try_files $uri $uri/ =404;
@@ -21,7 +22,7 @@ server {
 		default_type text/html;
 		try_files /index.html /index.html;
 	}
-	location ~^/profile/(.*)$ {
+	location ~^/(profile|team)/(.*)$ {
 		default_type text/html;
 		try_files /index.html /index.html;
 	}

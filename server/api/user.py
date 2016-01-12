@@ -79,6 +79,8 @@ def user_status():
 		"admin": is_admin(),
 		"username": session["username"] if logged_in else "",
 	}
+	if logged_in:
+		result["has_team"] = in_team(get_user().first())
 
 	return result
 
@@ -86,7 +88,7 @@ def user_status():
 @api_wrapper
 def user_info():
 	logged_in = is_logged_in()
-	username = utils.flat_multi(request.form).get("username")
+	username = utils.flat_multi(request.args).get("username")
 	if username is None:
 		if logged_in:
 			username = session["username"]
@@ -116,8 +118,6 @@ def user_info():
 # USER FUNCTIONS #
 ##################
 
-__check_email_format = lambda email: re.match(".+@.+\..{2,}", email) is not None
-__check_ascii = lambda s: all(ord(c) < 128 for c in s)
 __check_username = lambda username: get_user(username_lower=username.lower()).first() is None
 __check_email = lambda email: get_user(email=email.lower()).first() is None
 
@@ -125,19 +125,19 @@ UserSchema = Schema({
 	Required("email"): check(
 		([str, Length(min=4, max=128)], "Your email should be between 4 and 128 characters long."),
 		([__check_email], "Someone already registered this email."),
-		([__check_email_format], "Please enter a legit email.")
+		([utils.__check_email_format], "Please enter a legit email.")
 	),
 	Required("name"): check(
 		([str, Length(min=4, max=128)], "Your name should be between 4 and 128 characters long.")
 	),
 	Required("username"): check(
 		([str, Length(min=4, max=32)], "Your username should be between 4 and 32 characters long."),
-		([__check_ascii], "Please only use ASCII characters in your username."),
+		([utils.__check_ascii], "Please only use ASCII characters in your username."),
 		([__check_username], "This username is taken, did you forget your password?")
 	),
 	Required("password"): check(
 		([str, Length(min=4, max=64)], "Your password should be between 4 and 64 characters long."),
-		([__check_ascii], "Please only use ASCII characters in your password."),
+		([utils.__check_ascii], "Please only use ASCII characters in your password."),
 	),
 	Required("type"): check(
 		([str, lambda x: x.isdigit()], "Please use the online form.")
@@ -155,8 +155,8 @@ def get_user(username=None, username_lower=None, email=None, uid=None):
 		match.update({ "uid": uid })
 	elif email != None:
 		match.update({ "email": email })
-	# elif api.auth.is_logged_in():
-	# 	match.update({ "uid": api.auth.get_uid() })
+	elif is_logged_in():
+		match.update({ "username": session["username"] })
 	with app.app_context():
 		result = Users.query.filter_by(**match)
 		return result
@@ -183,6 +183,9 @@ def login_user(username, password):
 		session["admin"] = user.admin == True
 
 	return True
+
+def in_team(user):
+	return user.tid is not None and user.tid >= 0
 
 def is_logged_in():
 	if not("sid" in session and "username" in session): return False

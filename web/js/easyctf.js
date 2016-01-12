@@ -44,6 +44,14 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: "pages/settings.html",
 		controller: "mainController"
 	})
+	.when("/team", {
+		templateUrl: "pages/team.html",
+		controller: "teamController"
+	})
+	.when("/team/:teamname", {
+		templateUrl: "pages/team.html",
+		controller: "teamController"
+	})
 	.when("/admin/problems", {
 		templateUrl: "pages/admin/problems.html",
 		controller: "adminProblemsController"
@@ -59,10 +67,9 @@ app.controller("mainController", ["$scope", "$http", function($scope, $http) {
 	$scope.config = { navbar: { } };
 	$.get("/api/user/status", function(result) {
 		if (result["success"] == 1) {
-			$scope.config.navbar.logged_in = result["logged_in"];
-			$scope.config.navbar.username = result["username"];
-			$scope.config.navbar.admin = result["admin"];
-			$scope.$emit("adminStatus");
+			delete result["success"];
+			$scope.config.navbar = result;
+			$scope.$emit("loginStatus");
 		} else {
 			$scope.config.navbar.logged_in = false;
 		}
@@ -92,9 +99,35 @@ app.controller("profileController", ["$controller", "$scope", "$http", "$routePa
 	});
 }]);
 
+app.controller("loginController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
+	$controller("mainController", { $scope: $scope });
+	$scope.$on("loginStatus", function() {
+		if ($scope.config["navbar"].logged_in != true) {
+			location.href = "/login";
+			return;
+		}
+	});
+}]);
+
+app.controller("teamController", ["$controller", "$scope", "$http", "$routeParams", function($controller, $scope, $http, $routeParams) {
+	var data = { };
+	if ("teamname" in $routeParams) {
+		data["teamname"] = $routeParams["teamname"];
+	} else {
+		$controller("loginController", { $scope: $scope });
+	}
+	$.get("/api/team/info", data, function(result) {
+		if (result["success"] == 1) {
+			$scope.team = result["team"];
+		}
+		$scope.$apply();
+		$(".timeago").timeago();
+	});
+}]);
+
 app.controller("adminController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
 	$controller("mainController", { $scope: $scope });
-	$scope.$on("adminStatus", function() {
+	$scope.$on("loginStatus", function() {
 		if ($scope.config["navbar"].logged_in != true) {
 			location.href = "/login";
 			return;
@@ -175,5 +208,23 @@ var login_form = function() {
 	}).fail(function(jqXHR, status, error) {
 		var result = JSON.parse(jqXHR["responseText"]);
 		display_message("login_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"]);
+	});
+};
+
+// team page
+
+var create_team = function() {
+	var input = "#create_team input";
+	var data = $("#create_team").serializeObject();
+	data["csrf_token"] = $.cookie("csrf_token");
+	$.post("/api/team/create", data, function(result) {
+		if (result["success"] == 1) {
+			location.reload(true);
+		} else {
+			display_message("create_team_msg", "danger", result["message"]);
+		}
+	}).fail(function(jqXHR, status, error) {
+		var result = JSON.parse(jqXHR["responseText"]);
+		display_message("create_team_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"]);
 	});
 };

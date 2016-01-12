@@ -1,0 +1,71 @@
+<style>
+	.editable {
+		display: inline-block;
+		padding: 15px;
+		outline: none;
+		border: 1px solid rgba(0, 0, 0, 0);
+	}
+	.editable:hover {
+		border: 1px solid #999;
+	}
+	.editable:focus {
+		border: 1px solid #999;
+		background-color: #FFF;
+	}
+	.padded {
+		display: inline-block;
+		padding: 15px;
+	}
+</style>
+
+<div ng-show="!(config.navbar['logged_in']==true && config.navbar['has_team']!=true)">
+	<div class="jumbotron">
+		<center>
+			<div ng-show="team['in_team']==true">
+				<h1><span data-toggle="tooltip" data-placement="top" title="Click to edit team name." id="teamname_edit" class="editable" contenteditable>{{ team['teamname'] }}</span></h1>
+				<h4><i class="fa fa-fw fa-university"></i> <span data-toggle="tooltip" data-placement="top" title="Click to edit school." id="school_edit" class="editable" contenteditable>{{ team['school'] || 'Add School' }}</span></h4>
+			</div>
+			<div ng-show="team['in_team']!=true">
+				<h1><span class="padded">{{ team['teamname'] }}</span></h1>
+				<h4><i class="fa fa-fw fa-university"></i> <span class="padded">{{ team['school'] || 'Unknown Affiliation' }}</span></h4>
+			</div>
+		</center>
+	</div>
+</div>
+<div ng-show="config.navbar['logged_in']==true && config.navbar['has_team']!=true">
+	<div class="page-header">
+		<h1>Team</h1>
+	</div>
+	<p>To participate in EasyCTF, you must be on a <b>team</b>. If you'd like to go solo, just create a team by yourself. Read about team eligibility in the <a href="/rules">rules</a>.</p>
+
+	<form class="form-horizontal" onsubmit="create_team(); return false;" id="create_team">
+		<fieldset>
+			<div id="create_team_msg"></div>
+		</fieldset>
+		<fieldset class="container-fluid">
+			<div class="row">
+				<div class="input-group">
+					<input class="form-control input-lg" type="text" required name="teamname" id="teamname" placeholder="Choose a team name..." autocomplete="off" />
+					<span class="input-group-btn">
+						<input type="hidden" id="_csrf" value="{{ csrf_token }}" />
+						<input type="submit" class="btn btn-success btn-lg" value="Create Team" />
+					</span>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+
+	<div class="page-header">
+		<h3>Invitations</h3>
+	</div>
+	<p>You need an invitation to join another team. If you'd like to request to be a member of their team, go to their team page and click the Request button.</p>
+</div>
+
+<script type="text/javascript">
+	$("#teamname_edit").on("keypress", function(e) {
+		if (e.keyCode == 13) {
+			e.preventDefault();
+		}
+	});
+	$("[data-toggle=tooltip]").tooltip();
+</script>

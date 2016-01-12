@@ -29,17 +29,23 @@ class Users(db.Model):
 
 class Teams(db.Model):
 	tid = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(64), unique=True)
-	join_code = db.Column(db.String(128), unique=True)
+	teamname = db.Column(db.String(64), unique=True)
+	teamname_lower = db.Column(db.String(64), unique=True)
 	school = db.Column(db.Text)
-	size = db.Column(db.Integer)
-	score = db.Column(db.Integer)
-	observer = db.Column(db.Boolean)
 	owner = db.Column(db.Integer)
 
-	def __init__(self, name, school):
-		self.name = name
-		self.school = school
+	def __init__(self, teamname, owner):
+		self.teamname = teamname
+		self.teamname_lower = teamname.lower()
+		self.owner = owner
+
+	def get_members(self):
+		members = [ ]
+		for member in Users.query.filter_by(tid=self.tid).all():
+			members.append({
+				"username": member.username
+			})
+		return members
 
 class Problems(db.Model):
 	pid = db.Column(db.Integer, primary_key=True)
