@@ -18,7 +18,7 @@ server {
 		default_type text/html;
 		try_files /index.html /index.html;
 	}
-	location ~^/admin/(problems)$ {
+	location ~^/admin/(problems|settings|stats|teams)$ {
 		default_type text/html;
 		try_files /index.html /index.html;
 	}

@@ -1,7 +1,5 @@
 <style>
 	.editable {
-		display: inline-block;
-		padding: 15px;
 		outline: none;
 		border: 1px solid rgba(0, 0, 0, 0);
 	}
@@ -22,8 +20,12 @@
 	<div class="jumbotron">
 		<center>
 			<div ng-show="team['in_team']==true">
-				<h1><span data-toggle="tooltip" data-placement="top" title="Click to edit team name." id="teamname_edit" class="editable" contenteditable>{{ team['teamname'] }}</span></h1>
-				<h4><i class="fa fa-fw fa-university"></i> <span data-toggle="tooltip" data-placement="top" title="Click to edit school." id="school_edit" class="editable" contenteditable>{{ team['school'] || 'Add School' }}</span></h4>
+				<h1><span data-toggle="tooltip" data-placement="top" title="Click to edit team name." id="teamname_edit" class="padded editable" contenteditable>{{ team['teamname'] }}</span></h1>
+				<h4><i class="fa fa-fw fa-university"></i> <span data-toggle="tooltip" data-placement="top" title="Click to edit school." id="school_edit" class="padded editable" contenteditable>{{ team['school'] || 'Add School' }}</span></h4>
+				<div class="badge">
+					<i class="fa fa-fw fa-flag"></i>
+					I'm in the team!
+				</div>
 			</div>
 			<div ng-show="team['in_team']!=true">
 				<h1><span class="padded">{{ team['teamname'] }}</span></h1>
