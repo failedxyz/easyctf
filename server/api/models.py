@@ -48,7 +48,9 @@ class Teams(db.Model):
 		members = [ ]
 		for member in Users.query.filter_by(tid=self.tid).all():
 			members.append({
-				"username": member.username
+				"username": member.username,
+				"name": member.name,
+				"captain": member.uid == self.owner
 			})
 		return members
 
@@ -70,6 +72,25 @@ class Teams(db.Model):
 			return (i, "%d%s" % (i, "tsnrhtdd"[(i / 10 % 10 != 1) * (k < 4) * k::4]))
 		except ValueError:
 			return (-1, "--")
+
+	def get_pending_invitations(self, toid=None):
+		if toid is not None:
+			invitation = db.session.query(TeamInvitations).filter_by(rtype=0, frid=self.tid, toid=toid).first()
+			if invitation is None:
+				return None
+			else:
+				user = db.session.query(Users).filter_by(uid=invitation.toid).first()
+				return { "username": user.username, "name": user.name, "uid": user.uid }
+		result = [ ]
+		invitations = db.session.query(TeamInvitations).filter_by(rtype=0, frid=self.tid).all()
+		for invitation in invitations:
+			user = db.session.query(Users).filter_by(uid=invitation.toid).first()
+			result.append({
+				"username": user.username,
+				"name": user.name,
+				"uid": user.uid
+			})
+		return result
 
 class Problems(db.Model):
 	pid = db.Column(db.Integer, primary_key=True)
@@ -115,10 +136,6 @@ class Solves(db.Model):
 		self.flag = flag
 		self.correct = correct
 
-##########
-# TOKENS #
-##########
-
 class LoginTokens(db.Model):
 	sid = db.Column(db.String(64), unique=True, primary_key=True)
 	uid = db.Column(db.Integer)
@@ -138,3 +155,15 @@ class LoginTokens(db.Model):
 		self.active = active
 		self.ua = ua
 		self.ip = ip
+
+class TeamInvitations(db.Model):
+	rid = db.Column(db.Integer, primary_key=True)
+	rtype = db.Column(db.Integer)
+	frid = db.Column(db.Integer)
+	toid = db.Column(db.Integer)
+	date = db.Column(db.Integer, default=utils.get_time_since_epoch())
+
+	def __init__(self, rtype, frid, toid):
+		self.rtype = rtype
+		self.frid = frid
+		self.toid = toid

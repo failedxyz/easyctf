@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from flask import current_app as app
 from voluptuous import Schema, Length, Required
 
-from models import db, Teams, Users
+from models import db, Teams, Users, TeamInvitations
 from decorators import api_wrapper, login_required, WebException
 from schemas import verify_to_schema, check
 
@@ -37,31 +37,64 @@ def team_create():
 	
 	return { "success": 1, "message": "Success!" }
 
+@blueprint.route("/invite", methods=["POST"])
+@api_wrapper
+@login_required
+def team_invite():
+	params = utils.flat_multi(request.form)
+	_user = user.get_user().first()
+	if not user.in_team(_user):
+		raise WebException("You must be in a team!")
+	_team = get_team(tid=_user.tid).first()
+	if _user.uid != _team.owner:
+		raise WebException("You must be the captain of your team to invite members!")
+
+	new_member = params.get("new_member")
+	if new_member is None:
+		raise WebException("Please provide a username!")
+	_user2 = user.get_user(username_lower=new_member.lower()).first()
+	if _user2 is None:
+		raise WebException("User doesn't exist!")
+	if _user2.tid > 0:
+		raise WebException("This user is already a part of a team!")
+
+	if _team.get_pending_invitations(toid=_user2.uid) is not None:
+		raise WebException("You've already invited this member!")
+
+	req = TeamInvitations(0, _team.tid, _user2.uid)
+	with app.app_context():
+		db.session.add(req)
+		db.session.commit()
+
+	return { "success": 1, "message": "Success!" }
+
 @blueprint.route("/info", methods=["GET"])
 @api_wrapper
 def team_info():
 	logged_in = user.is_logged_in()
-	me = False
+	in_team = False
+	owner = False
+	_user = None
+	search = { }
 	teamname = utils.flat_multi(request.args).get("teamname")
+	if teamname:
+		search.update({ "teamname_lower": teamname.lower() })
 	if logged_in:
-		my_team = get_team().first()
-		if my_team is not None:
-			if teamname is None:
-				teamname = my_team.teamname
-				me = True
-			elif teamname.lower() == my_team.teamname.lower():
-				me = True
-	if teamname is None:
-		raise WebException("No team specified.")
-	team = get_team(teamname_lower=teamname.lower()).first()
-	if team is None:
-		raise WebException("Team not found.")
-
-	teamdata = {
-		"teamname": team.teamname,
-		"school": team.school
-	}
-	teamdata["in_team"] = me
+		_user = user.get_user().first()
+		if user.in_team(_user):
+			if "teamname_lower" not in search:
+				search.update({ "tid": _user.tid })
+				in_team = True
+	team = get_team(**search).first()
+	teamdata = get_team_info(**search)
+	if logged_in:
+		in_team = teamdata["tid"] == _user.tid
+		owner = teamdata["captain"] == _user.uid
+	teamdata["in_team"] = in_team
+	if in_team:
+		teamdata["is_owner"] = owner
+		if owner:
+			teamdata["pending_invitations"] = team.get_pending_invitations()
 	return { "success": 1, "team": teamdata }
 
 ##################
@@ -84,6 +117,9 @@ TeamSchema = Schema({
 
 def get_team_info(tid=None, teamname=None, teamname_lower=None, owner=None):
 	team = get_team(tid=tid, teamname=teamname, teamname_lower=teamname_lower, owner=owner).first()
+	if team is None:
+		raise WebException("Team not found.")
+
 	place_number, place = team.place()
 	result = {
 		"tid": team.tid,
@@ -91,7 +127,9 @@ def get_team_info(tid=None, teamname=None, teamname_lower=None, owner=None):
 		"school": team.school,
 		"place": place,
 		"place_number": place_number,
-		"points": team.points()
+		"points": team.points(),
+		"members": team.get_members(),
+		"captain": team.owner,
 	}
 	return result
 

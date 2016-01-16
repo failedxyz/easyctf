@@ -13,6 +13,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 __check_email_format = lambda email: re.match(".+@.+\..{2,}", email) is not None
 __check_ascii = lambda s: all(c in string.printable for c in s)
+__check_alphanumeric = lambda s: all(c in string.digits + string.ascii_uppercase + string.ascii_lowercase for c in s)
 
 def hash_password(s):
 	return generate_password_hash(s)

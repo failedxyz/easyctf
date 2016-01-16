@@ -1,4 +1,8 @@
 var app = angular.module("easyctf", [ "ngRoute" ]);
+
+app.config(["$compileProvider", function($compileProvider) {
+	$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|javascript):/);
+}]);
 app.config(function($routeProvider, $locationProvider) {
 	$routeProvider.when("/", {
 		templateUrl: "pages/home.html",
@@ -158,6 +162,18 @@ function display_message(containerId, alertType, message, callback) {
 	});
 };
 
+function api_call(method, url, data, callback) {
+	if (method.toLowerCase() == "post") {
+		data["csrf_token"] = $.cookie("csrf_token");
+	}
+	$.ajax({
+		"type": method,
+		"datatype": "json",
+		"data": data,
+		"url": url
+	}).done(callback);
+}
+
 $.fn.serializeObject = function() {
 	var a, o;
 	o = {};
@@ -180,8 +196,7 @@ $.fn.serializeObject = function() {
 var register_form = function() {
 	var input = "#register_form input";
 	var data = $("#register_form").serializeObject();
-	data["csrf_token"] = $.cookie("csrf_token");
-	$.post("/api/user/register", data, function(result) {
+	api_call("POST", "/api/user/register", data, function(result) {
 		if (result["success"] == 1) {
 			location.href = "/profile";
 		} else {
@@ -198,8 +213,7 @@ var register_form = function() {
 var login_form = function() {
 	var input = "#login_form input";
 	var data = $("#login_form").serializeObject();
-	data["csrf_token"] = $.cookie("csrf_token");
-	$.post("/api/user/login", data, function(result) {
+	api_call("POST", "/api/user/login", data, function(result) {
 		if (result["success"] == 1) {
 			location.href = "/profile";
 		} else {
@@ -216,8 +230,7 @@ var login_form = function() {
 var create_team = function() {
 	var input = "#create_team input";
 	var data = $("#create_team").serializeObject();
-	data["csrf_token"] = $.cookie("csrf_token");
-	$.post("/api/team/create", data, function(result) {
+	api_call("POST", "/api/team/create", data, function(result) {
 		if (result["success"] == 1) {
 			location.reload(true);
 		} else {
@@ -226,5 +239,15 @@ var create_team = function() {
 	}).fail(function(jqXHR, status, error) {
 		var result = JSON.parse(jqXHR["responseText"]);
 		display_message("create_team_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"]);
+	});
+};
+
+var add_member = function() {
+	var input = "#add_member input";
+	var data = $("#add_member").serializeObject();
+	api_call("POST", "/api/team/invite", data, function(result) {
+		if (result["success"] == 1) {
+			location.reload(true);
+		}
 	});
 };

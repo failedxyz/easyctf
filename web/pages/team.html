@@ -16,7 +16,7 @@
 	}
 </style>
 
-<div ng-show="!(config.navbar['logged_in']==true && config.navbar['has_team']!=true)">
+<div ng-show="team['tid'] >= 0">
 	<div class="jumbotron">
 		<center>
 			<div ng-show="team['in_team']==true">
@@ -33,8 +33,58 @@
 			</div>
 		</center>
 	</div>
+	<div class="row">
+		<div class="col-sm-3 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">Team Members</h4>
+				</div>
+				<div class="list-group">
+					<div class="list-group-item" ng-repeat="member in team['members']">
+						<h4 class="list-group-item-heading">{{ member['name'] }}</h4>
+						<p class="list-group-item-text">@{{ member['username'] }}</p>
+					</div>
+				</div>
+				<div class="panel-footer" ng-show="team['is_owner']==true">
+					<form id="add_member" onsubmit="add_member(); return false;" style="margin:none;">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="input-group">
+									<input type="text" class="form-control" id="new_member" name="new_member" placeholder="Add member..." autocomplete="off">
+									<span class="input-group-btn">
+										<button class="btn btn-success" type="submit">&nbsp;<i class="fa fa-fw fa-plus"></i>&nbsp;</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="panel-footer" ng-show="team['in_team']!=true && config.navbar['logged_in']==true">
+					<div class="row">
+						<div class="col-xs-12">
+							<a href="javascript:request_invitation();" class="btn btn-primary col-xs-12"><i class="fa fa-fw fa-plus"></i> Join this team</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default" ng-show="team['is_owner']==true && team['pending_invitations'].length > 0">
+				<div class="panel-heading">
+					<h4 class="panel-title">Pending Invitations</h4>
+				</div>
+				<div class="list-group">
+					<div class="list-group-item" ng-repeat="member in team['pending_invitations']">
+						<a class="badge" ng-href="javascript:rescind_invitation({{ member['uid'] }});"><i class="fa fa-fw fa-times"></i></a>
+						<h4 class="list-group-item-heading">{{ member['name'] }}</h4>
+						<p class="list-group-item-text">@{{ member['username'] }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-9 col-xs-12">
+		</div>
+	</div>
 </div>
-<div ng-show="config.navbar['logged_in']==true && config.navbar['has_team']!=true">
+<div ng-show="!(team['tid'] >= 0) && config.navbar['logged_in']==true">
 	<div class="page-header">
 		<h1>Team</h1>
 	</div>
@@ -75,7 +125,6 @@
 								<div class="row">
 									<div class="col-sm-12 form-group">
 										<center>
-											<input type="hidden" id="_csrf" value="{{ csrf_token }}" />
 											<input type="submit" class="btn btn-success btn-lg" value="Create Team" />
 										</center>
 									</div>
@@ -92,6 +141,13 @@
 		<h3>Invitations</h3>
 	</div>
 	<p>You need an invitation to join another team. If you'd like to request to be a member of their team, go to their team page and click the Request button.</p>
+</div>
+<div ng-show="!(team['tid'] >= 0) && config.navbar['logged_in']!=true">
+	<div class="page-header">
+		<h1>Team Not Found</h1>
+	</div>
+
+	<p>The team you were looking for doesn't exist. Check to make sure you've spelled the name right.</p>
 </div>
 
 <script type="text/javascript">

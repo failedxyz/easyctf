@@ -137,7 +137,7 @@ UserSchema = Schema({
 	),
 	Required("username"): check(
 		([str, Length(min=4, max=32)], "Your username should be between 4 and 32 characters long."),
-		([utils.__check_ascii], "Please only use ASCII characters in your username."),
+		([utils.__check_alphanumeric], "Please only use alphanumeric characters in your username."),
 		([__check_username], "This username is taken, did you forget your password?")
 	),
 	Required("password"): check(
