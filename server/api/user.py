@@ -10,6 +10,7 @@ import datetime
 import logger
 import re
 import requests
+import team
 import utils
 
 ###############
@@ -97,9 +98,10 @@ def user_info():
 	me = False if not("username" in session) else username.lower() == session["username"].lower()
 	user = get_user(username_lower=username.lower()).first()
 	if user is None:
-		raise WebException("User not found.")
+		raise WebException("User not found.")	
 
 	show_email = me if logged_in else False
+	user_in_team = in_team(user)
 	userdata = {
 		"user_found": True,
 		"name": user.name,
@@ -108,10 +110,13 @@ def user_info():
 		"admin": user.admin,
 		"registertime": datetime.datetime.fromtimestamp(user.registertime).isoformat() + "Z",
 		"me": me,
-		"show_email": show_email
+		"show_email": show_email,
+		"in_team": user_in_team
 	}
 	if show_email:
 		userdata["email"] = user.email
+	if user_in_team:
+		userdata["team"] = team.get_team_info(tid=user.tid)
 	return { "success": 1, "user": userdata }
 
 ##################

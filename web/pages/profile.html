@@ -3,7 +3,7 @@
 		<div class="col-sm-3 col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<img src="//www.gravatar.com/avatar/?size=512" id="avatar" style="max-width:100%;" />
+					<img src="//www.gravatar.com/avatar/?size=512" id="avatar" style="width:100%;max-width:100%;" />
 					<small style="display:block;text-align:right;" ng-show="user['me']==true"><a href="http://en.gravatar.com/emails/" target="_blank">Edit Picture</a></small>
 					<h2 style="margin:0px;font-weight:bold;font-size:2em;">{{ user.name }}</h2>
 					<small style="display:block;font-size:1.5em;color:#999;">@{{ user.username }}</small>
@@ -38,13 +38,29 @@
 						<div class="panel-heading">
 							<h4 class="panel-title">Team Information</h4>
 						</div>
-						<div class="panel-body">
-							<div ng-show="user['in_team']==true">
-							</div>
-							<div ng-show="user['in_team']!=true">
-								<p>{{ user['me']==true ? "You're" : "This user is" }} not a part of a team.</p>
-								<a href="/team" class="btn btn-primary" ng-show="user['me']==true">Join or create one now &raquo;</a>
-							</div>
+						<div class="table-responsive" ng-show="user['in_team']==true">
+							<table class="table table-bordered">
+								<tr>
+									<th>Team Name</th>
+									<td>{{ user.team['teamname'] }}</td>
+								</tr>
+								<tr>
+									<th>School</th>
+									<td>{{ user.team['school'] }}</td>
+								</tr>
+								<tr>
+									<th>Points</th>
+									<td>{{ user.team['points'] }}</td>
+								</tr>
+								<tr>
+									<th>Rank</th>
+									<td>{{ user.team['place'] }}</td>
+								</tr>
+							</table>
+						</div>
+						<div class="panel-body" ng-show="user['in_team']!=true">
+							<p>{{ user['me']==true ? "You're" : "This user is" }} not a part of a team.</p>
+							<a href="/team" class="btn btn-primary" ng-show="user['me']==true">Join or create one now &raquo;</a>
 						</div>
 					</div>
 					<div class="panel panel-default">

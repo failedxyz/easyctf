@@ -45,13 +45,44 @@
 			<div id="create_team_msg"></div>
 		</fieldset>
 		<fieldset class="container-fluid">
-			<div class="row">
-				<div class="input-group">
-					<input class="form-control input-lg" type="text" required name="teamname" id="teamname" placeholder="Choose a team name..." autocomplete="off" />
-					<span class="input-group-btn">
-						<input type="hidden" id="_csrf" value="{{ csrf_token }}" />
-						<input type="submit" class="btn btn-success btn-lg" value="Create Team" />
-					</span>
+			<div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h2 class="panel-title">Create a Team</h2>
+					</div>
+					<div class="panel-body">
+						<form class="form-horizontal" onsubmit="login_form(); return false;" id="login_form">
+							<fieldset>
+								<div id="login_msg"></div>
+							</fieldset>
+							<fieldset class="container-fluid">
+								<div class="row">
+									<div class="col-sm-12 form-group">
+										<label class="col-sm-12" for="teamname"><small>Team Name</small></label>
+										<div class="col-sm-12">
+											<input class="form-control" type="text" required name="teamname" id="teamname" placeholder="Create a team name..." autocomplete="off" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 form-group">
+										<label class="col-sm-12" for="school"><small>School Name</small></label>
+										<div class="col-sm-12">
+											<input class="form-control" type="text" required name="school" id="school" placeholder="School Name" autocomplete="off" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 form-group">
+										<center>
+											<input type="hidden" id="_csrf" value="{{ csrf_token }}" />
+											<input type="submit" class="btn btn-success btn-lg" value="Create Team" />
+										</center>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
 				</div>
 			</div>
 		</fieldset>

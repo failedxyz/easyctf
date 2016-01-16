@@ -48,8 +48,6 @@ def api_wrapper(f):
 		return response
 	return wrapper
 
-import user # Must go below api_wrapper to prevent import loops
-
 def login_required(f):
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
@@ -57,6 +55,8 @@ def login_required(f):
 			return { "success": 0, "message": "Not logged in." }
 		return f(*args, **kwargs)
 	return decorated_function
+
+import user # Must go below api_wrapper to prevent import loops
 
 def admins_only(f):
 	@wraps(f)

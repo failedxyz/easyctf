@@ -1,5 +1,7 @@
 from flask.ext.sqlalchemy import SQLAlchemy
+
 import time
+import traceback
 import utils
 
 db = SQLAlchemy()
@@ -33,11 +35,14 @@ class Teams(db.Model):
 	teamname_lower = db.Column(db.String(64), unique=True)
 	school = db.Column(db.Text)
 	owner = db.Column(db.Integer)
+	observer = db.Column(db.Boolean)
 
-	def __init__(self, teamname, owner):
+	def __init__(self, teamname, school, owner, observer):
 		self.teamname = teamname
 		self.teamname_lower = teamname.lower()
+		self.school = school
 		self.owner = owner
+		self.observer = observer
 
 	def get_members(self):
 		members = [ ]
@@ -46,6 +51,25 @@ class Teams(db.Model):
 				"username": member.username
 			})
 		return members
+
+	def points(self):
+		score = db.func.sum(Problems.value).label("score")
+		team = db.session.query(Solves.tid, score).join(Teams).join(Problems).filter(Teams.tid==self.tid).group_by(Solves.tid).first()
+		if team:
+			return team.score
+		else:
+			return 0
+
+	def place(self):
+		score = db.func.sum(Problems.value).label("score")
+		quickest = db.func.max(Solves.date).label("quickest")
+		teams = db.session.query(Solves.tid).join(Teams).join(Problems).filter().group_by(Solves.tid).order_by(score.desc(), quickest).all()
+		try:
+			i = teams.index((self.tid,)) + 1
+			k = i % 10
+			return (i, "%d%s" % (i, "tsnrhtdd"[(i / 10 % 10 != 1) * (k < 4) * k::4]))
+		except ValueError:
+			return (-1, "--")
 
 class Problems(db.Model):
 	pid = db.Column(db.Integer, primary_key=True)
@@ -77,13 +101,19 @@ class Files(db.Model):
 
 class Solves(db.Model):
 	sid = db.Column(db.Integer, primary_key=True)
-	pid = db.Column(db.Integer)
-	tid = db.Column(db.Integer)
+	pid = db.Column(db.Integer, db.ForeignKey("problems.pid"))
+	tid = db.Column(db.Integer, db.ForeignKey("teams.tid"))
 	date = db.Column(db.Integer, default=utils.get_time_since_epoch())
+	team = db.relationship("Teams", foreign_keys="Solves.tid", lazy="joined")
+	prob = db.relationship("Problems", foreign_keys="Solves.pid", lazy="joined")
+	correct = db.Column(db.Boolean)
+	flag = db.Column(db.Text)
 
-	def __init__(self, pid, tid):
+	def __init__(self, pid, tid, flag, correct):
 		self.pid = pid
 		self.tid = tid
+		self.flag = flag
+		self.correct = correct
 
 ##########
 # TOKENS #
