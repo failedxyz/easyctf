@@ -48,6 +48,14 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: "pages/settings.html",
 		controller: "mainController"
 	})
+	.when("/forgot", {
+		templateUrl: "pages/forgot.html",
+		controller: "resetController"
+	})
+	.when("/forgot/:token", {
+		templateUrl: "pages/forgot.html",
+		controller: "resetController"
+	})
 	.when("/team", {
 		templateUrl: "pages/team.html",
 		controller: "teamController"
@@ -120,13 +128,23 @@ app.controller("teamController", ["$controller", "$scope", "$http", "$routeParam
 	} else {
 		$controller("loginController", { $scope: $scope });
 	}
-	$.get("/api/team/info", data, function(result) {
-		if (result["success"] == 1) {
-			$scope.team = result["team"];
-		}
-		$scope.$apply();
-		$(".timeago").timeago();
-	});
+}]);
+
+app.controller("resetController", ["$controller", "$scope", "$http", "$routeParams", function($controller, $scope, $http, $routeParams) {
+	var data = { };
+    $scope.token = false;
+    data["csrf_token"] = $.cookie("csrf_token");
+	if ("token" in $routeParams) {
+        $scope.token = true;
+		token = $routeParams["token"];
+		$.get("/api/user/forgot/" + token, data, function(data) {
+            $scope.body = data["message"];
+            $scope.success = data["success"]
+            $scope.$apply();
+		});
+	} else {
+		$controller("mainController", { $scope: $scope });
+	}
 }]);
 
 app.controller("adminController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
@@ -207,6 +225,41 @@ var register_form = function() {
 		display_message("register_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"]);
 	});
 };
+
+// password reset
+var request_reset_form = function() {
+    var data = $("#request_reset_form").serializeObject();
+    data["csrf_token"] = $.cookie("csrf_token");
+    $.post("/api/user/forgot", data, function(result) {
+        if (result["success"] == 1) {
+            display_message("reset_msg", "success", result["message"]);
+        } else {
+            display_message("reset_msg", "danger", result["message"]);
+        }
+    }).fail(function(jqXHR, status, error) {
+		var result = JSON.parse(jqXHR["responseText"]);
+		display_message("reset_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"]);
+    });
+}
+
+var reset_form = function() {
+    var data = $("#reset_form").serializeObject();
+    data["csrf_token"] = $.cookie("csrf_token");
+    var url = window.location.href;
+    var token = url.substr(url.lastIndexOf("/")+1);
+    $.post("/api/user/forgot/" + token, data, function(result) {
+        if (result["success"] == 1) {
+            display_message("reset_msg", "success", result["message"], function() {
+                location.href = "/login";
+            });
+        } else {
+            display_message("reset_msg", "danger", result["message"]);
+        }
+    }).fail(function(jqXHR, status, error) {
+		var result = JSON.parse(jqXHR["responseText"]);
+		display_message("reset_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"]);
+    });
+}
 
 // login page
 

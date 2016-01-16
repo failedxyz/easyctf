@@ -14,7 +14,7 @@ server {
 	# }
 
 	# Put all the pages here so Angular doesn't fail.
-	location ~^/(about|chat|help|learn|login|profile|register|scoreboard|settings|team)$ {
+	location ~^/(about|chat|help|learn|login|profile|register|scoreboard|settings|team|forgot)$ {
 		default_type text/html;
 		try_files /index.html /index.html;
 	}
@@ -22,7 +22,7 @@ server {
 		default_type text/html;
 		try_files /index.html /index.html;
 	}
-	location ~^/(profile|team)/(.*)$ {
+	location ~^/(profile|team|forgot)/(.*)$ {
 		default_type text/html;
 		try_files /index.html /index.html;
 	}

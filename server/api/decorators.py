@@ -44,7 +44,7 @@ def api_wrapper(f):
 			token = utils.generate_string()
 			response.set_cookie("csrf_token", token)
 			session["csrf_token"] = token
-		
+
 		return response
 	return wrapper
 
