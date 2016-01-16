@@ -229,8 +229,7 @@ var register_form = function() {
 // password reset
 var request_reset_form = function() {
     var data = $("#request_reset_form").serializeObject();
-    data["csrf_token"] = $.cookie("csrf_token");
-    $.post("/api/user/forgot", data, function(result) {
+    api_call("POST", "/api/user/forgot", data, function(result) {
         if (result["success"] == 1) {
             display_message("reset_msg", "success", result["message"]);
         } else {
@@ -247,7 +246,7 @@ var reset_form = function() {
     data["csrf_token"] = $.cookie("csrf_token");
     var url = window.location.href;
     var token = url.substr(url.lastIndexOf("/")+1);
-    $.post("/api/user/forgot/" + token, data, function(result) {
+    api_call("POST", "/api/user/forgot/" + token, data, function(result) {
         if (result["success"] == 1) {
             display_message("reset_msg", "success", result["message"], function() {
                 location.href = "/login";
