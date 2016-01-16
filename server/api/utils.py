@@ -2,10 +2,12 @@ import datetime
 import json
 import random
 import re
+import requests
 import string
 import traceback
 import unicodedata
 
+from flask import current_app as app
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -34,3 +36,13 @@ def flat_multi(multidict):
 		value = values[0] if type(values) == list and len(values) == 1 else values
 		flat[key] = value.encode("utf-8")
 	return flat
+
+def send_email(recipient, subject, body):
+    api_key = app.config["MG_API_KEY"]
+    data = {"from": "EasyCTF Administrator <%s>" % (app.config["ADMIN_EMAIL"]),
+            "to": recipient,
+            "subject": subject,
+            "text": body
+    }
+    auth = ("api", api_key)
+    return requests.post("https://api.mailgun.net/v3/%s/messages" % (app.config["MG_HOST"]), auth=auth, data=data)

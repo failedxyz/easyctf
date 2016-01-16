@@ -1,6 +1,8 @@
 from argparse import ArgumentParser
 from flask import Flask
 
+app = Flask(__name__)
+
 import api
 import config
 import json
@@ -8,11 +10,7 @@ import os
 
 from api.decorators import api_wrapper
 
-app = Flask(__name__)
-
-app.config["SQLALCHEMY_DATABASE_URI"] = config.SQLALCHEMY_DATABASE_URI
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = config.SQLALCHEMY_TRACK_MODIFICATIONS
-app.config["UPLOAD_FOLDER"] = config.UPLOAD_FOLDER
+app.config.from_object(config)
 
 if not os.path.exists(app.config["UPLOAD_FOLDER"]):
     os.makedirs(app.config["UPLOAD_FOLDER"])

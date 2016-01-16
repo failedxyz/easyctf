@@ -98,7 +98,7 @@ def user_info():
 	me = False if not("username" in session) else username.lower() == session["username"].lower()
 	user = get_user(username_lower=username.lower()).first()
 	if user is None:
-		raise WebException("User not found.")	
+		raise WebException("User not found.")
 
 	show_email = me if logged_in else False
 	user_in_team = in_team(user)
@@ -182,7 +182,7 @@ def login_user(username, password):
 		token = LoginTokens(user.uid, user.username, ua=useragent, ip=ip)
 		db.session.add(token)
 		db.session.commit()
-			
+
 		session["sid"] = token.sid
 		session["username"] = token.username
 		session["admin"] = user.admin == True
