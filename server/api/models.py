@@ -18,6 +18,7 @@ class Users(db.Model):
 	utype = db.Column(db.Integer)
 	tid = db.Column(db.Integer)
 	registertime = db.Column(db.Integer)
+	reset_token = db.Column(db.String(64))
 
 	def __init__(self, name, username, email, password, utype=1):
 		self.name = name

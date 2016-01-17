@@ -19,6 +19,55 @@ import utils
 
 blueprint = Blueprint("user", __name__)
 
+@blueprint.route("/forgot", methods=["POST"])
+@blueprint.route("/forgot/<token>", methods=["GET", "POST"])
+@api_wrapper
+def user_forgot_password(token=None):
+    params = utils.flat_multi(request.form)
+    if token is not None:
+        user = get_user(reset_token=token).first()
+        if user is None:
+            raise WebException("Invalid reset token.")
+
+        # We are viewing the actual reset form
+        if request.method == "GET":
+            return { "success": 1, "message": ""}
+
+        # Submission of actual reset form
+        if request.method == "POST":
+            password = params.get("password")
+            confirm_password = params.get("confirm_password")
+            if password != confirm_password:
+                raise WebException("Passwords do not match.")
+            else:
+                user.password = utils.hash_password(password)
+                user.reset_token = None
+                current_session = db.session.object_session(user)
+                current_session.add(user)
+                current_session.commit()
+                return { "success": 1, "message": "Success!" }
+    else:
+        email = params.get("email")
+
+        user = get_user(email=email).first()
+        if user is None:
+            raise WebException("User with that email does not exist.")
+
+        token = utils.generate_string(length=64)
+        user.reset_token = token
+        current_session = db.session.object_session(user)
+        current_session.add(user)
+        current_session.commit()
+
+        reset_link = "%s/forgot/%s" % ("127.0.0.1:8000", token)
+        subject = "EasyCTF password reset"
+        body = """%s,\n\nA request to reset your EasyCT password has been made. If you did not request this password reset, you may safely ignore this email and delete it.\n\nYou may reset your password by clicking this link or pasting it to your browser.\n\n%s\n\nThis link can only be used once, and will lead you to a page where you can reset your password.\n\nGood luck!\n\n- The EasyCTF Team""" % (user.username, reset_link)
+        response = utils.send_email(email, subject, body).json()
+        if "Queued" in response["message"]:
+            return { "success": 1, "message": "Email sent to %s" % email }
+        else:
+            raise WebException(response["message"])
+
 @blueprint.route("/register", methods=["POST"])
 @api_wrapper
 def user_register():
@@ -150,21 +199,23 @@ UserSchema = Schema({
 	"notify": str
 }, extra=True)
 
-def get_user(username=None, username_lower=None, email=None, uid=None):
-	match = {}
-	if username != None:
-		match.update({ "username": username })
-	elif username_lower != None:
-		match.update({ "username_lower": username_lower })
-	elif uid != None:
-		match.update({ "uid": uid })
-	elif email != None:
-		match.update({ "email": email })
-	elif is_logged_in():
-		match.update({ "username": session["username"] })
-	with app.app_context():
-		result = Users.query.filter_by(**match)
-		return result
+def get_user(username=None, username_lower=None, email=None, uid=None, reset_token=None):
+    match = {}
+    if username != None:
+        match.update({ "username": username })
+    elif username_lower != None:
+        match.update({ "username_lower": username_lower })
+    elif uid != None:
+        match.update({ "uid": uid })
+    elif email != None:
+        match.update({ "email": email })
+    elif is_logged_in():
+        match.update({ "username": session["username"] })
+    elif reset_token != None:
+        match.update({ "reset_token": reset_token })
+    with app.app_context():
+        result = Users.query.filter_by(**match)
+        return result
 
 def login_user(username, password):
 	user = get_user(username_lower=username.lower()).first()
@@ -186,6 +237,8 @@ def login_user(username, password):
 		session["sid"] = token.sid
 		session["username"] = token.username
 		session["admin"] = user.admin == True
+                if user.tid is not None and user.tid >= 0:
+                    session["tid"] = user.tid
 
 	return True
 

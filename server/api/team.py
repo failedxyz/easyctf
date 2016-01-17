@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, session
 from flask import current_app as app
 from voluptuous import Schema, Length, Required
 
@@ -21,7 +21,7 @@ blueprint = Blueprint("team", __name__)
 def team_create():
 	params = utils.flat_multi(request.form)
 	_user = user.get_user().first()
-	if _user.tid is not None or _user.tid >= 0 or get_team(owner=_user.uid).first() is not None:
+	if (_user.tid is not None and _user.tid >= 0) or get_team(owner=_user.uid).first() is not None:
 		raise WebException("You're already in a team!")
 
 	verify_to_schema(TeamSchema, params)
@@ -29,13 +29,35 @@ def team_create():
 	school = params.get("school")
 
 	team = Teams(teamname, school, _user.uid, _user.utype != 1)
+	tid = team.tid
 	with app.app_context():
 		db.session.add(team)
 		db.session.commit()
 		Users.query.filter_by(uid=_user.uid).update({ "tid": team.tid })
 		db.session.commit()
-	
+
+        session["tid"] = tid
 	return { "success": 1, "message": "Success!" }
+
+@blueprint.route("/delete", methods=["POST"])
+@api_wrapper
+@login_required
+def team_delete():
+    username = session["username"]
+    tid = session["tid"]
+    team = Teams.query.filter_by(tid=tid).first()
+    usr = Users.query.filter_by(username=username).first()
+    owner = team.owner
+    if usr.uid == owner or usr.admin:
+        usr.tid = -1
+        with app.app_context():
+            db.session.add(usr)
+            db.session.delete(team)
+            db.session.commit()
+            session.pop("tid")
+        return { "success": 1, "message": "Success!" }
+    else:
+        raise WebException("Not authorized.")
 
 @blueprint.route("/invite", methods=["POST"])
 @api_wrapper
