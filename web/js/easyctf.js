@@ -180,7 +180,7 @@ function display_message(containerId, alertType, message, callback) {
 	});
 };
 
-function api_call(method, url, data, callback) {
+function api_call(method, url, data, callback_success, callback_fail) {
 	if (method.toLowerCase() == "post") {
 		data["csrf_token"] = $.cookie("csrf_token");
 	}
@@ -189,7 +189,7 @@ function api_call(method, url, data, callback) {
 		"datatype": "json",
 		"data": data,
 		"url": url
-	}).done(callback);
+	}).done(callback_success).fail(callback_fail);
 }
 
 $.fn.serializeObject = function() {
@@ -224,9 +224,9 @@ var register_form = function() {
 			    button.removeAttr("disabled");
 			});
 		}
-	}).fail(function(jqXHR, status, error) {
-		var result = JSON.parse(jqXHR["responseText"]);
-		display_message("register_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
+	}, function(jqXHR, status, error) {
+		var result = jqXHR["responseText"];
+		display_message("register_msg", "danger", "Failed to connect to the API.", function() {
 		    button.removeAttr("disabled");
 		});
 	});
@@ -245,9 +245,9 @@ var request_reset_form = function() {
                 button.removeAttr("disabled");
             });
         }
-    }).fail(function(jqXHR, status, error) {
-		var result = JSON.parse(jqXHR["responseText"]);
-		display_message("reset_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
+    }, function(jqXHR, status, error) {
+		var result = jqXHR["responseText"];
+		display_message("reset_msg", "danger", "Failed to connect to the API.", function() {
 		    button.removeAttr("disabled");
 		});
     });
@@ -270,9 +270,9 @@ var reset_form = function() {
                 button.removeAttr("disabled");
             });
         }
-    }).fail(function(jqXHR, status, error) {
-		var result = JSON.parse(jqXHR["responseText"]);
-		display_message("reset_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
+    }, function(jqXHR, status, error) {
+		var result = jqXHR["responseText"];
+		display_message("reset_msg", "danger", "Failed to connect to the API.", function() {
 		    button.removeAttr("disabled");
 		});
     });
@@ -281,23 +281,23 @@ var reset_form = function() {
 // login page
 
 var login_form = function() {
-	var input = "#login_form input";
-	var data = $("#login_form").serializeObject();
-	var button = $("#login_form").find(":submit");
-	button.prop("disabled", true);
-	api_call("POST", "/api/user/login", data, function(result) {
-		if (result["success"] == 1) {
-			location.href = "/profile";
-		} else {
-			display_message("login_msg", "danger", result["message"], function() {
-			    button.removeAttr("disabled");
-			});
-		}
-	}).fail(function(jqXHR, status, error) {
-		var result = JSON.parse(jqXHR["responseText"]);
-		display_message("login_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
+    var input = "#login_form input";
+    var data = $("#login_form").serializeObject();
+    var button = $("#login_form").find(":submit");
+    button.prop("disabled", true);
+    api_call("POST", "/api/user/login", data, function(result) {
+        if (result["success"] == 1) {
+            location.href = "/profile";
+        } else {
+            display_message("login_msg", "danger", result["message"], function() {
+                button.removeAttr("disabled");
+            });
+        }
+    }, function(jqXHR, status, error) {
+	    var result = jqXHR["responseText"];
+        display_message("login_msg", "danger", "Failed to connect to the API.", function() {
             button.removeAttr("disabled");
-		});
+        });
 	});
 };
 
@@ -316,9 +316,9 @@ var create_team = function() {
 			    button.removeAttr("disabled");
 			});
 		}
-	}).fail(function(jqXHR, status, error) {
-		var result = JSON.parse(jqXHR["responseText"]);
-		display_message("create_team_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
+	}, function(jqXHR, status, error) {
+		var result = jqXHR["responseText"];
+		display_message("create_team_msg", "danger", "Failed to connect to the API.", function() {
 		    button.removeAttr("disabled");
 		});
 	});
@@ -333,13 +333,8 @@ var add_member = function() {
 		if (result["success"] == 1) {
 			location.reload(true);
 		} else {
-		    button.removeAtr("disabled");
-		}
-	}).fail(function(jqXHR, status, error) {
-		var result = JSON.parse(jqXHR["responseText"]);
-		display_message("create_team_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
 		    button.removeAttr("disabled");
-		});
+		}
 	});
 };
 
