@@ -34,7 +34,7 @@ def team_create():
 		db.session.commit()
 		Users.query.filter_by(uid=_user.uid).update({ "tid": team.tid })
 		db.session.commit()
-	
+
 	return { "success": 1, "message": "Success!" }
 
 @blueprint.route("/invite", methods=["POST"])
