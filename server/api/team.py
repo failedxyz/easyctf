@@ -49,12 +49,35 @@ def team_delete():
     usr = Users.query.filter_by(username=username).first()
     owner = team.owner
     if usr.uid == owner or usr.admin:
-        usr.tid = -1
+        for member in Users.query.filter_by(tid=tid).all():
+            member.tid = -1
+            with app.app_context():
+                db.session.add(member)
+
         with app.app_context():
-            db.session.add(usr)
             db.session.delete(team)
             db.session.commit()
             session.pop("tid")
+        return { "success": 1, "message": "Success!" }
+    else:
+        raise WebException("Not authorized.")
+
+@blueprint.route("/remove_member", methods=["POST"])
+@api_wrapper
+@login_required
+def team_remove_member():
+    username = session["username"]
+    tid = session["tid"]
+    team = Teams.query.filter_by(tid=tid).first()
+    usr = Users.query.filter_by(username=username).first()
+    owner = team.owner
+    if usr.uid == owner or usr.admin:
+        params = utils.flat_multi(request.form)
+        user_to_remove = Users.query.filter_by(username=params.get("user"))
+        user_to_remove.tid = -1
+        with app.app_context():
+            db.session.add(user_to_remove)
+            db.session.commit()
         return { "success": 1, "message": "Success!" }
     else:
         raise WebException("Not authorized.")
