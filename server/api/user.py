@@ -237,6 +237,8 @@ def login_user(username, password):
 		session["sid"] = token.sid
 		session["username"] = token.username
 		session["admin"] = user.admin == True
+                if user.tid is not None and user.tid >= 0:
+                    session["tid"] = user.tid
 
 	return True
 

@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, session
 from flask import current_app as app
 from voluptuous import Schema, Length, Required
 
@@ -35,6 +35,7 @@ def team_create():
 		Users.query.filter_by(uid=_user.uid).update({ "tid": team.tid })
 		db.session.commit()
 
+        session["tid"] = team.tid
 	return { "success": 1, "message": "Success!" }
 
 @blueprint.route("/invite", methods=["POST"])
