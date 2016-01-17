@@ -40,7 +40,7 @@ def api_wrapper(f):
 		response = make_response(result)
 
 		# Setting CSRF token
-		if "token" not in session:
+		if "csrf_token" not in session:
 			token = utils.generate_string()
 			response.set_cookie("csrf_token", token)
 			session["csrf_token"] = token

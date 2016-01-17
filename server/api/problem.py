@@ -7,7 +7,7 @@ from flask import current_app as app
 from werkzeug import secure_filename
 
 from models import db, Files, Problems, Solves, Teams
-from decorators import admins_only, api_wrapper, login_required
+from decorators import admins_only, api_wrapper, login_required, WebException
 
 blueprint = Blueprint("problem", __name__)
 
@@ -24,7 +24,7 @@ def problem_add():
 
     name_exists = Problems.query.filter_by(name=name).first()
     if name_exists:
-        return { "success": 0, "message": "Problem name already taken." }
+        raise WebException("Problem name already taken.")
     problem = Problems(name, category, description, hint, flag, value)
     db.session.add(problem)
     db.session.commit()
@@ -57,7 +57,7 @@ def problem_delete():
         Problems.query.filter_by(pid=pid).delete()
         db.session.commit()
         return { "success": 1, "message": "Success!" }
-    return { "success": 0, "message": "Problem does not exist!" }
+    raise WebException("Problem does not exist!")
 
 @blueprint.route("/update", methods=["POST"])
 @admins_only
@@ -86,7 +86,7 @@ def problem_update():
         db.session.commit()
 
         return { "success": 1, "message": "Success!" }
-    return { "success": 0, "message": "Problem does not exist!" }
+    raise WebException("Problem does not exist!")
 
 @blueprint.route("/submit", methods=["POST"])
 @api_wrapper
@@ -113,10 +113,10 @@ def problem_submit():
 
         else:
             logger.log("submissions.log", logger.WARNING, "%s has incorrectly submitted %s to %s" % (team.name, flag, problem.name))
-            return { "success": 0, "message": "Incorrect." }
+            raise WebException("Incorrect.")
 
     else:
-        return { "success": 0, "message": "Problem does not exist!" }
+        raise WebException("Problem does not exist!")
 
 @blueprint.route("/data", methods=["POST"])
 #@api_wrapper # Disable atm due to json serialization issues: will fix

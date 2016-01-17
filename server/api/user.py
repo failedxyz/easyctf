@@ -27,7 +27,7 @@ def user_forgot_password(token=None):
     if token is not None:
         user = get_user(reset_token=token).first()
         if user is None:
-            return { "success": 0, "message": "Invalid reset token"}
+            raise WebException("Invalid reset token.")
 
         # We are viewing the actual reset form
         if request.method == "GET":
@@ -38,7 +38,7 @@ def user_forgot_password(token=None):
             password = params.get("password")
             confirm_password = params.get("confirm_password")
             if password != confirm_password:
-                return { "success": 0, "message": "Passwords do not match." }
+                raise WebException("Passwords do not match.")
             else:
                 user.password = utils.hash_password(password)
                 user.reset_token = None
@@ -51,7 +51,7 @@ def user_forgot_password(token=None):
 
         user = get_user(email=email).first()
         if user is None:
-            return { "success": 0, "message": "User with that email does not exist." }
+            raise WebException("User with that email does not exist.")
 
         token = utils.generate_string(length=64)
         user.reset_token = token
@@ -66,7 +66,7 @@ def user_forgot_password(token=None):
         if "Queued" in response["message"]:
             return { "success": 1, "message": "Email sent to %s" % email }
         else:
-            return { "success": 0, "message": response["message"] }
+            raise WebException(response["message"])
 
 @blueprint.route("/register", methods=["POST"])
 @api_wrapper
