@@ -251,3 +251,23 @@ var add_member = function() {
 		}
 	});
 };
+
+var rescind_invitation = function(uid) {
+	var input = "#add_member input";
+	var data = { "uid": uid };
+	api_call("POST", "/api/team/invite/rescind", data, function(result) {
+		if (result["success"] == 1) {
+			location.reload(true);
+		}
+	});
+};
+
+var request_invitation = function(tid) {
+	var input = "#add_member input";
+	var data = { "tid": tid };
+	api_call("POST", "/api/team/invite/request", data, function(result) {
+		if (result["success"] == 1) {
+			location.reload(true);
+		}
+	});
+};

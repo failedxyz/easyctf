@@ -73,6 +73,25 @@ class Teams(db.Model):
 		except ValueError:
 			return (-1, "--")
 
+	def get_invitation_requests(self, frid=None):
+		if frid is not None:
+			req = db.session.query(TeamInvitations).filter_by(rtype=1, frid=frid, toid=self.tid).first()
+			if req is None:
+				return None
+			else:
+				user = db.session.query(Users).filter_by(uid=req.frid).first()
+				return { "username": user.username, "name": user.name, "uid": user.uid }
+		result = [ ]
+		requests = db.session.query(TeamInvitations).filter_by(rtype=1, toid=self.tid).all()
+		for req in requests:
+			user = db.session.query(Users).filter_by(uid=req.frid).first()
+			result.append({
+				"username": user.username,
+				"name": user.name,
+				"uid": user.uid
+			})
+		return result
+
 	def get_pending_invitations(self, toid=None):
 		if toid is not None:
 			invitation = db.session.query(TeamInvitations).filter_by(rtype=0, frid=self.tid, toid=toid).first()

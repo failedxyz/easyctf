@@ -46,7 +46,7 @@
 					</div>
 				</div>
 				<div class="panel-footer" ng-show="team['is_owner']==true">
-					<form id="add_member" onsubmit="add_member(); return false;" style="margin:none;">
+					<form id="add_member" onsubmit="add_member(); return false;" style="margin: 0;">
 						<div class="row">
 							<div class="col-xs-12">
 								<div class="input-group">
@@ -62,7 +62,9 @@
 				<div class="panel-footer" ng-show="team['in_team']!=true && config.navbar['logged_in']==true">
 					<div class="row">
 						<div class="col-xs-12">
-							<a href="javascript:request_invitation();" class="btn btn-primary col-xs-12"><i class="fa fa-fw fa-plus"></i> Join this team</a>
+							<a ng-href="javascript:request_invitation({{ team['tid'] }});" class="btn btn-primary col-xs-12" ng-show="team['invited']!=true && team['requested']!=true"><i class="fa fa-fw fa-plus"></i> Join this team</a>
+							<a class="btn btn-primary col-xs-12 disabled" ng-show="team['invited']!=true && team['requested']==true"><i class="fa fa-fw fa-check"></i> Sent Request</a>
+							<a ng-href="javascript:accept_invitation({{ team['tid'] }});" class="btn btn-success col-xs-12" ng-show="team['invited']==true"><i class="fa fa-fw fa-check"></i> Accept Invitation</a>
 						</div>
 					</div>
 				</div>
@@ -74,6 +76,18 @@
 				<div class="list-group">
 					<div class="list-group-item" ng-repeat="member in team['pending_invitations']">
 						<a class="badge" ng-href="javascript:rescind_invitation({{ member['uid'] }});"><i class="fa fa-fw fa-times"></i></a>
+						<h4 class="list-group-item-heading">{{ member['name'] }}</h4>
+						<p class="list-group-item-text">@{{ member['username'] }}</p>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default" ng-show="team['is_owner']==true && team['invitation_requests'].length > 0">
+				<div class="panel-heading">
+					<h4 class="panel-title">Invitation Requests</h4>
+				</div>
+				<div class="list-group">
+					<div class="list-group-item" ng-repeat="member in team['invitation_requests']">
+						<a class="badge" ng-href="javascript:accept_invitation_request({{ member['uid'] }});"><i class="fa fa-fw fa-check"></i></a>
 						<h4 class="list-group-item-heading">{{ member['name'] }}</h4>
 						<p class="list-group-item-text">@{{ member['username'] }}</p>
 					</div>

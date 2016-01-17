@@ -68,6 +68,55 @@ def team_invite():
 
 	return { "success": 1, "message": "Success!" }
 
+@blueprint.route("/invite/rescind", methods=["POST"])
+@api_wrapper
+@login_required
+def team_invite_rescind():
+	params = utils.flat_multi(request.form)
+	_user = user.get_user().first()
+	if not user.in_team(_user):
+		raise WebException("You must be in a team!")
+	_team = get_team(tid=_user.tid).first()
+	if _user.uid != _team.owner:
+		raise WebException("You must be the captain of your team to rescind invitations!")
+
+	uid = params.get("uid")
+	if uid is None:
+		raise WebException("Please provide a user.")
+	invitation = TeamInvitations.query.filter_by(rtype=0, frid=_team.tid, toid=uid).first()
+	if invitation is None:
+		raise WebException("Invitation doesn't exist.")
+
+	with app.app_context():
+		db.session.delete(invitation)
+		db.session.commit()
+
+	return { "success": 1, "message": "Success!" }
+
+@blueprint.route("/invite/request", methods=["POST"])
+@api_wrapper
+@login_required
+def team_invite_request():
+	params = utils.flat_multi(request.form)
+	_user = user.get_user().first()
+	if user.in_team(_user):
+		raise WebException("You're already in a team!")
+
+	tid = params.get("tid")
+	_team = get_team(tid=tid).first()
+	if _team is None:
+		raise WebException("Team not found.")
+
+	if _team.get_invitation_requests(frid=_user.uid) is not None:
+		raise WebException("You've already requested to join this team!")
+
+	req = TeamInvitations(1, _user.uid, _team.tid)
+	with app.app_context():
+		db.session.add(req)
+		db.session.commit()
+
+	return { "success": 1, "message": "Success!" }
+
 @blueprint.route("/info", methods=["GET"])
 @api_wrapper
 def team_info():
@@ -95,6 +144,11 @@ def team_info():
 		teamdata["is_owner"] = owner
 		if owner:
 			teamdata["pending_invitations"] = team.get_pending_invitations()
+			teamdata["invitation_requests"] = team.get_invitation_requests()
+	else:
+		if logged_in:
+			teamdata["invited"] = team.get_pending_invitations(toid=_user.uid) is not None
+			teamdata["requested"] = team.get_invitation_requests(frid=_user.uid) is not None
 	return { "success": 1, "team": teamdata }
 
 ##################
