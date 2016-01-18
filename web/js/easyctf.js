@@ -197,7 +197,7 @@ function display_message(containerId, alertType, message, callback) {
 	});
 };
 
-function api_call(method, url, data, callback) {
+function api_call(method, url, data, callback_success, callback_fail) {
 	if (method.toLowerCase() == "post") {
 		data["csrf_token"] = $.cookie("csrf_token");
 	}
@@ -206,7 +206,7 @@ function api_call(method, url, data, callback) {
 		"datatype": "json",
 		"data": data,
 		"url": url
-	}).done(callback);
+	}).done(callback_success).fail(callback_fail);
 }
 
 $.fn.serializeObject = function() {
