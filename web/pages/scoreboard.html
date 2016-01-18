@@ -1,92 +1,22 @@
-<script type="text/javascript">
-    var chart = c3.generate({
-        data: {
-            x: 'x',
-            columns: [
-                ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06'],
-                ['Team Thomas', 30, 250, 380, 500, 620, 740],
-            ]
-        },
-        axis: {
-            x: {
-                type: 'timeseries',
-                tick: {
-                    format: '%Y-%m-%d'
-                }
-            }
-        }
-    });
-    setTimeout(function() {
-        chart.load({
-            columns: [
-                ['Team Charles', 100, 210, 320, 430, 540, 650]
-            ]
-        });
-    }, 1000);
-    setTimeout(function() {
-        chart.load({
-            columns: [
-                ['Team Zach', 10, 120, 230, 340, 450, 560]
-            ]
-        });
-    }, 2000);
-    setTimeout(function() {
-        chart.load({
-            columns: [
-                ['Team Michael', 0, 80, 190, 300, 410, 520]
-            ]
-        });
-    }, 3000);
-    setTimeout(function() {
-        chart.load({
-            columns: [
-                ['Team James', 0, 100, 250, 300, 450, 600]
-            ]
-        });
-    }, 4000);
-</script>
-<div class="fade_in text-center">
-    <h1 class="heading1">Scoreboard</h1>
-    <br>
-    <div id="chart"></div>
-    <br>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Team Name</th>
-                <th>School</th>
-                <th>Points</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Team Thomas</td>
-                <td>T. High School</td>
-                <td>740</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Team Charles</td>
-                <td>C. High School</td>
-                <td>650</td>
-            </tr><tr>
-                <td>3</td>
-                <td>Team Zach</td>
-                <td>Z. High School</td>
-                <td>560</td>
-            </tr><tr>
-                <td>4</td>
-                <td>Team Michael</td>
-                <td>M. High School</td>
-                <td>520</td>
-            </tr><tr>
-                <td>5</td>
-                <td>Team James</td>
-                <td>J. High School</td>
-                <td>600</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="page-header">
+	<h1>Scoreboard</h1>
 </div>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Rank</th>
+			<th>Team Name</th>
+			<th>School</th>
+			<th>Points</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="team in scoreboard">
+			<td></td>
+			<td><a ng-href="/team/{{ team['teamname'] }}">{{ team['teamname'] }}</a></td>
+			<td>{{ team['school'] }}</td>
+			<td>{{ team['points'] }}</td>
+		</tr>
+	</tbody>
+</table>

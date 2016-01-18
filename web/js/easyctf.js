@@ -42,7 +42,7 @@ app.config(function($routeProvider, $locationProvider) {
 	})
 	.when("/scoreboard", {
 		templateUrl: "pages/scoreboard.html",
-		controller: "mainController"
+		controller: "scoreboardController"
 	})
 	.when("/settings", {
 		templateUrl: "pages/settings.html",
@@ -128,6 +128,23 @@ app.controller("teamController", ["$controller", "$scope", "$http", "$routeParam
 	} else {
 		$controller("loginController", { $scope: $scope });
 	}
+	$.get("/api/team/info", data, function(result) {
+		if (result["success"] == 1) {
+			$scope.team = result["team"];
+		}
+		$scope.$apply();
+		$(".timeago").timeago();
+	});
+}]);
+
+app.controller("scoreboardController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
+	$controller("mainController", { $scope: $scope });
+	api_call("GET", "/api/stats/scoreboard", { }, function(result) {
+		if (result["success"] == 1) {
+			$scope.scoreboard = result["scoreboard"];
+			$scope.$apply();
+		}
+	});
 }]);
 
 app.controller("resetController", ["$controller", "$scope", "$http", "$routeParams", function($controller, $scope, $http, $routeParams) {
@@ -214,20 +231,19 @@ $.fn.serializeObject = function() {
 var register_form = function() {
 	var input = "#register_form input";
 	var data = $("#register_form").serializeObject();
-	var button = $("#register_form").find(":submit");
-	button.prop("disabled", true);
+	$(input).attr("disabled", "disabled");
 	api_call("POST", "/api/user/register", data, function(result) {
 		if (result["success"] == 1) {
 			location.href = "/profile";
 		} else {
 			display_message("register_msg", "danger", result["message"], function() {
-			    button.removeAttr("disabled");
+			    $(input).removeAttr("disabled");
 			});
 		}
 	}).fail(function(jqXHR, status, error) {
 		var result = JSON.parse(jqXHR["responseText"]);
 		display_message("register_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
-		    button.removeAttr("disabled");
+		    $(input).removeAttr("disabled");
 		});
 	});
 };
@@ -235,20 +251,19 @@ var register_form = function() {
 // password reset
 var request_reset_form = function() {
     var data = $("#request_reset_form").serializeObject();
-    var button = $("#request_reset_form").find(":submit");
-    button.prop("disabled", true);
+    $(input).attr("disabled", "disabled");
     api_call("POST", "/api/user/forgot", data, function(result) {
         if (result["success"] == 1) {
             display_message("reset_msg", "success", result["message"]);
         } else {
             display_message("reset_msg", "danger", result["message"], function() {
-                button.removeAttr("disabled");
+                $(input).removeAttr("disabled");
             });
         }
     }).fail(function(jqXHR, status, error) {
 		var result = JSON.parse(jqXHR["responseText"]);
 		display_message("reset_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
-		    button.removeAttr("disabled");
+		    $(input).removeAttr("disabled");
 		});
     });
 }
@@ -258,8 +273,7 @@ var reset_form = function() {
     data["csrf_token"] = $.cookie("csrf_token");
     var url = window.location.href;
     var token = url.substr(url.lastIndexOf("/")+1);
-    var button = $("#reset_form").find(":submit");
-    button.prop("disabled", true);
+    $(input).attr("disabled", "disabled");
     api_call("POST", "/api/user/forgot/" + token, data, function(result) {
         if (result["success"] == 1) {
             display_message("reset_msg", "success", result["message"], function() {
@@ -267,13 +281,13 @@ var reset_form = function() {
             });
         } else {
             display_message("reset_msg", "danger", result["message"], function() {
-                button.removeAttr("disabled");
+                $(input).removeAttr("disabled");
             });
         }
     }).fail(function(jqXHR, status, error) {
 		var result = JSON.parse(jqXHR["responseText"]);
 		display_message("reset_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
-		    button.removeAttr("disabled");
+		    $(input).removeAttr("disabled");
 		});
     });
 }
@@ -283,20 +297,19 @@ var reset_form = function() {
 var login_form = function() {
 	var input = "#login_form input";
 	var data = $("#login_form").serializeObject();
-	var button = $("#login_form").find(":submit");
-	button.prop("disabled", true);
+	$(input).attr("disabled", "disabled");
 	api_call("POST", "/api/user/login", data, function(result) {
 		if (result["success"] == 1) {
 			location.href = "/profile";
 		} else {
 			display_message("login_msg", "danger", result["message"], function() {
-			    button.removeAttr("disabled");
+			    $(input).removeAttr("disabled");
 			});
 		}
 	}).fail(function(jqXHR, status, error) {
 		var result = JSON.parse(jqXHR["responseText"]);
 		display_message("login_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
-            button.removeAttr("disabled");
+            $(input).removeAttr("disabled");
 		});
 	});
 };
@@ -306,20 +319,19 @@ var login_form = function() {
 var create_team = function() {
 	var input = "#create_team input";
 	var data = $("#create_team").serializeObject();
-	var button = $("#create_team").find(":submit");
-	button.prop("disabled", true);
+	$(input).attr("disabled", "disabled");
 	api_call("POST", "/api/team/create", data, function(result) {
 		if (result["success"] == 1) {
 			location.reload(true);
 		} else {
 			display_message("create_team_msg", "danger", result["message"], function() {
-			    button.removeAttr("disabled");
+			    $(input).removeAttr("disabled");
 			});
 		}
 	}).fail(function(jqXHR, status, error) {
 		var result = JSON.parse(jqXHR["responseText"]);
 		display_message("create_team_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
-		    button.removeAttr("disabled");
+		    $(input).removeAttr("disabled");
 		});
 	});
 };
@@ -327,18 +339,17 @@ var create_team = function() {
 var add_member = function() {
 	var input = "#add_member input";
 	var data = $("#add_member").serializeObject();
-	var button = $("#add_member").find(":submit");
-	button.prop("disabled", true);
+	$(input).attr("disabled", "disabled");
 	api_call("POST", "/api/team/invite", data, function(result) {
 		if (result["success"] == 1) {
 			location.reload(true);
 		} else {
-		    button.removeAtr("disabled");
+		    $(input).removeAttr("disabled");
 		}
 	}).fail(function(jqXHR, status, error) {
 		var result = JSON.parse(jqXHR["responseText"]);
 		display_message("create_team_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
-		    button.removeAttr("disabled");
+		    $(input).removeAttr("disabled");
 		});
 	});
 };

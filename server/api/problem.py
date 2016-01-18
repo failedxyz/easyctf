@@ -108,11 +108,11 @@ def problem_submit():
             db.session.add(problem)
             db.session.commit()
 
-            logger.log("submissions.log", logger.WARNING, "%s has solved %s by submitting %s" % (team.name, problem.name, flag))
+            logger.log(__name__, logger.WARNING, "%s has solved %s by submitting %s" % (team.name, problem.name, flag))
             return { "success": 1, "message": "Correct!" }
 
         else:
-            logger.log("submissions.log", logger.WARNING, "%s has incorrectly submitted %s to %s" % (team.name, flag, problem.name))
+            logger.log(__name__, logger.WARNING, "%s has incorrectly submitted %s to %s" % (team.name, flag, problem.name))
             raise WebException("Incorrect.")
 
     else:
