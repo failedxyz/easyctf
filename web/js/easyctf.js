@@ -242,8 +242,8 @@ var register_form = function() {
         }
     }, function(jqXHR, status, error) {
         var result = jqXHR["responseText"];
-        display_message("register_msg", "danger", "Failed to connect to the API.", function() {
-            button.removeAttr("disabled");
+        display_message("register_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
+            $(input).removeAttr("disabled");
         });
     });
 };
@@ -262,8 +262,8 @@ var request_reset_form = function() {
         }
     }, function(jqXHR, status, error) {
         var result = jqXHR["responseText"];
-        display_message("reset_msg", "danger", "Failed to connect to the API.", function() {
-            button.removeAttr("disabled");
+        display_message("reset_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
+            $(input).removeAttr("disabled");
         });
     });
 }
@@ -286,8 +286,8 @@ var reset_form = function() {
         }
     }, function(jqXHR, status, error) {
         var result = jqXHR["responseText"];
-        display_message("reset_msg", "danger", "Failed to connect to the API.", function() {
-            button.removeAttr("disabled");
+        display_message("reset_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
+            $(input).removeAttr("disabled");
         });
     });
 }
@@ -308,8 +308,8 @@ var login_form = function() {
         }
     }, function(jqXHR, status, error) {
         var result = jqXHR["responseText"];
-        display_message("login_msg", "danger", "Failed to connect to the API.", function() {
-            button.removeAttr("disabled");
+        display_message("login_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
+            $(input).removeAttr("disabled");
         });
     });
 };
@@ -330,8 +330,8 @@ var create_team = function() {
         }
     }, function(jqXHR, status, error) {
         var result = jqXHR["responseText"];
-        display_message("create_team_msg", "danger", "Failed to connect to the API.", function() {
-            button.removeAttr("disabled");
+        display_message("create_team_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
+            $(input).removeAttr("disabled");
         });
     });
 };
