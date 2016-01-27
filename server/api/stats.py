@@ -12,8 +12,11 @@ blueprint = Blueprint("stats", __name__)
 def all_teams_stats():
 	teams = team.get_team().all()
 	result = [ ]
+	count = 0
 	for _team in teams:
+		count += 1
 		result.append({
+			"rank": count,
 			"teamname": _team.teamname,
 			"tid": _team.tid,
 			"school": _team.school,

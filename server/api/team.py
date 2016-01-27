@@ -169,6 +169,7 @@ def team_info():
 	in_team = False
 	owner = False
 	_user = None
+	teamdata = { }
 	search = { }
 	teamname = utils.flat_multi(request.args).get("teamname")
 	if teamname:
@@ -179,21 +180,22 @@ def team_info():
 			if "teamname_lower" not in search:
 				search.update({ "tid": _user.tid })
 				in_team = True
-	team = get_team(**search).first()
-	teamdata = get_team_info(**search)
-	if logged_in:
-		in_team = teamdata["tid"] == _user.tid
-		owner = teamdata["captain"] == _user.uid
-	teamdata["in_team"] = in_team
-	if in_team:
-		teamdata["is_owner"] = owner
-		if owner:
-			teamdata["pending_invitations"] = team.get_pending_invitations()
-			teamdata["invitation_requests"] = team.get_invitation_requests()
-	else:
+	if bool(search) != False:
+		team = get_team(**search).first()
+		teamdata = get_team_info(**search)
 		if logged_in:
-			teamdata["invited"] = team.get_pending_invitations(toid=_user.uid) is not None
-			teamdata["requested"] = team.get_invitation_requests(frid=_user.uid) is not None
+			in_team = teamdata["tid"] == _user.tid
+			owner = teamdata["captain"] == _user.uid
+		teamdata["in_team"] = in_team
+		if in_team:
+			teamdata["is_owner"] = owner
+			if owner:
+				teamdata["pending_invitations"] = team.get_pending_invitations()
+				teamdata["invitation_requests"] = team.get_invitation_requests()
+		else:
+			if logged_in:
+				teamdata["invited"] = team.get_pending_invitations(toid=_user.uid) is not None
+				teamdata["requested"] = team.get_invitation_requests(frid=_user.uid) is not None
 	return { "success": 1, "team": teamdata }
 
 ##################

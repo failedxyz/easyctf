@@ -149,15 +149,15 @@ app.controller("scoreboardController", ["$controller", "$scope", "$http", functi
 
 app.controller("resetController", ["$controller", "$scope", "$http", "$routeParams", function($controller, $scope, $http, $routeParams) {
 	var data = { };
-    $scope.token = false;
-    data["csrf_token"] = $.cookie("csrf_token");
+	$scope.token = false;
+	data["csrf_token"] = $.cookie("csrf_token");
 	if ("token" in $routeParams) {
-        $scope.token = true;
+		$scope.token = true;
 		token = $routeParams["token"];
 		$.get("/api/user/forgot/" + token, data, function(data) {
-            $scope.body = data["message"];
-            $scope.success = data["success"]
-            $scope.$apply();
+			$scope.body = data["message"];
+			$scope.success = data["success"]
+			$scope.$apply();
 		});
 	} else {
 		$controller("mainController", { $scope: $scope });
@@ -237,59 +237,59 @@ var register_form = function() {
 			location.href = "/profile";
 		} else {
 			display_message("register_msg", "danger", result["message"], function() {
-			    $(input).removeAttr("disabled");
+				$(input).removeAttr("disabled");
 			});
 		}
-	}).fail(function(jqXHR, status, error) {
+	}, function(jqXHR, status, error) {
 		var result = JSON.parse(jqXHR["responseText"]);
 		display_message("register_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
-		    $(input).removeAttr("disabled");
+			$(input).removeAttr("disabled");
 		});
 	});
 };
 
 // password reset
 var request_reset_form = function() {
-    var data = $("#request_reset_form").serializeObject();
-    $(input).attr("disabled", "disabled");
-    api_call("POST", "/api/user/forgot", data, function(result) {
-        if (result["success"] == 1) {
-            display_message("reset_msg", "success", result["message"]);
-        } else {
-            display_message("reset_msg", "danger", result["message"], function() {
-                $(input).removeAttr("disabled");
-            });
-        }
-    }).fail(function(jqXHR, status, error) {
+	var data = $("#request_reset_form").serializeObject();
+	$(input).attr("disabled", "disabled");
+	api_call("POST", "/api/user/forgot", data, function(result) {
+		if (result["success"] == 1) {
+			display_message("reset_msg", "success", result["message"]);
+		} else {
+			display_message("reset_msg", "danger", result["message"], function() {
+				$(input).removeAttr("disabled");
+			});
+		}
+	}, function(jqXHR, status, error) {
 		var result = JSON.parse(jqXHR["responseText"]);
 		display_message("reset_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
-		    $(input).removeAttr("disabled");
+			$(input).removeAttr("disabled");
 		});
-    });
+	});
 }
 
 var reset_form = function() {
-    var data = $("#reset_form").serializeObject();
-    data["csrf_token"] = $.cookie("csrf_token");
-    var url = window.location.href;
-    var token = url.substr(url.lastIndexOf("/")+1);
-    $(input).attr("disabled", "disabled");
-    api_call("POST", "/api/user/forgot/" + token, data, function(result) {
-        if (result["success"] == 1) {
-            display_message("reset_msg", "success", result["message"], function() {
-                location.href = "/login";
-            });
-        } else {
-            display_message("reset_msg", "danger", result["message"], function() {
-                $(input).removeAttr("disabled");
-            });
-        }
-    }).fail(function(jqXHR, status, error) {
+	var data = $("#reset_form").serializeObject();
+	data["csrf_token"] = $.cookie("csrf_token");
+	var url = window.location.href;
+	var token = url.substr(url.lastIndexOf("/")+1);
+	$(input).attr("disabled", "disabled");
+	api_call("POST", "/api/user/forgot/" + token, data, function(result) {
+		if (result["success"] == 1) {
+			display_message("reset_msg", "success", result["message"], function() {
+				location.href = "/login";
+			});
+		} else {
+			display_message("reset_msg", "danger", result["message"], function() {
+				$(input).removeAttr("disabled");
+			});
+		}
+	}, function(jqXHR, status, error) {
 		var result = JSON.parse(jqXHR["responseText"]);
 		display_message("reset_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
-		    $(input).removeAttr("disabled");
+			$(input).removeAttr("disabled");
 		});
-    });
+	});
 }
 
 // login page
@@ -303,13 +303,13 @@ var login_form = function() {
 			location.href = "/profile";
 		} else {
 			display_message("login_msg", "danger", result["message"], function() {
-			    $(input).removeAttr("disabled");
+				$(input).removeAttr("disabled");
 			});
 		}
-	}).fail(function(jqXHR, status, error) {
+	}, function(jqXHR, status, error) {
 		var result = JSON.parse(jqXHR["responseText"]);
 		display_message("login_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
-            $(input).removeAttr("disabled");
+			$(input).removeAttr("disabled");
 		});
 	});
 };
@@ -325,13 +325,13 @@ var create_team = function() {
 			location.reload(true);
 		} else {
 			display_message("create_team_msg", "danger", result["message"], function() {
-			    $(input).removeAttr("disabled");
+				$(input).removeAttr("disabled");
 			});
 		}
-	}).fail(function(jqXHR, status, error) {
+	}, function(jqXHR, status, error) {
 		var result = JSON.parse(jqXHR["responseText"]);
 		display_message("create_team_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
-		    $(input).removeAttr("disabled");
+			$(input).removeAttr("disabled");
 		});
 	});
 };
@@ -344,12 +344,12 @@ var add_member = function() {
 		if (result["success"] == 1) {
 			location.reload(true);
 		} else {
-		    $(input).removeAttr("disabled");
+			$(input).removeAttr("disabled");
 		}
-	}).fail(function(jqXHR, status, error) {
+	}, function(jqXHR, status, error) {
 		var result = JSON.parse(jqXHR["responseText"]);
 		display_message("create_team_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
-		    $(input).removeAttr("disabled");
+			$(input).removeAttr("disabled");
 		});
 	});
 };

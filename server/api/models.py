@@ -51,7 +51,8 @@ class Teams(db.Model):
 			members.append({
 				"username": member.username,
 				"name": member.name,
-				"captain": member.uid == self.owner
+				"captain": member.uid == self.owner,
+				"type": member.utype
 			})
 		return members
 
@@ -63,7 +64,7 @@ class Teams(db.Model):
 		else:
 			return 0
 
-	def place(self):
+	def place(self, ranked=True):
 		score = db.func.sum(Problems.value).label("score")
 		quickest = db.func.max(Solves.date).label("quickest")
 		teams = db.session.query(Solves.tid).join(Teams).join(Problems).filter().group_by(Solves.tid).order_by(score.desc(), quickest).all()
@@ -111,6 +112,13 @@ class Teams(db.Model):
 				"uid": user.uid
 			})
 		return result
+
+	def is_observer(self):
+		members = get_members()
+		for member in members:
+			if member["observer"] == True:
+				return True
+		return False
 
 class Problems(db.Model):
 	pid = db.Column(db.Integer, primary_key=True)
