@@ -317,7 +317,6 @@ var login_form = function() {
 // team page
 
 var create_team = function() {
-<<<<<<< HEAD
 	var input = "#create_team input";
 	var data = $("#create_team").serializeObject();
 	$(input).attr("disabled", "disabled");
@@ -353,43 +352,6 @@ var add_member = function() {
 			$(input).removeAttr("disabled");
 		});
 	});
-=======
-	var input = "#create_team input";
-	var data = $("#create_team").serializeObject();
-	$(input).attr("disabled", "disabled");
-	api_call("POST", "/api/team/create", data, function(result) {
-		if (result["success"] == 1) {
-			location.reload(true);
-		} else {
-			display_message("create_team_msg", "danger", result["message"], function() {
-				$(input).removeAttr("disabled");
-			});
-		}
-	}, function(jqXHR, status, error) {
-		var result = jqXHR["responseText"];
-		display_message("create_team_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
-			$(input).removeAttr("disabled");
-		});
-	});
-};
-
-var add_member = function() {
-	var input = "#add_member input";
-	var data = $("#add_member").serializeObject();
-	$(input).attr("disabled", "disabled");
-	api_call("POST", "/api/team/invite", data, function(result) {
-		if (result["success"] == 1) {
-			location.reload(true);
-		} else {
-			$(input).removeAttr("disabled");
-		}
-	}, function(jqXHR, status, error) {
-		var result = JSON.parse(jqXHR["responseText"]);
-		display_message("create_team_msg", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
-			$(input).removeAttr("disabled");
-		});
-	});
->>>>>>> d6564d17efae214a3284d1afe243952d90d0b752
 };
 
 var rescind_invitation = function(uid) {
