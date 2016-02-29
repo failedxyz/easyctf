@@ -166,6 +166,9 @@ def user_info():
 		userdata["email"] = user.email
 	if user_in_team:
 		userdata["team"] = team.get_team_info(tid=user.tid)
+	if me and not(user_in_team):
+		invitations = user.get_invitations()
+		userdata["invitations"] = invitations
 	return { "success": 1, "user": userdata }
 
 ##################

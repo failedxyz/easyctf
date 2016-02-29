@@ -59,6 +59,7 @@
 							</table>
 						</div>
 						<div class="panel-body" ng-show="user['in_team']!=true">
+							<div class="alert alert-success" ng-show="user['me']==true && user['invitations'].length>0">You have {{ user['invitations'].length }} invitation{{ user['invitations'].length==1 ? "" : "s" }}! <a href="/team">View &raquo;</a></div>
 							<p>{{ user['me']==true ? "You're" : "This user is" }} not a part of a team.</p>
 							<a href="/team" class="btn btn-primary" ng-show="user['me']==true">Join or create one now &raquo;</a>
 						</div>

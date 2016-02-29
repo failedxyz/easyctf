@@ -162,6 +162,34 @@ def team_invite_request():
 
 	return { "success": 1, "message": "Success!" }
 
+@blueprint.route("/invite/accept", methods=["POST"])
+@api_wrapper
+def team_accept_invite():
+	params = utils.flat_multi(request.form)
+	_user = user.get_user().first()
+	if user.in_team(_user):
+		raise WebException("You're already in a team!")
+
+	tid = params.get("tid")
+	_team = get_team(tid=tid).first()
+	if _team is None:
+		raise WebException("Team not found.")
+
+	invitation = TeamInvitations.query.filter_by(rtype=0, frid=tid, toid=_user.uid).first()
+	if invitation is None:
+		raise WebException("Invitation doesn't exist.")
+
+	with app.app_context():
+		_user = Users.query.filter_by(uid=_user.uid).first()
+		_user.tid = tid
+		db.session.delete(invitation)
+		invitation2 = TeamInvitations.query.filter_by(rtype=1, frid=_user.uid, toid=tid).first()
+		if invitation2 is not None:
+			db.session.delete(invitation2)
+		db.session.commit()
+
+	return { "success": 1, "message": "Success!" }
+
 @blueprint.route("/info", methods=["GET"])
 @api_wrapper
 def team_info():
@@ -196,6 +224,9 @@ def team_info():
 			if logged_in:
 				teamdata["invited"] = team.get_pending_invitations(toid=_user.uid) is not None
 				teamdata["requested"] = team.get_invitation_requests(frid=_user.uid) is not None
+	else:
+		if logged_in:
+			teamdata["invitations"] = _user.get_invitations()
 	return { "success": 1, "team": teamdata }
 
 ##################

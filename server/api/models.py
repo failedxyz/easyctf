@@ -30,6 +30,16 @@ class Users(db.Model):
 		self.admin = False
 		self.registertime = int(time.time())
 
+	def get_invitations(self):
+		invitations = db.session.query(TeamInvitations).filter_by(rtype=0, toid=self.uid).all()
+		result = [ ]
+		for inv in invitations:
+			team = db.session.query(Teams).filter_by(tid=inv.frid).first()
+			result.append({
+				"team": team.teamname
+			})
+		return result
+
 class Teams(db.Model):
 	tid = db.Column(db.Integer, primary_key=True)
 	teamname = db.Column(db.String(64), unique=True)
