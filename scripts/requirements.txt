@@ -5,3 +5,4 @@ SQLAlchemy
 gunicorn
 requests
 voluptuous
+PIL

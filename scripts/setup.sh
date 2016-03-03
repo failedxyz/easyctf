@@ -12,7 +12,7 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again p
 
 echo "Installing dependencies..."
 apt-get -y install python
-apt-get -y install python-pip
+apt-get -y install python-pip libjpeg-dev
 apt-get -y install python-dev libmysqlclient-dev
 apt-get -y install nginx
 apt-get -y install mysql-server

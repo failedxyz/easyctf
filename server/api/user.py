@@ -1,4 +1,4 @@
-from flask import Blueprint, make_response, session, request, redirect, url_for
+from flask import Blueprint, make_response, session, request, redirect, url_for, send_file
 from flask import current_app as app
 from voluptuous import Schema, Length, Required
 
@@ -88,6 +88,7 @@ def user_register():
 	with app.app_context():
 		db.session.add(user)
 		db.session.commit()
+		utils.generate_identicon(email, user.uid)
 
 	logger.log(__name__, logger.INFO, "%s registered with %s" % (name.encode("utf-8"), email.encode("utf-8")))
 	login_user(username, password)
@@ -160,7 +161,8 @@ def user_info():
 		"registertime": datetime.datetime.fromtimestamp(user.registertime).isoformat() + "Z",
 		"me": me,
 		"show_email": show_email,
-		"in_team": user_in_team
+		"in_team": user_in_team,
+		"uid": user.uid
 	}
 	if show_email:
 		userdata["email"] = user.email
@@ -170,6 +172,18 @@ def user_info():
 		invitations = user.get_invitations()
 		userdata["invitations"] = invitations
 	return { "success": 1, "user": userdata }
+
+@blueprint.route("/avatar/<uid>", methods=["GET"])
+def user_avatar(uid):
+	uid = int(uid)
+	try:
+		return send_file("pfp/%d.png" % uid, mimetype="image/png")
+	except:
+		user = get_user(uid=uid).first()
+		if user is not None:
+			utils.generate_identicon(user.email, user.uid)
+			return send_file("pfp/%d.png" % uid, mimetype="image/png")
+		return abort(404)
 
 ##################
 # USER FUNCTIONS #

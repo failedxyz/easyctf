@@ -10,4 +10,4 @@ sudo cp /vagrant/ctf.nginx /etc/nginx/sites-enabled/ctf
 echo "Starting the server..."
 cd /home/vagrant/server
 sudo service nginx start
-tmux new-session -s ctf -d 'gunicorn "app:app" -c /home/vagrant/scripts/gunicorn.py.ini'
+tmux new-session -s ctf -d 'tmux set remain-on-exit on && gunicorn "app:app" -c /home/vagrant/scripts/gunicorn.py.ini'

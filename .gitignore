@@ -3,6 +3,7 @@
 .bundle/config
 logs/
 files/
+pfp/
 
 # Object files
 *.o

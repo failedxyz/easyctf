@@ -46,7 +46,7 @@ app.config(function($routeProvider, $locationProvider) {
 	})
 	.when("/settings", {
 		templateUrl: "pages/settings.html",
-		controller: "mainController"
+		controller: "settingsController"
 	})
 	.when("/forgot", {
 		templateUrl: "pages/forgot.html",
@@ -183,6 +183,17 @@ app.controller("adminProblemsController", ["$controller", "$scope", "$http", fun
 	$.get("/api/admin/problems/list", function(result) {
 		if (result["success"] == 1) {
 			$scope.problems = result["problems"];
+		}
+		$scope.$apply();
+	});
+}]);
+
+app.controller("settingsController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
+	$controller("mainController", { $scope: $scope });
+	$.get("/api/user/info", {}, function(result) {
+		if (result["success"] == 1) {
+			console.log(result["user"]);
+			$scope.user = result["user"];
 		}
 		$scope.$apply();
 	});
@@ -377,6 +388,15 @@ var request_invitation = function(tid) {
 var accept_invitation = function(tid) {
 	var data = { "tid": tid };
 	api_call("POST", "/api/team/invite/accept", data, function(result) {
+		if (result["success"] == 1) {
+			location.reload(true);
+		}
+	});
+};
+
+var accept_invitation_request = function(uid) {
+	var data = { "uid": uid };
+	api_call("POST", "/api/team/invite/request/accept", data, function(result) {
 		if (result["success"] == 1) {
 			location.reload(true);
 		}

@@ -43,7 +43,7 @@
 					<div class="list-group-item" ng-repeat="member in team['members']">
 						<h4 class="list-group-item-heading" style="display:inline-block;">{{ member['name'] }}</h4>
 						<div class="label label-info" ng-show="member['captain']==true">Owner</div>
-						<p class="list-group-item-text">@{{ member['username'] }}</p>
+						<p class="list-group-item-text"><a href="/profile/{{ member['username'] }}">@{{ member['username'] }}</a></p>
 					</div>
 				</div>
 				<div class="panel-footer" ng-show="team['is_owner']==true">
@@ -75,10 +75,10 @@
 					<h4 class="panel-title">Pending Invitations</h4>
 				</div>
 				<div class="list-group">
-					<div class="list-group-item" ng-repeat="member in team['pending_invitations']">
+					<div class="list-group-item" ng-repeat="member in team['pending_invitations']" href="/profile/{{ member['username'] }}">
 						<a class="badge" ng-href="javascript:rescind_invitation({{ member['uid'] }});"><i class="fa fa-fw fa-times"></i></a>
 						<h4 class="list-group-item-heading">{{ member['name'] }}</h4>
-						<p class="list-group-item-text">@{{ member['username'] }}</p>
+						<p class="list-group-item-text"><a href="/profile/{{ member['username'] }}">@{{ member['username'] }}</a></p>
 					</div>
 				</div>
 			</div>
@@ -87,15 +87,26 @@
 					<h4 class="panel-title">Invitation Requests</h4>
 				</div>
 				<div class="list-group">
-					<div class="list-group-item" ng-repeat="member in team['invitation_requests']">
+					<div class="list-group-item" ng-repeat="member in team['invitation_requests']" href="/profile/{{ member['username'] }}">
 						<a class="badge" ng-href="javascript:accept_invitation_request({{ member['uid'] }});"><i class="fa fa-fw fa-check"></i></a>
 						<h4 class="list-group-item-heading">{{ member['name'] }}</h4>
-						<p class="list-group-item-text">@{{ member['username'] }}</p>
+						<p class="list-group-item-text"><a href="/profile/{{ member['username'] }}">@{{ member['username'] }}</a></p>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-sm-9 col-xs-12">
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+				<li role="presentation"><a href="#activity" aria-controls="activity" role="tab" data-toggle="tab">Activity</a></li>
+			</ul>
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="profile">
+
+				</div>
+				<div role="tabpanel" class="tab-pane" id="activity">
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -185,5 +196,11 @@
 			e.preventDefault();
 		}
 	});
-	$("[data-toggle=tooltip]").tooltip();
+	$(document).ready(function() {
+		$("[data-toggle=tooltip]").tooltip();
+		$("ul[role=tablist]").tab();
+		$("a[role=tab]").click(function(e) {
+			e.preventDefault();
+		});
+	});
 </script>

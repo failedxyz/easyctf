@@ -36,7 +36,7 @@ def team_create():
 		Users.query.filter_by(uid=_user.uid).update({ "tid": team.tid })
 		db.session.commit()
 
-        session["tid"] = tid
+        session["tid"] = team.tid
 	return { "success": 1, "message": "Success!" }
 
 @blueprint.route("/delete", methods=["POST"])
@@ -175,6 +175,9 @@ def team_accept_invite():
 	if _team is None:
 		raise WebException("Team not found.")
 
+	if len(_team.get_members()) >= 5:
+		raise WebException("This team is full.")
+
 	invitation = TeamInvitations.query.filter_by(rtype=0, frid=tid, toid=_user.uid).first()
 	if invitation is None:
 		raise WebException("Invitation doesn't exist.")
@@ -184,6 +187,41 @@ def team_accept_invite():
 		_user.tid = tid
 		db.session.delete(invitation)
 		invitation2 = TeamInvitations.query.filter_by(rtype=1, frid=_user.uid, toid=tid).first()
+		if invitation2 is not None:
+			db.session.delete(invitation2)
+		db.session.commit()
+
+	return { "success": 1, "message": "Success!" }
+
+@blueprint.route("/invite/request/accept", methods=["POST"])
+@api_wrapper
+def team_accept_invite_request():
+	params = utils.flat_multi(request.form)
+	_user = user.get_user().first()
+	if not user.in_team(_user):
+		raise WebException("You must be in a team!")
+	_team = get_team(tid=_user.tid).first()
+	tid = _team.tid
+	if _user.uid != _team.owner:
+		raise WebException("You must be the captain of your team to rescind invitations!")
+
+	if len(_team.get_members()) >= 5:
+		raise WebException("Your team is full.")
+
+	uid = params.get("uid")
+	_user2 = user.get_user(uid=uid).first()
+	if user.in_team(_user2):
+		raise WebException("This user is already in a team!")
+
+	invitation = TeamInvitations.query.filter_by(rtype=1, frid=_user2.uid, toid=tid).first()
+	if invitation is None:
+		raise WebException("Invitation doesn't exist.")
+
+	with app.app_context():
+		_user2 = Users.query.filter_by(uid=_user2.uid).first()
+		_user2.tid = tid
+		db.session.delete(invitation)
+		invitation2 = TeamInvitations.query.filter_by(rtype=0, frid=tid, toid=_user2.uid).first()
 		if invitation2 is not None:
 			db.session.delete(invitation2)
 		db.session.commit()

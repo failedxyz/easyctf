@@ -3,8 +3,10 @@
 		<div class="col-sm-3 col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<img src="//www.gravatar.com/avatar/?size=512" id="avatar" style="width:100%;max-width:100%;" />
-					<small style="display:block;text-align:right;" ng-show="user['me']==true"><a href="http://en.gravatar.com/emails/" target="_blank">Edit Picture</a></small>
+					<div style="width:100%;max-width:100%;">
+						<img src="/api/user/avatar/{{ user.uid }}" id="avatar" style="width:100%;" />
+						<small style="display:block;text-align:right;" ng-show="user['me']==true"><a href="/settings#profile">Edit Picture</a></small>
+					</div>
 					<h2 style="margin:0px;font-weight:bold;font-size:2em;">{{ user.name }}</h2>
 					<small style="display:block;font-size:1.5em;color:#999;">@{{ user.username }}</small>
 					<hr>
