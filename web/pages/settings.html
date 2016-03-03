@@ -21,9 +21,16 @@
 					<label>Profile Picture</label>
 					<div class="row">
 						<div class="col-sm-2">
+							<img src="/api/user/avatar/{{ user.uid }}" id="avatar" style="width:100%;max-height:256px;" />
 						</div>
 						<div class="col-sm-10">
-							<pre>{{ user }}</pre>
+							<p>
+								<a href="javascript:upload_new_picture();" class="btn btn-primary">Upload new picture</a>
+								<a href="javascript:remove_profile_picture();" class="btn btn-default">Remove profile picture</a>
+							</p>
+							<p>
+								<i>If you remove your picture, an automatically generated <a href="http://en.wikipedia.org/wiki/Identicon" target="_blank">identicon</a> will be used.</i>
+							</p>
 						</div>
 					</div>
 				</div>
