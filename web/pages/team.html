@@ -22,14 +22,26 @@
 			<div ng-show="team['in_team']==true">
 				<h1><span data-toggle="tooltip" data-placement="top" title="Click to edit team name." id="teamname_edit" class="padded editable" contenteditable>{{ team['teamname'] }}</span></h1>
 				<h4><i class="fa fa-fw fa-university"></i> <span data-toggle="tooltip" data-placement="top" title="Click to edit school." id="school_edit" class="padded editable" contenteditable>{{ team['school'] || 'Add School' }}</span></h4>
-				<div class="badge">
-					<i class="fa fa-fw fa-flag"></i>
-					I'm in the team!
+				<div class="row">
+					<div class="label label-success">
+						<i class="fa fa-fw fa-flag"></i>
+						I'm in the team!
+					</div>
+					<div class="label label-warning">
+						<i class="fa fa-fw fa-globe"></i>
+						OBSERVER
+					</div>
 				</div>
 			</div>
 			<div ng-show="team['in_team']!=true">
 				<h1><span class="padded">{{ team['teamname'] }}</span></h1>
 				<h4><i class="fa fa-fw fa-university"></i> <span class="padded">{{ team['school'] || 'Unknown Affiliation' }}</span></h4>
+				<div class="row">
+					<div class="label label-warning">
+						<i class="fa fa-fw fa-globe"></i>
+						OBSERVER
+					</div>
+				</div>
 			</div>
 		</center>
 	</div>

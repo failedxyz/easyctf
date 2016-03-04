@@ -62,7 +62,9 @@ class Teams(db.Model):
 				"username": member.username,
 				"name": member.name,
 				"captain": member.uid == self.owner,
-				"type": member.utype
+				"type": member.utype,
+				"admin": member.admin == True,
+				"observer": member.utype == 3
 			})
 		return members
 
@@ -124,9 +126,9 @@ class Teams(db.Model):
 		return result
 
 	def is_observer(self):
-		members = get_members()
+		members = self.get_members()
 		for member in members:
-			if member["observer"] == True:
+			if member["observer"] == True or member["admin"] == True:
 				return True
 		return False
 
