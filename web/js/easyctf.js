@@ -190,7 +190,7 @@ app.controller("adminProblemsController", ["$controller", "$scope", "$http", fun
 }]);
 
 app.controller("settingsController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
-	$controller("mainController", { $scope: $scope });
+	$controller("loginController", { $scope: $scope });
 	$.get("/api/user/info", {}, function(result) {
 		if (result["success"] == 1) {
 			$scope.user = result["user"];
