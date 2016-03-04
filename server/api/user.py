@@ -1,4 +1,5 @@
 from flask import Blueprint, make_response, session, request, redirect, url_for, send_file
+from werkzeug import secure_filename
 from flask import current_app as app
 from voluptuous import Schema, Length, Required
 
@@ -8,10 +9,13 @@ from schemas import verify_to_schema, check
 
 import datetime
 import logger
+import os
 import re
 import requests
 import team
 import utils
+
+from PIL import Image
 
 ###############
 # USER ROUTES #
@@ -184,6 +188,46 @@ def user_avatar(uid):
 			utils.generate_identicon(user.email, user.uid)
 			return send_file("pfp/%d.png" % uid, mimetype="image/png")
 		return abort(404)
+
+@blueprint.route("/avatar/upload", methods=["POST"])
+@api_wrapper
+def user_avatar_upload():
+	logged_in = is_logged_in()
+	if not logged_in:
+		raise WebException("You're not logged in.")
+
+	_user = get_user().first()
+	f = request.files["file"]
+	if f is None:
+		raise WebException("Please upload something.")
+
+	fname = "/tmp/" + secure_filename(utils.generate_string())
+	f.save(fname)
+
+	try:
+		pfp = "pfp/%d.png" % _user.uid
+		os.remove(pfp)
+		im = Image.open(fname)
+		im = im.resize((256, 256), Image.ANTIALIAS)
+		im.save(open(pfp, "w"), "PNG")
+		return { "success": 1, "message": "Uploaded!" }
+	except Exception, e:
+		raise WebException(str(e))
+
+@blueprint.route("/avatar/remove", methods=["POST"])
+@api_wrapper
+def user_avatar_remove():
+	logged_in = is_logged_in()
+	if not logged_in:
+		raise WebException("You're not logged in.")
+	_user = get_user().first()
+
+	try:
+		pfp = "pfp/%d.png" % _user.uid
+		os.remove(pfp)
+		return { "success": 1, "message": "Removed!" }
+	except Exception, e:
+		raise WebException(str(e))
 
 ##################
 # USER FUNCTIONS #

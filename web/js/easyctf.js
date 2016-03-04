@@ -77,6 +77,7 @@ app.config(function($routeProvider, $locationProvider) {
 
 app.controller("mainController", ["$scope", "$http", function($scope, $http) {
 	$scope.config = { navbar: { } };
+	$scope.timestamp = Date.now();
 	$.get("/api/user/status", function(result) {
 		if (result["success"] == 1) {
 			delete result["success"];
@@ -192,7 +193,6 @@ app.controller("settingsController", ["$controller", "$scope", "$http", function
 	$controller("mainController", { $scope: $scope });
 	$.get("/api/user/info", {}, function(result) {
 		if (result["success"] == 1) {
-			console.log(result["user"]);
 			$scope.user = result["user"];
 		}
 		$scope.$apply();
@@ -204,7 +204,7 @@ function display_message(containerId, alertType, message, callback) {
 	$("#" + containerId).hide().slideDown("fast", "swing", function() {
 		window.setTimeout(function () {
 			$("#" + containerId).slideUp("fast", "swing", callback);
-		}, message.length * 75);
+		}, message.length * 55);
 	});
 };
 
@@ -397,6 +397,16 @@ var accept_invitation = function(tid) {
 var accept_invitation_request = function(uid) {
 	var data = { "uid": uid };
 	api_call("POST", "/api/team/invite/request/accept", data, function(result) {
+		if (result["success"] == 1) {
+			location.reload(true);
+		}
+	});
+};
+
+// settings page
+
+var remove_profile_picture = function() {
+	api_call("POST", "/api/user/avatar/remove", { }, function(result) {
 		if (result["success"] == 1) {
 			location.reload(true);
 		}
