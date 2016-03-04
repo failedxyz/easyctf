@@ -20,8 +20,14 @@
 	<div class="jumbotron">
 		<center>
 			<div ng-show="team['in_team']==true">
-				<h1><span data-toggle="tooltip" data-placement="top" title="Click to edit team name." id="teamname_edit" class="padded editable" contenteditable>{{ team['teamname'] }}</span></h1>
-				<h4><i class="fa fa-fw fa-university"></i> <span data-toggle="tooltip" data-placement="top" title="Click to edit school." id="school_edit" class="padded editable" contenteditable>{{ team['school'] || 'Add School' }}</span></h4>
+				<div ng-show="team['is_owner']==true">
+					<h1><span data-toggle="tooltip" data-placement="top" title="Click to edit team name." id="teamname_edit" class="padded editable" contenteditable>{{ team['teamname'] }}</span></h1>
+					<h4><i class="fa fa-fw fa-university"></i> <span data-toggle="tooltip" data-placement="top" title="Click to edit school." id="school_edit" class="padded editable" contenteditable>{{ team['school'] || 'Add School' }}</span></h4>
+				</div>
+				<div ng-show="team['is_owner']==false">
+					<h1><span class="padded">{{ team['teamname'] }}</span></h1>
+					<h4><i class="fa fa-fw fa-university"></i> <span class="padded">{{ team['school'] || 'Unknown Affiliation' }}</span></h4>
+				</div>
 				<div class="row">
 					<div class="label label-success">
 						<i class="fa fa-fw fa-flag"></i>
@@ -187,8 +193,8 @@
 			<p ng-show="team['invitations'].length==0">You need an invitation to join another team. If you'd like to request to be a member of their team, go to their team page and click the Request button.</p>
 			<div ng-show="team['invitations'].length>0" class="list-group">
 				<div class="list-group-item" ng-repeat="invitation in team['invitations']">
-					<a href="/team/{{ invitation['team'] }}">{{ invitation['team'] }}</a>
-					<a href="javascript:accept_invitation();" class="badge">Accept &raquo;</a>
+					<a ng-href="/team/{{ invitation['team'] }}">{{ invitation['team'] }}</a>
+					<a ng-href="javascript:accept_invitation({{ invitation['tid'] }});" class="badge">Accept &raquo;</a>
 				</div>
 			</div>
 		</div>

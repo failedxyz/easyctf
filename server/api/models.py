@@ -36,7 +36,8 @@ class Users(db.Model):
 		for inv in invitations:
 			team = db.session.query(Teams).filter_by(tid=inv.frid).first()
 			result.append({
-				"team": team.teamname
+				"team": team.teamname,
+				"tid": team.tid
 			})
 		return result
 
