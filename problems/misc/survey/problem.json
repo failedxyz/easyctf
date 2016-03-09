@@ -1,5 +1,12 @@
 {
 	"title": "Survey",
 	"description": "Take our survey.",
-	
+	"hint": "No hint!",
+	"category": "Miscellaneous",
+	"autogen": false,
+	"programming": false,
+	"value": 20,
+	"bonus": 0,
+	"threshold": 0,
+	"weightmap": { }
 }
