@@ -23,3 +23,5 @@ CTF_END = 0 # To be used later
 MG_HOST = ""
 MG_API_KEY = ""
 ADMIN_EMAIL = ""
+
+PROBLEM_DIR = "../problems"

@@ -130,3 +130,7 @@ def problem_data():
         jason.append({"pid": problem[1], "name": problem[2] ,"category": problem[3], "description": problem[4], "hint": problem[5], "value": problem[6], "solves": problem[7], "files": problem_files})
 
     return jsonify(data=jason)
+
+def insert_problem(data):
+    print data
+    pass

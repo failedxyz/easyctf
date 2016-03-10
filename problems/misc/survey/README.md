@@ -8,19 +8,22 @@ The directory *must* contain a `problem.json`; this information will be loaded i
 
 ```javascript
 {
-    "pid": "survey",                    // required
-    "title": "Survey",                  // required
-    "description": "Take our survey.",  // required - can use HTML
-    "hint": "No hint!",                 // optional - defaults to ""
-    "category": "Miscellaneous",        // required
-    "autogen": false,                   // optional - defaults to false
-    "programming": false,               // optional - defaults to false
-    "value": 20,                        // required - integer out of 800
-    "bonus": 0,                         // optional - defaults to 0; see below for details
-    "threshold": 0,                     // recommended - defaults to 0; see below for details
-    "weightmap": { }                    // recommended - defaults to {}
+	"pid": "survey",                    // required
+	"title": "Survey",                  // required
+	"hint": "No hint!",                 // optional - defaults to ""
+	"category": "Miscellaneous",        // required
+	"autogen": false,                   // optional - defaults to false
+	"programming": false,               // optional - defaults to false
+	"value": 20,                        // required - integer out of 800
+	"bonus": 0,                         // optional - defaults to 0; see below for details
+	"threshold": 0,                     // recommended - defaults to 0; see below for details
+	"weightmap": { }                    // recommended - defaults to {}
 }
 ```
+
+## `description.md`
+
+The directory *must* contain a `description.md`. Just write your description here in Markdown. If you're using `autogen: true`, you can include `${}` variables to produce dynamic content.
 
 ## `grader.py`
 
@@ -28,8 +31,8 @@ The directory must *also* contain a `grader.py`; this script must contain a `gra
 
 ```python
 {
-    "correct": True # or False, indicating whether the answer is correct.
-    "message": "Congratulations!" # a custom message for feedback on the website.
+	"correct": True # or False, indicating whether the answer is correct.
+	"message": "Congratulations!" # a custom message for feedback on the website.
 }
 ```
 
@@ -37,9 +40,9 @@ For the most part, checking in flags will simply be a matter of comparing string
 
 ```python
 def grade(tid, answer):
-    if answer.find("csrf_protection_would_probably_have_been_a_good_idea_:/") != -1:
-        return { "correct": True, "message": "Indeed." }
-    return { "correct": False, "message": "Nope, that's not quite right." }
+	if answer.find("csrf_protection_would_probably_have_been_a_good_idea_:/") != -1:
+		return { "correct": True, "message": "Indeed." }
+	return { "correct": False, "message": "Nope, that's not quite right." }
 ```
 
 You can copy-paste the above example into your grader and make any necessary adjustments. If you were wondering why we don't just compare strings, some problems may warrant a more complicated grader, like the problem H4SH3D from last year:
@@ -48,31 +51,31 @@ You can copy-paste the above example into your grader and make any necessary adj
 import binascii
 
 def compute(uinput):
-    if len(uinput) > 32: return ""
-    blen = 32
-    n = blen - len(uinput) % blen
-    if n == 0:
-        n = blen
-    pad = chr(n)
-    ninput = uinput + pad * n
-    r = ""
-    for i in range(0, blen, 4):
-        s = ninput[i:i+4]
-        h = 0
-        for j in range(len(s)):
-            h = (h << 4) + ord(s[j])
-            g = h & 4026531840
-            if not(g == 0):
-                h ^= g >> 24
-            h &= ~g
-        r += chr(h % 256)
-    h = binascii.hexlify(bytes(r, 'Latin-1'))
-    return h
+	if len(uinput) > 32: return ""
+	blen = 32
+	n = blen - len(uinput) % blen
+	if n == 0:
+		n = blen
+	pad = chr(n)
+	ninput = uinput + pad * n
+	r = ""
+	for i in range(0, blen, 4):
+		s = ninput[i:i+4]
+		h = 0
+		for j in range(len(s)):
+			h = (h << 4) + ord(s[j])
+			g = h & 4026531840
+			if not(g == 0):
+				h ^= g >> 24
+			h &= ~g
+		r += chr(h % 256)
+	h = binascii.hexlify(bytes(r, 'Latin-1'))
+	return h
 
 def grade(tid, answer):
-    if compute(answer) == compute("they_see_me_hashin_they_hatin"):
-        return { "correct": True, "message": "They see me hashin' they hatin'" }
-    return { "correct": False, "message": "Nope." }
+	if compute(answer) == compute("they_see_me_hashin_they_hatin"):
+		return { "correct": True, "message": "They see me hashin' they hatin'" }
+	return { "correct": False, "message": "Nope." }
 ```
 
 ## `static`
@@ -98,7 +101,7 @@ Bonus points encourage teams to finish solving a problem first. Rather than an a
 | 4    | 6%  | 8%  | 10% |
 | 5    | 8%  | 12% | 20% |
 
-The table indicates how many percent bonus a team should receive if they solve a problem first, second, or third. Low problems such as the survey should not yield bonus points; only high-valued points should have bonus points in order to encourage teams t o solve them first.
+The table indicates how many percent bonus a team should receive if they solve a problem first, second, or third. Low problems such as the survey should not yield bonus points; only high-valued points should have bonus points in order to encourage teams to solve them first.
 
 ## Problem Unlocking
 
@@ -106,20 +109,20 @@ Problem unlocking is managed through a mechanism that involves a threshold and w
 
 ```javascript
 {
-    "pid": "launch-code",
-    "threshold": 5,
-    "weightmap":    {
-        "php3": 1,
-        "faster-math": 1,
-        "biggerisbetter": 1,
-        "cave-johnson": 1,
-        "blackmesa": 1,
-        "rsa3": 1,
-        "yandere": 1,
-        "rsi": 1,
-        "adoughbee": 1,
-        "infinity_star": 1
-    }
+	"pid": "launch-code",
+	"threshold": 5,
+	"weightmap":    {
+		"php3": 1,
+		"faster-math": 1,
+		"biggerisbetter": 1,
+		"cave-johnson": 1,
+		"blackmesa": 1,
+		"rsa3": 1,
+		"yandere": 1,
+		"rsi": 1,
+		"adoughbee": 1,
+		"infinity_star": 1
+	}
 }
 ```
 
