@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify
 from decorators import admins_only, api_wrapper
 from models import db, Problems, Files
+from schemas import verify_to_schema, check
 
 import json
 
@@ -24,3 +25,20 @@ def problem_data():
 			"weightmap": json.loads(problem.weightmap)
 		})
 	return { "success": 1, "problems": problems_return }
+
+"""
+@blueprint.route("/problems/submit", methods=["POST"])
+@api_wrapper
+@admins_only
+def problem_submit():
+	params = utils.flat_multi(request.form)
+	verify_to_schema(UserSchema, params)
+
+	title = params.get("title")
+
+ProblemSubmissionSchema = Schema({
+	Required("title"): check(
+		([str, Length(min=4, max=64)], "The title should be between 4 and 64 characters long."),
+	),
+}, extra=True)
+"""

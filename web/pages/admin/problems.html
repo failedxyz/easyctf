@@ -7,6 +7,9 @@
 	width: 100%;
 	height: 200px;
 }
+.epiceditor-edit-mode {
+	border: 1px solid #999 !important;
+}
 </style>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -16,7 +19,7 @@
 <div class="tab-content">
 	<div role="tabpanel" class="tab-pane active" id="problems">
 		<div class="row">
-			<div class="col-sm-12 col-md-6">
+			<div class="col-sm-12 col-md-3">
 				<div class="panel-group" id="problems" role="tablist" aria-multiselectable="true">
 					<div class="well" ng-show="problems.length==0">There are no problems to show!</div>
 					<!-- <div class="panel panel-default">
@@ -35,7 +38,7 @@
 					</div> -->
 				</div>
 			</div>
-			<div class="col-sm-12 col-md-6">
+			<div class="col-sm-12 col-md-9">
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="heading-new">
 						<h4 class="panel-title">
@@ -89,7 +92,7 @@
 										<div class="col-sm-12 form-group">
 											<label class="col-sm-12" for="description"><small>Description</small></label>
 											<div class="col-sm-12">
-												<textarea id="new_description" name="description"></textarea>
+												<div id="description"></div>
 											</div>
 										</div>
 									</div>
@@ -132,27 +135,46 @@
 		</div>
 	</div>
 	<div role="tabpanel" class="tab-pane" id="filesystem">
-		<div class="well">Nothing here yet.</div>
+		<div class="row">
+			<div class="col-sm-12 col-md-3">
+				<div class="">
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-9">
+			</div>
+		</div>
 	</div>
 </div>
 
 <script type="text/javascript">
-	$("ul[role=tablist]").tab();
-	$("a[role=tab]").click(function(e) {
-		e.preventDefault();
+	$(document).ready(function() {
+		$("ul[role=tablist]").tab();
+		$("a[role=tab]").click(function(e) {
+			e.preventDefault();
+		});
+		$(".selectpicker").selectpicker();
+		var config = {
+			toolbar: [
+				{ name: "basicstyles", items: [ "Bold", "Italic", "Underline" ] },
+				{ name: "links", items: [ "Link" ] },
+				{ name: "paragraph", items: [ "NumberedList", "BulletedList", "-", "Outdent", "Indent", "-", "Blockquote" ] },
+				{ name: "tools", items: [ "Maximize" ] },
+				{ name: "document", items: [ "Source" ] },
+			]
+		};
+		var editor = new EpicEditor({
+			container: "description",
+			theme: {
+				base: "https://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/base/epiceditor.css",
+				preview: "https://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/preview/github.css",
+				editor: "https://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/editor/epic-light.css"
+			},
+			button: {
+				bar: "show"
+			}
+		}).load();
+		var new_grader = ace.edit("new_grader");
+		new_grader.setTheme("ace/theme/tomorrow");
+		new_grader.getSession().setMode("ace/mode/python");
 	});
-	$(".selectpicker").selectpicker();
-	var config = {
-		toolbar: [
-			{ name: "basicstyles", items: [ "Bold", "Italic", "Underline" ] },
-			{ name: "links", items: [ "Link" ] },
-			{ name: "paragraph", items: [ "NumberedList", "BulletedList", "-", "Outdent", "Indent", "-", "Blockquote" ] },
-			{ name: "tools", items: [ "Maximize" ] },
-			{ name: "document", items: [ "Source" ] },
-		]
-	};
-	CKEDITOR.replace("new_description", config);
-	var new_grader = ace.edit("new_grader");
-	new_grader.setTheme("ace/theme/tomorrow");
-	new_grader.getSession().setMode("ace/mode/python");
 </script>

@@ -13,7 +13,6 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder "scripts", "/home/vagrant/scripts"
   config.vm.synced_folder "web", "/srv/http/ctf"
 
-  config.vm.provision :shell, path: "/vagrant/deploy", run: "always", privileged: false
   config.vm.provision :shell, :path => "scripts/setup.sh"
   config.ssh.forward_agent = true
 
