@@ -1,0 +1,12 @@
+{
+  "pid": "dijkstra",
+  "title": "Dijkstra",
+  "hint": "You might consider reading up on shortest-path algorithms.",
+  "category": "Programming",
+  "autogen": false,
+  "programming": true,
+  "value": 450,
+  "bonus": 4,
+  "threshold": 0,
+  "weightmap": { }
+}
