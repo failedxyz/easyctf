@@ -28,7 +28,7 @@ def initialize_logs():
 	for importer, modname, ispkg in pkgutil.walk_packages(path="../api"):
 		create_logger(modname)
 
-def log(logname, level, message):
+def log(logname, message, level=INFO):
 	logger = logging.getLogger(logname)
 	message = "[%s] %s" % (datetime.datetime.now().strftime("%m/%d/%Y %X"), message)
 	logger.log(level, message)

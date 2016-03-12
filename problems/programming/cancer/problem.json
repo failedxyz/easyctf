@@ -3,9 +3,9 @@
 	"title": "Cancer",
 	"hint": "No hint!",
 	"category": "Miscellaneous",
-	"autogen": false,
+	"autogen": true,
 	"programming": false,
-	"value": 20,
+	"value": 100,
 	"bonus": 0,
 	"threshold": 0,
 	"weightmap": { }

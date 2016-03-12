@@ -3,6 +3,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import time
 import traceback
 import utils
+import cPickle as pickle
 
 db = SQLAlchemy()
 
@@ -70,17 +71,14 @@ class Teams(db.Model):
 		return members
 
 	def points(self):
-		score = db.func.sum(Problems.value).label("score")
-		team = db.session.query(Solves.tid, score).join(Teams).join(Problems).filter(Teams.tid==self.tid).group_by(Solves.tid).first()
-		if team:
-			return team.score
-		else:
-			return 0
+		""" TODO: Implement scoring with Bonus Points """
+		return 0
 
 	def place(self, ranked=True):
-		score = db.func.sum(Problems.value).label("score")
-		quickest = db.func.max(Solves.date).label("quickest")
-		teams = db.session.query(Solves.tid).join(Teams).join(Problems).filter().group_by(Solves.tid).order_by(score.desc(), quickest).all()
+		# score = db.func.sum(Problems.value).label("score")
+		# quickest = db.func.max(Solves.date).label("quickest")
+		# teams = db.session.query(Solves.tid).join(Teams).join(Problems).filter().group_by(Solves.tid).order_by(score.desc(), quickest).all()
+		teams = [ self.tid ]
 		try:
 			i = teams.index((self.tid,)) + 1
 			k = i % 10
@@ -134,23 +132,28 @@ class Teams(db.Model):
 		return False
 
 class Problems(db.Model):
-	pid = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(128))
+	pid = db.Column(db.String(128), primary_key=True, autoincrement=False)
+	title = db.Column(db.String(128))
 	category = db.Column(db.String(128))
 	description = db.Column(db.Text)
-	hint = db.Column(db.Text)
-	flag = db.Column(db.Text)
-	disabled = db.Column(db.Boolean, default=False)
 	value = db.Column(db.Integer)
-	solves = db.Column(db.Integer, default=0)
+	hint = db.Column(db.Text)
+	autogen = db.Column(db.Boolean)
+	bonus = db.Column(db.Integer)
+	threshold = db.Column(db.Integer)
+	weightmap = db.Column(db.PickleType)
 
-	def __init__(self, name, category, description, hint, flag, value):
-		self.name = name
+	def __init__(self, pid, title, category, description, value, hint="", autogen=False, bonus=0, threshold=0, weightmap={}):
+		self.pid = pid
+		self.title = title
 		self.category = category
 		self.description = description
-		self.hint = hint
-		self.flag = flag
 		self.value = value
+		self.hint = hint
+		self.autogen = autogen
+		self.bonus = bonus
+		self.threshold = threshold
+		self.weightmap = weightmap
 
 class Files(db.Model):
 	fid = db.Column(db.Integer, primary_key=True)
@@ -162,12 +165,11 @@ class Files(db.Model):
 		self.location = location
 
 class Solves(db.Model):
+	__table_args__ = (db.UniqueConstraint("pid", "tid"), {})
 	sid = db.Column(db.Integer, primary_key=True)
-	pid = db.Column(db.Integer, db.ForeignKey("problems.pid"))
-	tid = db.Column(db.Integer, db.ForeignKey("teams.tid"))
+	pid = db.Column(db.Integer)
+	tid = db.Column(db.Integer)
 	date = db.Column(db.Integer, default=utils.get_time_since_epoch())
-	team = db.relationship("Teams", foreign_keys="Solves.tid", lazy="joined")
-	prob = db.relationship("Problems", foreign_keys="Solves.pid", lazy="joined")
 	correct = db.Column(db.Boolean)
 	flag = db.Column(db.Text)
 

@@ -12,135 +12,30 @@
 }
 </style>
 
-<ul class="nav nav-tabs" role="tablist">
-	<li role="presentation" class="active"><a href="#problems" aria-controls="problems" role="tab" data-toggle="tab">Problems</a></li>
-	<li role="presentation"><a href="#filesystem" aria-controls="filesystem" role="tab" data-toggle="tab">Filesystem</a></li>
-</ul>
-<div class="tab-content">
-	<div role="tabpanel" class="tab-pane active" id="problems">
-		<div class="row">
-			<div class="col-sm-12 col-md-3">
-				<div class="panel-group" id="problems" role="tablist" aria-multiselectable="true">
-					<div class="well" ng-show="problems.length==0">There are no problems to show!</div>
-					<!-- <div class="panel panel-default">
-						<div class="panel-heading" role="tab" id="heading-new">
-							<h4 class="panel-title">
-								<a class="NO_HOVER_UNDERLINE_DAMMIT" style="display:block;" data-toggle="collapse" data-parent="#accordion" href="#collapse-new" aria-expanded="true" aria-controls="collapse-new">
-									<i class="fa fa-fw fa-plus"></i> Create New Problem
-								</a>
-							</h4>
-						</div>
-						<div id="collapse-new" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-new">
-							<div class="panel-body">
-								
-							</div>
-						</div>
-					</div> -->
-				</div>
-			</div>
-			<div class="col-sm-12 col-md-9">
+<div class="row">
+	<div class="tabbable">
+		<ul class="nav nav-pills nav-stacked col-md-3">
+			<li class="active"><a data-target="#new" data-toggle="tab">New</a></li>
+			<li ng-repeat="problem in problems"><a data-target="#problem_{{ problem['pid'] }}" data-toggle="tab">{{ problem["title"] }} ({{ problem["value"] }} points)</a></li>
+		</ul>
+		<div class="tab-content col-md-9">
+			<div class="tab-pane active" id="new">
 				<div class="panel panel-default">
-					<div class="panel-heading" role="tab" id="heading-new">
-						<h4 class="panel-title">
-							<i class="fa fa-fw fa-plus"></i> Create New Problem
-						</h4>
+					<div class="panel-heading">
+						<h4 class="panel-title">New Problem</h4>
 					</div>
-					<div id="collapse-new" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-new">
-						<div class="panel-body">
-							<form class="form-horizontal" onsubmit="create_problem(); return false;" id="create_problem">
-								<fieldset>
-									<div id="register_msg"></div>
-								</fieldset>
-								<fieldset class="container-fluid">
-									<p>Be sure you are familiar with guidelines to writing problems before you submit! Problem unlocking and other options will be available after you submit your problem.</p>
-									<div class="row">
-										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="name"><small>Title</small></label>
-											<div class="col-sm-12">
-												<input class="form-control" type="text" required name="name" placeholder="Title" autocomplete="off" />
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="category"><small>Category</small></label>
-											<div class="col-sm-12">
-												<select name="category" class="selectpicker" data-width="100%">
-													<option value="Algorithm">Algorithm</option>
-													<option value="Binary Exploitation">Binary Exploitation</option>
-													<option value="Cryptography">Cryptography</option>
-													<option value="Forensics">Forensics</option>
-													<option value="Linux">Linux</option>
-													<option value="Miscellaneous">Miscellaneous</option>
-													<option value="Programming">Programming</option>
-													<option value="Reconnaissance">Reconnaissance</option>
-													<option value="Reverse Engineering">Reverse Engineering</option>
-													<option value="Web Exploitation">Web Exploitation</option>
-												</select>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="value"><small>Value</small></label>
-											<div class="col-sm-12">
-												<input class="form-control" type="number" required name="value" placeholder="Value" autocomplete="off" value="10" />
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="description"><small>Description</small></label>
-											<div class="col-sm-12">
-												<div id="description"></div>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="hint"><small>Hint</small></label>
-											<div class="col-sm-12">
-												<input class="form-control" type="text" required name="hint" placeholder="Hint" autocomplete="off" />
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12 form-group">
-											<label class="col-sm-12" for="grader"><small>Grader</small></label>
-											<div class="col-sm-12">
-												<div id="new_grader" class="ace_editor">def grade(key, tid):
-	""" Grade this problem. """
-	flag = "easyctf{a_flag}"
-	case_sensitive = True
-	if (key.find(flag) >= 0) if case_sensitive \
-	  else (key.lower().find(flag.lower()) >= 0):
-		return { "success": 1, "message": "Correct!" }
-	return { "success": 0, "message": "Sorry, try again." }</div>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-sm-12 form-group">
-											<center>
-												<input type="submit" class="btn btn-primary btn-lg" value="Create" />
-											</center>
-										</div>
-									</div>
-								</fieldset>
-							</form>
-						</div>
+					<div class="panel-body">
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-	<div role="tabpanel" class="tab-pane" id="filesystem">
-		<div class="row">
-			<div class="col-sm-12 col-md-3">
-				<div class="">
+			<div class="tab-pane" ng-repeat="problem in problems" id="problem_{{ problem['pid'] }}">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">{{ problem["title"] }}</h4>
+					</div>
+					<div class="panel-body">
+					</div>
 				</div>
-			</div>
-			<div class="col-sm-12 col-md-9">
 			</div>
 		</div>
 	</div>
@@ -148,11 +43,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("ul[role=tablist]").tab();
-		$("a[role=tab]").click(function(e) {
-			e.preventDefault();
-		});
-		$(".selectpicker").selectpicker();
+		/*$(".selectpicker").selectpicker();
 		var config = {
 			toolbar: [
 				{ name: "basicstyles", items: [ "Bold", "Italic", "Underline" ] },
@@ -175,6 +66,6 @@
 		}).load();
 		var new_grader = ace.edit("new_grader");
 		new_grader.setTheme("ace/theme/tomorrow");
-		new_grader.getSession().setMode("ace/mode/python");
+		new_grader.getSession().setMode("ace/mode/python");*/
 	});
 </script>

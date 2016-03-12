@@ -7,6 +7,7 @@ import traceback
 import utils
 
 class WebException(Exception): pass
+class InternalException(Exception): pass
 response_header = { "Content-Type": "application/json; charset=utf-8" }
 
 def api_wrapper(f):

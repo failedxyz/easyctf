@@ -35,52 +35,53 @@ def team_create():
 		db.session.commit()
 		Users.query.filter_by(uid=_user.uid).update({ "tid": team.tid })
 		db.session.commit()
+		db.session.close()
 
-        session["tid"] = team.tid
+		session["tid"] = team.tid
 	return { "success": 1, "message": "Success!" }
 
 @blueprint.route("/delete", methods=["POST"])
 @api_wrapper
 @login_required
 def team_delete():
-    username = session["username"]
-    tid = session["tid"]
-    team = Teams.query.filter_by(tid=tid).first()
-    usr = Users.query.filter_by(username=username).first()
-    owner = team.owner
-    if usr.uid == owner or usr.admin:
-        for member in Users.query.filter_by(tid=tid).all():
-            member.tid = -1
-            with app.app_context():
-                db.session.add(member)
-
-        with app.app_context():
-            db.session.delete(team)
-            db.session.commit()
-            session.pop("tid")
-        return { "success": 1, "message": "Success!" }
-    else:
-        raise WebException("Not authorized.")
+	username = session["username"]
+	tid = session["tid"]
+	team = Teams.query.filter_by(tid=tid).first()
+	usr = Users.query.filter_by(username=username).first()
+	owner = team.owner
+	if usr.uid == owner or usr.admin:
+		with app.app_context():
+			for member in Users.query.filter_by(tid=tid).all():
+				member.tid = -1
+				db.session.add(member)
+				db.session.delete(team)
+				db.session.commit()
+			db.session.close()
+			session.pop("tid")
+		return { "success": 1, "message": "Success!" }
+	else:
+		raise WebException("Not authorized.")
 
 @blueprint.route("/remove_member", methods=["POST"])
 @api_wrapper
 @login_required
 def team_remove_member():
-    username = session["username"]
-    tid = session["tid"]
-    team = Teams.query.filter_by(tid=tid).first()
-    usr = Users.query.filter_by(username=username).first()
-    owner = team.owner
-    if usr.uid == owner or usr.admin:
-        params = utils.flat_multi(request.form)
-        user_to_remove = Users.query.filter_by(username=params.get("user"))
-        user_to_remove.tid = -1
-        with app.app_context():
-            db.session.add(user_to_remove)
-            db.session.commit()
-        return { "success": 1, "message": "Success!" }
-    else:
-        raise WebException("Not authorized.")
+	username = session["username"]
+	tid = session["tid"]
+	team = Teams.query.filter_by(tid=tid).first()
+	usr = Users.query.filter_by(username=username).first()
+	owner = team.owner
+	if usr.uid == owner or usr.admin:
+		params = utils.flat_multi(request.form)
+		user_to_remove = Users.query.filter_by(username=params.get("user"))
+		user_to_remove.tid = -1
+		with app.app_context():
+			db.session.add(user_to_remove)
+			db.session.commit()
+			db.session.close()
+		return { "success": 1, "message": "Success!" }
+	else:
+		raise WebException("Not authorized.")
 
 @blueprint.route("/invite", methods=["POST"])
 @api_wrapper
@@ -110,6 +111,7 @@ def team_invite():
 	with app.app_context():
 		db.session.add(req)
 		db.session.commit()
+		db.session.close()
 
 	return { "success": 1, "message": "Success!" }
 
@@ -135,6 +137,7 @@ def team_invite_rescind():
 	with app.app_context():
 		db.session.delete(invitation)
 		db.session.commit()
+		db.session.close()
 
 	return { "success": 1, "message": "Success!" }
 
@@ -159,6 +162,7 @@ def team_invite_request():
 	with app.app_context():
 		db.session.add(req)
 		db.session.commit()
+		db.session.close()
 
 	return { "success": 1, "message": "Success!" }
 
@@ -190,6 +194,7 @@ def team_accept_invite():
 		if invitation2 is not None:
 			db.session.delete(invitation2)
 		db.session.commit()
+		db.session.close()
 
 	return { "success": 1, "message": "Success!" }
 
@@ -225,6 +230,7 @@ def team_accept_invite_request():
 		if invitation2 is not None:
 			db.session.delete(invitation2)
 		db.session.commit()
+		db.session.close()
 
 	return { "success": 1, "message": "Success!" }
 
@@ -280,7 +286,7 @@ TeamSchema = Schema({
 		([__check_teamname], "This teamname is taken, did you forget your password?")
 	),
 	Required("school"): check(
-		([str, Length(min=4, max=60)], "Your school name should be between 4 and 60 characters long."),
+		([str, Length(min=4, max=40)], "Your school name should be between 4 and 40 characters long."),
 		([utils.__check_ascii], "Please only use ASCII characters in your school name."),
 	),
 }, extra=True)

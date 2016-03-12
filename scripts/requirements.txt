@@ -6,3 +6,4 @@ gunicorn
 requests
 voluptuous
 PIL
+markdown2

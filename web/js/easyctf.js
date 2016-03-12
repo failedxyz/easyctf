@@ -75,10 +75,37 @@ app.config(function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
 });
 
+function api_call(method, url, data, callback_success, callback_fail) {
+	if (method.toLowerCase() == "post") {
+		data["csrf_token"] = $.cookie("csrf_token");
+	}
+	$.ajax({
+		"type": method,
+		"datatype": "json",
+		"data": data,
+		"url": url,
+		"cache": false
+	}).done(callback_success).fail(callback_fail);
+}
+
+function permanent_message(containerId, alertType, message, callback) {
+	$("#" + containerId).html("<div class=\"alert alert-" + alertType + "\" style=\"margin:0;\">" + message + "</div>");
+	$("#" + containerId).hide().slideDown("fast", "swing");
+};
+
+function display_message(containerId, alertType, message, callback) {
+	$("#" + containerId).html("<div class=\"alert alert-" + alertType + "\">" + message + "</div>");
+	$("#" + containerId).hide().slideDown("fast", "swing", function() {
+		window.setTimeout(function () {
+			$("#" + containerId).slideUp("fast", "swing", callback);
+		}, message.length * 55);
+	});
+};
+
 app.controller("mainController", ["$scope", "$http", function($scope, $http) {
 	$scope.config = { navbar: { } };
 	$scope.timestamp = Date.now();
-	$.get("/api/user/status", function(result) {
+	api_call("GET", "/api/user/status", {}, function(result) {
 		if (result["success"] == 1) {
 			delete result["success"];
 			$scope.config.navbar = result;
@@ -87,14 +114,15 @@ app.controller("mainController", ["$scope", "$http", function($scope, $http) {
 			$scope.config.navbar.logged_in = false;
 		}
 		$scope.$apply();
-	}).fail(function() {
+	}, function() {
 		$scope.config.navbar.logged_in = false;
 		$scope.$apply();
+		permanent_message("site-message", "danger", "<div class='container'>The EasyCTF API server is currently down. We're working to fix this error right away. Follow <a href='http://twitter.com/easyctf' target='_blank'>@easyctf</a> for status updates.</div>");
 	});
 }]);
 
 app.controller("logoutController", function() {
-	$.get("/api/user/logout", function(result) {
+	api_call("GET", "/api/user/logout", {}, function(result) {
 		location.href = "/";
 	});
 });
@@ -103,7 +131,7 @@ app.controller("profileController", ["$controller", "$scope", "$http", "$routePa
 	var data = { };
 	if ("username" in $routeParams) data["username"] = $routeParams["username"];
 	$controller("mainController", { $scope: $scope });
-	$.get("/api/user/info", data, function(result) {
+	api_call("GET", "/api/user/info", data, function(result) {
 		if (result["success"] == 1) {
 			$scope.user = result["user"];
 		}
@@ -129,7 +157,7 @@ app.controller("teamController", ["$controller", "$scope", "$http", "$routeParam
 	} else {
 		$controller("loginController", { $scope: $scope });
 	}
-	$.get("/api/team/info", data, function(result) {
+	api_call("GET", "/api/team/info", data, function(result) {
 		if (result["success"] == 1) {
 			$scope.team = result["team"];
 		}
@@ -155,7 +183,7 @@ app.controller("resetController", ["$controller", "$scope", "$http", "$routePara
 	if ("token" in $routeParams) {
 		$scope.token = true;
 		token = $routeParams["token"];
-		$.get("/api/user/forgot/" + token, data, function(data) {
+		api_call("GET", "/api/user/forgot/" + token, data, function(data) {
 			$scope.body = data["message"];
 			$scope.success = data["success"]
 			$scope.$apply();
@@ -181,9 +209,11 @@ app.controller("adminController", ["$controller", "$scope", "$http", function($c
 
 app.controller("adminProblemsController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
 	$controller("adminController", { $scope: $scope });
-	$.get("/api/admin/problems/list", function(result) {
+	api_call("GET", "/api/admin/problems/list", {}, function(result) {
 		if (result["success"] == 1) {
 			$scope.problems = result["problems"];
+		} else {
+			$scope.problems = [];
 		}
 		$scope.$apply();
 	});
@@ -191,34 +221,13 @@ app.controller("adminProblemsController", ["$controller", "$scope", "$http", fun
 
 app.controller("settingsController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
 	$controller("loginController", { $scope: $scope });
-	$.get("/api/user/info", {}, function(result) {
+	api_call("GET", "/api/user/info", {}, function(result) {
 		if (result["success"] == 1) {
 			$scope.user = result["user"];
 		}
 		$scope.$apply();
 	});
 }]);
-
-function display_message(containerId, alertType, message, callback) {
-	$("#" + containerId).html("<div class=\"alert alert-" + alertType + "\">" + message + "</div>");
-	$("#" + containerId).hide().slideDown("fast", "swing", function() {
-		window.setTimeout(function () {
-			$("#" + containerId).slideUp("fast", "swing", callback);
-		}, message.length * 55);
-	});
-};
-
-function api_call(method, url, data, callback_success, callback_fail) {
-	if (method.toLowerCase() == "post") {
-		data["csrf_token"] = $.cookie("csrf_token");
-	}
-	$.ajax({
-		"type": method,
-		"datatype": "json",
-		"data": data,
-		"url": url
-	}).done(callback_success).fail(callback_fail);
-}
 
 $.fn.serializeObject = function() {
 	var a, o;

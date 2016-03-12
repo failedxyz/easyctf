@@ -10,6 +10,7 @@ import config
 import json
 import logging
 import os
+import traceback
 
 from api.decorators import api_wrapper
 
@@ -22,6 +23,8 @@ with app.app_context():
 	from api.models import db, Files, Teams, Problems, Solves, Users
 	db.init_app(app)
 	db.create_all()
+
+	app.db = db
 
 app.secret_key = config.SECRET_KEY
 
@@ -39,27 +42,29 @@ def api_main():
 
 def run(args):
 	with app.app_context():
-		app.debug = keyword_args["debug"]
+		keyword_args = dict(args._get_kwargs())
+		app.debug = keyword_args["debug"] if "debug" in keyword_args else False
 		app.run(host="0.0.0.0", port=8000)
 
 def load_problems(args):
+	keyword_args = dict(args._get_kwargs())
+	force = keyword_args["force"] if "force" in keyword_args else False
+
 	if not os.path.exists(config.PROBLEM_DIR):
-		logging.critical("Problems directory doesn't exist.")
+		api.logger.log("api.problem.log", "Problems directory doesn't exist.")
 		return
 
 	for (dirpath, dirnames, filenames) in os.walk(config.PROBLEM_DIR):
 		if "problem.json" in filenames:
 			json_file = os.path.join(dirpath, "problem.json")
 			contents = open(json_file).read()
-
 			try:
 				data = json.loads(contents)
 			except ValueError as e:
-				logging.warning("Invalid JSON format in file {filename} ({exception})".format(filename=json_file, exception=e))
+				api.logger.log("api.problem.log", "Invalid JSON format in file {filename} ({exception})".format(filename=json_file, exception=e))
 				continue
-
 			if not isinstance(data, dict):
-				logging.warning("{filename} is not a dict.".format(filename=json_file))
+				api.logger.log("api.problem.log", "{filename} is not a dict.".format(filename=json_file))
 				continue
 
 			missing_keys = []
@@ -67,24 +72,29 @@ def load_problems(args):
 				if key not in data:
 					missing_keys.append(key)
 			if len(missing_keys) > 0:
-				logging.warning("{filename} is missing the following keys: {keys}".format(filename=json_file, keys=", ".join(missing_keys)))
+				api.logger.log("api.problem.log", "{filename} is missing the following keys: {keys}".format(filename=json_file, keys=", ".join(missing_keys)))
 				continue
 
 			relative_path = os.path.relpath(dirpath, config.PROBLEM_DIR)
-			logging.info("Found problem '{}'".format(data["title"]))
+			data["description"] = open(os.path.join(dirpath, "description.md"), "r").read()
+			api.logger.log("api.problem.log", "Found problem '{}'".format(data["title"]))
+			with app.app_context():
+				try:
+					api.problem.insert_problem(data, force=force)
+				except Exception as e:
+					api.logger.log("api.problem.log", "Problem '{}' was not added to the database. Error: {}".format(data["title"], e))
+					api.logger.log("api.problem.log", "{}".format(traceback.format_exc()))
 
-			try:
-				api.problem.insert_problem(data)
-			except Exception as e:
-				logging.warning("Problem '{}' was not added to the database. Error: {}".format(data["title"], e))
+	api.logger.log("api.problem.log", "Finished.")
 
-if __name__ == "__main__":
+def main():
 	parser = ArgumentParser(description="EasyCTF Server Management")
 
 	subparser = parser.add_subparsers(help="Select one of the following actions.")
 	parser_problems = subparser.add_parser("problems", help="Manage problems.")
 	subparser_problems = parser_problems.add_subparsers(help="Select one of the following actions.")
 	parser_problems_load = subparser_problems.add_parser("load", help="Load all problems into database.")
+	parser_problems_load.add_argument("-f", "--force", action="store_true", help="Force overwrite problems.", default=False)
 	parser_problems_load.set_defaults(func=load_problems)
 
 	parser_run = subparser.add_parser("run", help="Run the server.")
@@ -92,10 +102,10 @@ if __name__ == "__main__":
 	parser_run.set_defaults(func=run)
 
 	args = parser.parse_args()
-	keyword_args, _ = dict(args._get_kwargs()), args._get_args()
-	logging.getLogger().setLevel(logging.INFO)
 
 	if "func" in args:
 		args.func(args)
 	else:
 		parser.print_help()
+
+main()

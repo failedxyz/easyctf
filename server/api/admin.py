@@ -3,7 +3,7 @@ from decorators import admins_only, api_wrapper
 from models import db, Problems, Files
 from schemas import verify_to_schema, check
 
-import json
+import cPickle as pickle
 
 blueprint = Blueprint("admin", __name__)
 
@@ -16,14 +16,15 @@ def problem_data():
 	for problem in problems:
 		problems_return.append({
 			"pid": problem.pid,
-			"name": problem.name,
+			"title": problem.title,
 			"category": problem.category,
 			"description": problem.description,
 			"hint": problem.hint,
 			"value": problem.value,
 			"threshold": problem.threshold,
-			"weightmap": json.loads(problem.weightmap)
+			"weightmap": problem.weightmap
 		})
+	problems_return.sort(key=lambda prob: prob["value"])
 	return { "success": 1, "problems": problems_return }
 
 """

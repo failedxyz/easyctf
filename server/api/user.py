@@ -8,7 +8,7 @@ from decorators import api_wrapper, WebException
 from schemas import verify_to_schema, check
 
 import datetime
-import logger
+import logger, logging
 import os
 import re
 import requests
@@ -94,7 +94,7 @@ def user_register():
 		db.session.commit()
 		utils.generate_identicon(email, user.uid)
 
-	logger.log(__name__, logger.INFO, "%s registered with %s" % (name.encode("utf-8"), email.encode("utf-8")))
+	logger.log(__name__, "%s registered with %s" % (name.encode("utf-8"), email.encode("utf-8")))
 	login_user(username, password)
 
 	return { "success": 1, "message": "Success!" }
