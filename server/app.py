@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from argparse import ArgumentParser
-from flask import Flask
+from flask import Flask, send_file
 
 app = Flask(__name__)
 
@@ -39,6 +39,10 @@ api.logger.initialize_logs()
 @api_wrapper
 def api_main():
 	return { "success": 1, "message": "The API is online." }
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return send_file("../web/index.html")
 
 def run(args):
 	with app.app_context():
