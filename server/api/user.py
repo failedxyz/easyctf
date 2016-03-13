@@ -132,6 +132,8 @@ def user_status():
 		"success": 1,
 		"logged_in": logged_in,
 		"admin": is_admin(),
+		"competition": is_admin(),
+		"in_team": in_team(get_user()),
 		"username": session["username"] if logged_in else "",
 	}
 	if logged_in:
@@ -260,24 +262,6 @@ UserSchema = Schema({
 	"notify": str
 }, extra=True)
 
-def get_user(username=None, username_lower=None, email=None, uid=None, reset_token=None):
-	match = {}
-	if username != None:
-		match.update({ "username": username })
-	elif username_lower != None:
-		match.update({ "username_lower": username_lower })
-	elif uid != None:
-		match.update({ "uid": uid })
-	elif email != None:
-		match.update({ "email": email })
-	elif is_logged_in():
-		match.update({ "username": session["username"] })
-	elif reset_token != None:
-		match.update({ "reset_token": reset_token })
-	with app.app_context():
-		result = Users.query.filter_by(**match)
-		return result
-
 def login_user(username, password):
 	user = get_user(username_lower=username.lower()).first()
 	if user is None: return False
@@ -303,9 +287,6 @@ def login_user(username, password):
 
 	return True
 
-def in_team(user):
-	return user.tid is not None and user.tid >= 0
-
 def is_logged_in():
 	if not("sid" in session and "username" in session): return False
 	sid = session["sid"]
@@ -320,8 +301,29 @@ def is_logged_in():
 	if token.ua != useragent: return False
 	return True
 
+def get_user(username=None, username_lower=None, email=None, uid=None, reset_token=None):
+	match = {}
+	if username != None:
+		match.update({ "username": username })
+	elif username_lower != None:
+		match.update({ "username_lower": username_lower })
+	elif uid != None:
+		match.update({ "uid": uid })
+	elif email != None:
+		match.update({ "email": email })
+	elif is_logged_in():
+		match.update({ "username": session["username"] })
+	elif reset_token != None:
+		match.update({ "reset_token": reset_token })
+	with app.app_context():
+		result = Users.query.filter_by(**match)
+		return result
+
 def is_admin():
 	return is_logged_in() and "admin" in session and session["admin"]
+
+def in_team(user):
+	return hasattr(user, "tid") and user.tid >= 0
 
 def validate_captcha(form):
 	if "captcha_response" not in form:

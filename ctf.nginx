@@ -27,8 +27,8 @@ server {
 		try_files /index.html /index.html;
 	}
 
-	location ~ /static {
-		root /srv/http/static;
+	location /static {
+		alias /srv/http/static;
 	}
 
 	location ~ /api {
