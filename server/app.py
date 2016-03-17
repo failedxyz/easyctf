@@ -18,6 +18,8 @@ app.config.from_object(config)
 
 if not os.path.exists(app.config["UPLOAD_FOLDER"]):
     os.makedirs(app.config["UPLOAD_FOLDER"])
+if not os.path.exists("pfp"):
+	os.makedirs("pfp")
 
 with app.app_context():
 	from api.models import db, Files, Teams, Problems, Solves, Users
@@ -44,10 +46,12 @@ def api_main():
 def page_not_found(e):
     return send_file("../web/index.html")
 
-def run(args):
+def run(args=None):
 	with app.app_context():
-		keyword_args = dict(args._get_kwargs())
-		app.debug = keyword_args["debug"] if "debug" in keyword_args else False
+		try:
+			keyword_args = dict(args._get_kwargs())
+			app.debug = keyword_args["debug"] if "debug" in keyword_args else False
+		except: pass
 		app.run(host="0.0.0.0", port=8000)
 
 def load_problems(args):
@@ -112,4 +116,5 @@ def main():
 	else:
 		parser.print_help()
 
-main()
+if __name__ == "__main__":
+	main()
