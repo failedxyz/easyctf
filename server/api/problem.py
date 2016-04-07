@@ -1,6 +1,7 @@
 import hashlib
 import logger
 import os
+import utils
 
 from flask import Blueprint, jsonify, session, request
 from flask import current_app as app
@@ -18,14 +19,18 @@ def problem_add():
 	name = request.form["name"]
 	category = request.form["category"]
 	description = request.form["description"]
-	hint = request.form["problem-hint"]
+	hint = request.form["hint"]
 	flag = request.form["flag"]
 	value = request.form["value"]
+	pid = utils.generate_string()
+	while Problems.query.filter_by(pid=pid).first():
+		pid = utils.generate_string()
 
-	name_exists = Problems.query.filter_by(name=name).first()
+	name_exists = Problems.query.filter_by(title=name).first()
 	if name_exists:
 		raise WebException("Problem name already taken.")
-	problem = Problems(name, category, description, hint, flag, value)
+
+	problem = Problems(pid, name, category, description, flag, value, hint=hint)
 	db.session.add(problem)
 	db.session.commit()
 

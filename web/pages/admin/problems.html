@@ -25,6 +25,24 @@
 						<h4 class="panel-title">New Problem</h4>
 					</div>
 					<div class="panel-body">
+						<div id="add-status"></div>
+						<form class="form-horizontal" onsubmit="create_problem(); return false;" id="new_problem_form">
+							<input class="form-control" name="name" placeholder="Name" required/>
+							<br>
+							<textarea class="form-control" name="description" placeholder="Description" required autocomplete="off"/>
+							<br>
+							<input class="form-control" name="category" placeholder="Category" required autocomplete="off"/>
+							<br>
+							<input class="form-control" name="hint" placeholder="Hint" required/>
+							<br>
+							<input class="form-control" name="value" type="number" placeholder="Problem Value" required autocomplete="off"/>
+							<br>
+							<input class="form-control" name="flag" placeholder="Flag" required/>
+							<br>
+							<div id="new_grader"></div>
+							<br>
+							<input type="submit" id="create-problem" class="btn btn-success" value="Create"/>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -43,7 +61,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		/*$(".selectpicker").selectpicker();
+		$(".selectpicker").selectpicker();
 		var config = {
 			toolbar: [
 				{ name: "basicstyles", items: [ "Bold", "Italic", "Underline" ] },
@@ -54,7 +72,7 @@
 			]
 		};
 		var editor = new EpicEditor({
-			container: "description",
+			container: "new_grader",
 			theme: {
 				base: "https://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/base/epiceditor.css",
 				preview: "https://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/preview/github.css",
@@ -66,6 +84,6 @@
 		}).load();
 		var new_grader = ace.edit("new_grader");
 		new_grader.setTheme("ace/theme/tomorrow");
-		new_grader.getSession().setMode("ace/mode/python");*/
+		new_grader.getSession().setMode("ace/mode/python");
 	});
 </script>
