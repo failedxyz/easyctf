@@ -16,13 +16,14 @@ def problem_data():
 	for problem in problems:
 		problems_return.append({
 			"pid": problem.pid,
-			"title": problem.title,
+			"name": problem.name,
 			"category": problem.category,
 			"description": problem.description,
 			"hint": problem.hint,
 			"value": problem.value,
 			"threshold": problem.threshold,
-			"weightmap": problem.weightmap
+			"weightmap": problem.weightmap,
+			"flag": problem.flag
 		})
 	problems_return.sort(key=lambda prob: prob["value"])
 	return { "success": 1, "problems": problems_return }

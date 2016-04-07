@@ -26,7 +26,7 @@ def problem_add():
 	while Problems.query.filter_by(pid=pid).first():
 		pid = utils.generate_string()
 
-	name_exists = Problems.query.filter_by(title=name).first()
+	name_exists = Problems.query.filter_by(name=name).first()
 	if name_exists:
 		raise WebException("Problem name already taken.")
 
@@ -74,7 +74,6 @@ def problem_update():
 	description = request.form["description"]
 	hint = request.form["hint"]
 	flag = request.form["flag"]
-	disabled = request.form.get("disabled", 0)
 	value = request.form["value"]
 
 	problem = Problems.query.filter_by(pid=pid).first()
@@ -84,7 +83,6 @@ def problem_update():
 		problem.description = description
 		problem.hint = hint
 		problem.flag = flag
-		problem.disabled = disabled
 		problem.value = value
 
 		db.session.add(problem)
@@ -146,7 +144,7 @@ def insert_problem(data, force=False):
 			else:
 				raise InternalException("Problem already exists.")
 
-		insert = Problems(data["pid"], data["title"], data["category"], data["description"], data["value"])
+		insert = Problems(data["pid"], data["name"], data["category"], data["description"], data["value"])
 		if "hint" in data: insert.hint = data["hint"]
 		if "autogen" in data: insert.autogen = data["autogen"]
 		if "bonus" in data: insert.bonus = data["bonus"]
@@ -157,10 +155,10 @@ def insert_problem(data, force=False):
 
 	return True
 
-def get_problem(title=None, pid=None):
+def get_problem(name=None, pid=None):
 	match = {}
-	if title != None:
-		match.update({ "title": title })
+	if name != None:
+		match.update({ "name": name })
 	elif pid != None:
 		match.update({ "pid": pid })
 	with app.app_context():
