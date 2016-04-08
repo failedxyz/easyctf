@@ -56,23 +56,27 @@ var update_problem = function(form_id) {
 };
 
 var delete_problem = function(form_id) {
-	var input = "#" + form_id + " input";
-	var pid = form_id.split("_")[1];
-	$(input).attr("disabled", "disabled");
-	api_call("POST", "/api/problem/delete", {"pid": pid}, function(result) {
-		if (result["success"] == 1) {
-			display_message(pid + "_status", "success", result["message"], function() {
+	$('#confirm').modal("show", { backdrop: 'static', keyboard: false })
+        .one('click', '#delete', function() {
+		var input = "#" + form_id + " input";
+		var pid = form_id.split("_")[1];
+		$(input).attr("disabled", "disabled");
+		api_call("POST", "/api/problem/delete", {"pid": pid}, function(result) {
+			if (result["success"] == 1) {
+				display_message(pid + "_status", "success", result["message"], function() {
+					$(input).removeAttr("disabled");
+				});
+			} else {
+				display_message(pid + "_status", "danger", result["message"], function() {
+					$(input).removeAttr("disabled");
+				});
+			}
+		}, function(jqXHR, status, error) {
+			var result = jqXHR["responseText"];
+			display_message(pid + "_status", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
 				$(input).removeAttr("disabled");
 			});
-		} else {
-			display_message(pid + "_status", "danger", result["message"], function() {
-				$(input).removeAttr("disabled");
-			});
-		}
-	}, function(jqXHR, status, error) {
-		var result = jqXHR["responseText"];
-		display_message(pid + "_status", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {
-			$(input).removeAttr("disabled");
 		});
-	});
+
+        });
 }
