@@ -1,6 +1,7 @@
 import hashlib
 import logger
 import os
+import shutil
 import utils
 
 from flask import Blueprint, jsonify, session, request
@@ -68,6 +69,8 @@ def problem_delete():
 	if problem:
 		Solves.query.filter_by(pid=pid).delete()
 		Problems.query.filter_by(pid=pid).delete()
+		grader_folder = "/".join(problem.grader.split("/")[:-1])
+		shutil.rmtree(grader_folder)
 		db.session.commit()
 		return { "success": 1, "message": "Success!" }
 	raise WebException("Problem does not exist!")
