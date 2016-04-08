@@ -18,6 +18,8 @@ app.config.from_object(config)
 
 if not os.path.exists(app.config["UPLOAD_FOLDER"]):
     os.makedirs(app.config["UPLOAD_FOLDER"])
+if not os.path.exists(app.config["GRADER_FOLDER"]):
+	os.makedirs(app.config["GRADER_FOLDER"])
 if not os.path.exists("pfp"):
 	os.makedirs("pfp")
 

@@ -7,6 +7,8 @@ $(document).ready(function() {
 var create_problem = function() {
 	var input = "#new_problem_form input";
 	var data = $("#new_problem_form").serializeObject();
+	var grader_contents = ace.edit("new_grader").getValue();
+	data["grader_contents"] = grader_contents;
 	$(input).attr("disabled", "disabled");
 	api_call("POST", "/api/problem/add", data, function(result) {
 		if (result["success"] == 1) {
@@ -30,6 +32,10 @@ var update_problem = function(form_id) {
 	var input = "#" + form_id + " input";
 	var data = $("#" + form_id).serializeObject();
 	pid = data["pid"];
+
+	var grader_contents = ace.edit(pid + "_grader").getValue();
+	data["grader_contents"] = grader_contents;
+
 	$(input).attr("disabled", "disabled");
 	api_call("POST", "/api/problem/update", data, function(result) {
 		if (result["success"] == 1) {

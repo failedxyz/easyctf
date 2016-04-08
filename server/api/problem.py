@@ -20,8 +20,8 @@ def problem_add():
 	category = request.form["category"]
 	description = request.form["description"]
 	hint = request.form["hint"]
-	flag = request.form["flag"]
 	value = request.form["value"]
+	grader_contents = request.form["grader_contents"]
 	pid = utils.generate_string()
 	while Problems.query.filter_by(pid=pid).first():
 		pid = utils.generate_string()
@@ -30,7 +30,7 @@ def problem_add():
 	if title_exist:
 		raise WebException("Problem name already taken.")
 
-	problem = Problems(pid, title, category, description, flag, value, hint=hint)
+	problem = Problems(pid, title, category, description, value, hint=hint)
 	db.session.add(problem)
 	db.session.commit()
 
@@ -47,6 +47,14 @@ def problem_add():
 		db_file = Files(problem.pid, "/".join(file_path.split("/")[2:]))
 		db.session.add(db_file)
 
+	grader_folder = os.path.join(app.config["GRADER_FOLDER"], pid)
+	if not os.path.exists(grader_folder):
+		os.makedirs(grader_folder)
+	grader_path = os.path.join(grader_folder, "grader.py")
+	grader_file = open(grader_path, "w")
+	grader_file.write(grader_contents)
+	grader_file.close()
+	problem.grader = grader_path
 	db.session.commit()
 
 	return { "success": 1, "message": "Success!" }
@@ -73,8 +81,8 @@ def problem_update():
 	category = request.form["category"]
 	description = request.form["description"]
 	hint = request.form["hint"]
-	flag = request.form["flag"]
 	value = request.form["value"]
+	grader_contents = request.form["grader_contents"]
 
 	problem = Problems.query.filter_by(pid=pid).first()
 	if problem:
@@ -82,8 +90,11 @@ def problem_update():
 		problem.category = category
 		problem.description = description
 		problem.hint = hint
-		problem.flag = flag
 		problem.value = value
+
+		grader = open(problem.grader, "w")
+		grader.write(grader_contents)
+		grader.close()
 
 		db.session.add(problem)
 		db.session.commit()
