@@ -29,15 +29,14 @@ def team_create():
 	school = params.get("school")
 
 	team = Teams(teamname, school, _user.uid, _user.utype != 1)
-	tid = team.tid
 	with app.app_context():
 		db.session.add(team)
 		db.session.commit()
 		Users.query.filter_by(uid=_user.uid).update({ "tid": team.tid })
 		db.session.commit()
+		session["tid"] = team.tid
 		db.session.close()
 
-		session["tid"] = team.tid
 	return { "success": 1, "message": "Success!" }
 
 @blueprint.route("/delete", methods=["POST"])

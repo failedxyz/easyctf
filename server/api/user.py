@@ -133,7 +133,7 @@ def user_status():
 		"logged_in": logged_in,
 		"admin": is_admin(),
 		"competition": is_admin(),
-		"in_team": in_team(get_user()),
+		"in_team": in_team(get_user().first()),
 		"username": session["username"] if logged_in else "",
 	}
 	if logged_in:
