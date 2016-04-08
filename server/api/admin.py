@@ -16,7 +16,7 @@ def problem_data():
 	for problem in problems:
 		problems_return.append({
 			"pid": problem.pid,
-			"name": problem.name,
+			"title": problem.title,
 			"category": problem.category,
 			"description": problem.description,
 			"hint": problem.hint,

@@ -16,7 +16,7 @@ blueprint = Blueprint("problem", __name__)
 @admins_only
 @api_wrapper
 def problem_add():
-	name = request.form["name"]
+	title = request.form["title"]
 	category = request.form["category"]
 	description = request.form["description"]
 	hint = request.form["hint"]
@@ -26,11 +26,11 @@ def problem_add():
 	while Problems.query.filter_by(pid=pid).first():
 		pid = utils.generate_string()
 
-	name_exists = Problems.query.filter_by(name=name).first()
-	if name_exists:
+	title_exist = Problems.query.filter_by(title=title).first()
+	if title_exist:
 		raise WebException("Problem name already taken.")
 
-	problem = Problems(pid, name, category, description, flag, value, hint=hint)
+	problem = Problems(pid, title, category, description, flag, value, hint=hint)
 	db.session.add(problem)
 	db.session.commit()
 
@@ -69,7 +69,7 @@ def problem_delete():
 @api_wrapper
 def problem_update():
 	pid = request.form["pid"]
-	name = request.form["name"]
+	title = request.form["title"]
 	category = request.form["category"]
 	description = request.form["description"]
 	hint = request.form["hint"]
@@ -78,7 +78,7 @@ def problem_update():
 
 	problem = Problems.query.filter_by(pid=pid).first()
 	if problem:
-		problem.name = name
+		problem.title = title
 		problem.category = category
 		problem.description = description
 		problem.hint = hint
@@ -111,11 +111,11 @@ def problem_submit():
 			db.session.add(problem)
 			db.session.commit()
 
-			logger.log(__name__, logger.WARNING, "%s has solved %s by submitting %s" % (team.name, problem.name, flag))
+			logger.log(__name__, logger.WARNING, "%s has solved %s by submitting %s" % (team.name, problem.title, flag))
 			return { "success": 1, "message": "Correct!" }
 
 		else:
-			logger.log(__name__, logger.WARNING, "%s has incorrectly submitted %s to %s" % (team.name, flag, problem.name))
+			logger.log(__name__, logger.WARNING, "%s has incorrectly submitted %s to %s" % (team.name, flag, problem.title))
 			raise WebException("Incorrect.")
 
 	else:
@@ -130,7 +130,7 @@ def problem_data():
 
 	for problem in problems:
 		problem_files = [ str(_file.location) for _file in Files.query.filter_by(pid=int(problem.pid)).all() ]
-		jason.append({"pid": problem[1], "name": problem[2] ,"category": problem[3], "description": problem[4], "hint": problem[5], "value": problem[6], "solves": problem[7], "files": problem_files})
+		jason.append({"pid": problem[1], "title": problem[2] ,"category": problem[3], "description": problem[4], "hint": problem[5], "value": problem[6], "solves": problem[7], "files": problem_files})
 
 	return jsonify(data=jason)
 
@@ -144,7 +144,7 @@ def insert_problem(data, force=False):
 			else:
 				raise InternalException("Problem already exists.")
 
-		insert = Problems(data["pid"], data["name"], data["category"], data["description"], data["value"])
+		insert = Problems(data["pid"], data["title"], data["category"], data["description"], data["value"])
 		if "hint" in data: insert.hint = data["hint"]
 		if "autogen" in data: insert.autogen = data["autogen"]
 		if "bonus" in data: insert.bonus = data["bonus"]
@@ -155,10 +155,10 @@ def insert_problem(data, force=False):
 
 	return True
 
-def get_problem(name=None, pid=None):
+def get_problem(title=None, pid=None):
 	match = {}
-	if name != None:
-		match.update({ "name": name })
+	if title != None:
+		match.update({ "title": title })
 	elif pid != None:
 		match.update({ "pid": pid })
 	with app.app_context():

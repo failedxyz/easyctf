@@ -133,7 +133,7 @@ class Teams(db.Model):
 
 class Problems(db.Model):
 	pid = db.Column(db.String(32), primary_key=True, autoincrement=False)
-	name = db.Column(db.String(128))
+	title = db.Column(db.String(128))
 	category = db.Column(db.String(128))
 	flag = db.Column(db.String(128))
 	description = db.Column(db.Text)
@@ -144,9 +144,9 @@ class Problems(db.Model):
 	threshold = db.Column(db.Integer)
 	weightmap = db.Column(db.PickleType)
 
-	def __init__(self, pid, name, category, description, flag, value, hint="", autogen=False, bonus=0, threshold=0, weightmap={}):
+	def __init__(self, pid, title, category, description, flag, value, hint="", autogen=False, bonus=0, threshold=0, weightmap={}):
 		self.pid = pid
-		self.name = name
+		self.title = title
 		self.category = category
 		self.description = description
 		self.flag = flag
