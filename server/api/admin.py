@@ -3,6 +3,8 @@ from decorators import admins_only, api_wrapper
 from models import db, Problems, Files
 from schemas import verify_to_schema, check
 
+import settings
+
 import cPickle as pickle
 
 blueprint = Blueprint("admin", __name__)
@@ -27,6 +29,16 @@ def problem_data():
 		})
 	problems_return.sort(key=lambda prob: prob["value"])
 	return { "success": 1, "problems": problems_return }
+
+@blueprint.route("/settings", methods=["GET"])
+@api_wrapper
+@admins_only
+def settings_data():
+	# data = settings.get_all()
+	settings_return = {}
+	settings_return["ctf_begin"] = settings.get("ctf_begin")
+	settings_return["ctf_end"] = settings.get("ctf_end")
+	return { "success": 1, "settings": settings_return }
 
 """
 @blueprint.route("/problems/submit", methods=["POST"])

@@ -1,0 +1,33 @@
+<div>
+	<h1>CTF Settings</h1>
+	<div ng-if="settings">
+		<div id="settings_msg"/>
+		<form class="form-horizontal" onsubmit="update_settings(); return false;" id="update_settings_form">
+			<input class="form-control" name="ctf_begin" value="{{ settings['ctf_begin'] }}"/>
+			<br>
+			<input class="form-control" name="ctf_end" value="{{ settings['ctf_end'] }}"/>
+			<br>
+			<input type="submit" class="btn btn-success" value="Update"/>
+		</form>
+	</div>
+</div>
+
+<script>
+var update_settings = function() {
+	var input = "#update_settings_form form input";
+	var data = $("#update_settings_form").serializeObject();
+	$(input).attr("disabled", "disabled");
+	api_call("POST", "/api/settings/update", data, function(result) {
+		if (result["success"] == 1) {
+			display_message("settings_msg", "success", result["message"], function() {
+				$(input).removeAttr("disabled");
+			});
+		} else {
+			display_message("settings_msg", "danger", result["message"], function() {
+				$(input).removeAttr("disabled");
+			});
+			console.log(result["error"]);
+		}
+	});
+}
+</script>

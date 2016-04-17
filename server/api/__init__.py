@@ -3,6 +3,7 @@ import logger
 import models
 import problem
 import user
+import settings
 import stats
 import team
 import utils

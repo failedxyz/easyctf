@@ -68,6 +68,10 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: "pages/admin/problems.html",
 		controller: "adminProblemsController"
 	})
+	.when("/admin/settings", {
+		templateUrl: "pages/admin/settings.html",
+		controller: "adminSettingsController"
+	})
 	.otherwise({
 		templateUrl: "pages/404.html",
 		controller: "mainController"
@@ -244,6 +248,16 @@ app.controller("adminProblemsController", ["$controller", "$scope", "$http", fun
 			grader.getSession().setMode("ace/mode/python");
 			grader.setValue(problem.grader_contents);
 		});
+	});
+}]);
+
+app.controller("adminSettingsController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
+	$controller("adminController", { $scope: $scope });
+	api_call("GET", "/api/admin/settings", {}, function(result) {
+		if (result["success"] == 1) {
+			$scope.settings = result["settings"];
+		}
+		$scope.$apply();
 	});
 }]);
 

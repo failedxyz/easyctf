@@ -18,9 +18,6 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 UPLOAD_FOLDER = os.path.normpath("../web/files")
 GRADER_FOLDER = os.path.normpath("graders")
 
-CTF_BEGIN = 0 # To be used later
-CTF_END = 0 # To be used later
-
 MG_HOST = ""
 MG_API_KEY = ""
 ADMIN_EMAIL = ""

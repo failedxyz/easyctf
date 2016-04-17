@@ -24,7 +24,7 @@ if not os.path.exists("pfp"):
 	os.makedirs("pfp")
 
 with app.app_context():
-	from api.models import db, Files, Teams, Problems, Solves, Users
+	from api.models import db, Files, Teams, Problems, Settings, Solves, Users
 	db.init_app(app)
 	db.create_all()
 
@@ -34,6 +34,7 @@ app.secret_key = config.SECRET_KEY
 
 app.register_blueprint(api.admin.blueprint, url_prefix="/api/admin")
 app.register_blueprint(api.problem.blueprint, url_prefix="/api/problem")
+app.register_blueprint(api.settings.blueprint, url_prefix="/api/settings")
 app.register_blueprint(api.stats.blueprint, url_prefix="/api/stats")
 app.register_blueprint(api.team.blueprint, url_prefix="/api/team")
 app.register_blueprint(api.user.blueprint, url_prefix="/api/user")
