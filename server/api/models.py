@@ -169,7 +169,7 @@ class Solves(db.Model):
 	sid = db.Column(db.Integer, primary_key=True)
 	pid = db.Column(db.String(32))
 	tid = db.Column(db.Integer)
-	date = db.Column(db.Integer, default=utils.get_time_since_epoch())
+	date = db.Column(db.Text, default=utils.get_time_since_epoch())
 	correct = db.Column(db.Boolean)
 	flag = db.Column(db.Text)
 
