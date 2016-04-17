@@ -32,6 +32,11 @@ def problem_add():
 	if title_exist:
 		raise WebException("Problem name already taken.")
 
+	try:
+		exec(grader_contents)
+	except Exception, e:
+		raise WebException("There is a syntax error in the grader: %s" % e)
+
 	problem = Problems(pid, title, category, description, value, hint=hint)
 	db.session.add(problem)
 	db.session.commit()
@@ -87,6 +92,10 @@ def problem_update():
 	hint = request.form["hint"]
 	value = request.form["value"]
 	grader_contents = request.form["grader_contents"]
+	try:
+		exec(grader_contents)
+	except Exception, e:
+		raise WebException("There is a syntax error in the grader: %s" % e)
 
 	problem = Problems.query.filter_by(pid=pid).first()
 	if problem:
