@@ -1,4 +1,5 @@
 import hashlib
+import imp
 import logger
 import os
 import shutil
@@ -115,38 +116,51 @@ def problem_submit():
 
 	problem = Problems.query.filter_by(pid=pid).first()
 	team = Teams.query.filter_by(tid=tid).first()
+	solved = Solves.query.filter_by(pid=pid, tid=tid, correct=1).first()
+	if solved:
+		raise WebException("You already solved this problem.")
 	if problem:
-		if flag == problem.flag:
-			solve = Solves(pid, tid)
-			team.score += problem.value
-			problem.solves += 1
+		grader = imp.load_source("grader.py", problem.grader)
+		if grader.grade(flag):
+			solve = Solves(pid, tid, flag, True)
 			db.session.add(solve)
-			db.session.add(team)
-			db.session.add(problem)
 			db.session.commit()
 
-			logger.log(__name__, logger.WARNING, "%s has solved %s by submitting %s" % (team.name, problem.title, flag))
+			logger.log(__name__, "%s has solved %s by submitting %s" % (team.teamname, problem.title, flag), level=logger.WARNING)
 			return { "success": 1, "message": "Correct!" }
 
 		else:
-			logger.log(__name__, logger.WARNING, "%s has incorrectly submitted %s to %s" % (team.name, flag, problem.title))
+			solve = Solves(pid, tid, flag, False)
+			db.session.add(solve)
+			db.session.commit()
+			logger.log(__name__, "%s has incorrectly submitted %s to %s" % (team.teamname, flag, problem.title), level=logger.WARNING)
 			raise WebException("Incorrect.")
 
 	else:
 		raise WebException("Problem does not exist!")
 
-@blueprint.route("/data", methods=["POST"])
-#@api_wrapper # Disable atm due to json serialization issues: will fix
+@blueprint.route("/data", methods=["GET"])
 @login_required
+@api_wrapper
 def problem_data():
-	problems = Problems.query.add_columns("pid", "name", "category", "description", "hint", "value", "solves").order_by(Problems.value).filter_by(disabled=False).all()
-	jason = []
+	problems = Problems.query.order_by(Problems.value).all()
+	problems_return = []
 
 	for problem in problems:
-		problem_files = [ str(_file.location) for _file in Files.query.filter_by(pid=int(problem.pid)).all() ]
-		jason.append({"pid": problem[1], "title": problem[2] ,"category": problem[3], "description": problem[4], "hint": problem[5], "value": problem[6], "solves": problem[7], "files": problem_files})
-
-	return jsonify(data=jason)
+		solves = Solves.query.filter_by(pid=problem.pid, correct=1).count()
+		solved = Solves.query.filter_by(pid=problem.pid, tid=session.get("tid", None), correct=1)
+		solved = ["Solved", "Unsolved"][solved is None]
+		problems_return.append({
+			"pid": problem.pid,
+			"title": problem.title,
+			"category": problem.category,
+			"description": problem.description,
+			"hint": problem.hint,
+			"value": problem.value,
+			"solves": solves,
+			"solved": solved
+		})
+	return { "success": 1, "problems": problems_return }
 
 def insert_problem(data, force=False):
 	with app.app_context():

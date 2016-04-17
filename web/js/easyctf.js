@@ -48,6 +48,10 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: "pages/settings.html",
 		controller: "settingsController"
 	})
+	.when("/problems", {
+		templateUrl: "pages/problems.html",
+		controller: "problemsController"
+	})
 	.when("/forgot", {
 		templateUrl: "pages/forgot.html",
 		controller: "resetController"
@@ -266,6 +270,16 @@ app.controller("settingsController", ["$controller", "$scope", "$http", function
 	api_call("GET", "/api/user/info", {}, function(result) {
 		if (result["success"] == 1) {
 			$scope.user = result["user"];
+		}
+		$scope.$apply();
+	});
+}]);
+
+app.controller("problemsController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
+	$controller("loginController", { $scope: $scope });
+	api_call("GET", "/api/problem/data", {}, function(result) {
+		if (result["success"] == 1) {
+			$scope.problems = result["problems"];
 		}
 		$scope.$apply();
 	});

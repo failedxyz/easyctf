@@ -166,9 +166,8 @@ class Files(db.Model):
 		self.location = location
 
 class Solves(db.Model):
-	__table_args__ = (db.UniqueConstraint("pid", "tid"), {})
 	sid = db.Column(db.Integer, primary_key=True)
-	pid = db.Column(db.Integer)
+	pid = db.Column(db.String(32))
 	tid = db.Column(db.Integer)
 	date = db.Column(db.Integer, default=utils.get_time_since_epoch())
 	correct = db.Column(db.Boolean)
@@ -214,7 +213,7 @@ class TeamInvitations(db.Model):
 
 class Settings(db.Model):
 	sid = db.Column(db.Integer, primary_key=True)
-	key = db.Column(db.Text, unique=True)
+	key = db.Column(db.Text)
 	value = db.Column(db.Text)
 
 	def __init__(self, key, value):
