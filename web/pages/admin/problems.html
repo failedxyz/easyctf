@@ -111,5 +111,14 @@
 		var new_grader = ace.edit("new_grader");
 		new_grader.setTheme("ace/theme/tomorrow");
 		new_grader.getSession().setMode("ace/mode/python");
+		new_grader.setValue(
+			'flag = "easyctf{FLAG}"\n\n'+
+			'def grade(candidate):\n'+
+			'    if candidate == flag:\n'+
+			'        return True, "Correct!"\n'+
+			'    return False, "Incorrect."\n\n'+
+			'# Return True if the flag is correct, False otherwise, along with\n'+
+			'# a corresponding message to send to the user.'
+		);
 	});
 </script>
