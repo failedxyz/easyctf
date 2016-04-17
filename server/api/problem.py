@@ -128,22 +128,22 @@ def problem_submit():
 	solved = Solves.query.filter_by(pid=pid, tid=tid, correct=1).first()
 	if solved:
 		raise WebException("You already solved this problem.")
-	if problem:
-		grader = imp.load_source("grader.py", problem.grader)
-		if grader.grade(flag):
-			solve = Solves(pid, tid, flag, True)
-			db.session.add(solve)
-			db.session.commit()
 
+	if problem:
+		grader = imp.load_source("grader", problem.grader)
+		correct, response = grader.grade(flag)
+
+		solve = Solves(pid, tid, flag, correct)
+		db.session.add(solve)
+		db.session.commit()
+
+		if correct:
 			logger.log(__name__, "%s has solved %s by submitting %s" % (team.teamname, problem.title, flag), level=logger.WARNING)
-			return { "success": 1, "message": "Correct!" }
+			return { "success": 1, "message": response }
 
 		else:
-			solve = Solves(pid, tid, flag, False)
-			db.session.add(solve)
-			db.session.commit()
 			logger.log(__name__, "%s has incorrectly submitted %s to %s" % (team.teamname, flag, problem.title), level=logger.WARNING)
-			raise WebException("Incorrect.")
+			raise WebException(response)
 
 	else:
 		raise WebException("Problem does not exist!")
