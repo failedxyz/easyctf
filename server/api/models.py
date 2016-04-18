@@ -71,8 +71,18 @@ class Teams(db.Model):
 		return members
 
 	def points(self):
-		""" TODO: Implement scoring with Bonus Points """
-		return 0
+		bonuses = [5, 3, 1] # TODO: Make this a setting in the web interface
+		points = 0
+
+		# TODO: use joins
+		solves = Solves.query.filter_by(tid=self.tid).all()
+		for solve in solves:
+			problem = Problems.query.filter_by(pid=solve.pid).first()
+			multiplier = 1
+			if solve.bonus != -1:
+				multiplier += bonuses[solve.bonus-1]/100.0
+			points += round(problem.value*multiplier)
+		return points
 
 	def place(self, ranked=True):
 		# score = db.func.sum(Problems.value).label("score")
@@ -139,7 +149,6 @@ class Problems(db.Model):
 	value = db.Column(db.Integer)
 	hint = db.Column(db.Text)
 	autogen = db.Column(db.Boolean)
-	bonus = db.Column(db.Integer)
 	threshold = db.Column(db.Integer)
 	weightmap = db.Column(db.PickleType)
 	grader = db.Column(db.Text)
@@ -152,7 +161,6 @@ class Problems(db.Model):
 		self.value = value
 		self.hint = hint
 		self.autogen = autogen
-		self.bonus = bonus
 		self.threshold = threshold
 		self.weightmap = weightmap
 
@@ -172,6 +180,7 @@ class Solves(db.Model):
 	date = db.Column(db.Text, default=utils.get_time_since_epoch())
 	correct = db.Column(db.Boolean)
 	flag = db.Column(db.Text)
+	bonus = db.Column(db.Integer) # 1 for first solve, 2 for second, etc.
 
 	def __init__(self, pid, tid, flag, correct):
 		self.pid = pid

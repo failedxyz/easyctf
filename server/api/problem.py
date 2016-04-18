@@ -138,6 +138,16 @@ def problem_submit():
 		db.session.commit()
 
 		if correct:
+			# Wait until after the solve has been added to the database before adding bonus
+			solves = Solves.query.filter_by(pid=pid, correct=1).count()
+			if solves < 4:
+				bonus = solves
+			else:
+				bonus = -1
+			solve.bonus = bonus
+			db.session.add(solve)
+			db.session.commit()
+
 			logger.log(__name__, "%s has solved %s by submitting %s" % (team.teamname, problem.title, flag), level=logger.WARNING)
 			return { "success": 1, "message": response }
 
