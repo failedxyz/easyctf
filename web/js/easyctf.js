@@ -225,28 +225,6 @@ app.controller("adminProblemsController", ["$controller", "$scope", "$http", fun
 		}
 		$scope.$apply();
 		$scope.problems.forEach(function(problem) {
-			
-			$(".selectpicker").selectpicker();
-			var config = {
-				toolbar: [
-					{ name: "basicstyles", items: [ "Bold", "Italic", "Underline" ] },
-					{ name: "links", items: [ "Link" ] },
-					{ name: "paragraph", items: [ "NumberedList", "BulletedList", "-", "Outdent", "Indent", "-", "Blockquote" ] },
-					{ name: "tools", items: [ "Maximize" ] },
-					{ name: "document", items: [ "Source" ] },
-				]
-			};
-			var editor = new EpicEditor({
-				container: problem.pid + "_grader",
-				theme: {
-					base: "https://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/base/epiceditor.css",
-					preview: "https://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/preview/github.css",
-					editor: "https://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/editor/epic-light.css"
-				},
-				button: {
-					bar: "show"
-				}
-			}).load();
 			var grader = ace.edit(problem.pid + "_grader");
 			grader.setTheme("ace/theme/tomorrow");
 			grader.getSession().setMode("ace/mode/python");

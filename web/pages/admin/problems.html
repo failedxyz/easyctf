@@ -87,27 +87,6 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$(".selectpicker").selectpicker();
-		var config = {
-			toolbar: [
-				{ name: "basicstyles", items: [ "Bold", "Italic", "Underline" ] },
-				{ name: "links", items: [ "Link" ] },
-				{ name: "paragraph", items: [ "NumberedList", "BulletedList", "-", "Outdent", "Indent", "-", "Blockquote" ] },
-				{ name: "tools", items: [ "Maximize" ] },
-				{ name: "document", items: [ "Source" ] },
-			]
-		};
-		var editor = new EpicEditor({
-			container: "new_grader",
-			theme: {
-				base: "https://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/base/epiceditor.css",
-				preview: "https://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/preview/github.css",
-				editor: "https://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/editor/epic-light.css"
-			},
-			button: {
-				bar: "show"
-			}
-		}).load();
 		var new_grader = ace.edit("new_grader");
 		new_grader.setTheme("ace/theme/tomorrow");
 		new_grader.getSession().setMode("ace/mode/python");
