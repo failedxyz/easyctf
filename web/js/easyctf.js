@@ -52,6 +52,10 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: "pages/problems.html",
 		controller: "problemsController"
 	})
+	.when("/programming", {
+		templateUrl: "pages/programming.html",
+		controller: "programmingController"
+	})
 	.when("/forgot", {
 		templateUrl: "pages/forgot.html",
 		controller: "resetController"
@@ -261,6 +265,20 @@ app.controller("problemsController", ["$controller", "$scope", "$http", function
 		}
 		$scope.$apply();
 	});
+}]);
+
+app.controller("programmingController", ["$controller", "$scope", "$http", function($controller, $scope, $http) {
+	$controller("loginController", { $scope: $scope });
+	$("#editor").height($(window).height()/2);
+	var grader = ace.edit("editor");
+	grader.setTheme("ace/theme/tomorrow");
+	grader.getSession().setMode("ace/mode/python");
+	grader.setOptions({
+	  fontFamily: "monospace",
+	  fontSize: "12pt"
+	});
+	grader.setValue("");
+
 }]);
 
 $.fn.serializeObject = function() {
