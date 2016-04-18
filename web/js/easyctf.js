@@ -237,7 +237,7 @@ app.controller("adminProblemsController", ["$controller", "$scope", "$http", fun
 				]
 			};
 			var editor = new EpicEditor({
-				container: "new_grader",
+				container: problem.pid + "_grader",
 				theme: {
 					base: "https://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/base/epiceditor.css",
 					preview: "https://cdnjs.cloudflare.com/ajax/libs/epiceditor/0.2.2/themes/preview/github.css",
