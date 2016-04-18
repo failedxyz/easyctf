@@ -25,7 +25,8 @@ def problem_data():
 			"value": problem.value,
 			"threshold": problem.threshold,
 			"weightmap": problem.weightmap,
-			"grader_contents": open(problem.grader, "r").read()
+			"grader_contents": open(problem.grader, "r").read(),
+			"bonus": problem.bonus
 		})
 	problems_return.sort(key=lambda prob: prob["value"])
 	return { "success": 1, "problems": problems_return }

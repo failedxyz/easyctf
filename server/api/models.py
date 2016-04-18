@@ -71,7 +71,14 @@ class Teams(db.Model):
 		return members
 
 	def points(self):
-		bonuses = [5, 3, 1] # TODO: Make this a setting in the web interface
+		bonuses = [
+			[0, 0, 0],
+			[3, 2, 1],
+			[5, 3, 1],
+			[8, 5, 3],
+			[10, 8, 6],
+			[20, 12, 8]
+		]
 		points = 0
 
 		# TODO: use joins
@@ -80,7 +87,7 @@ class Teams(db.Model):
 			problem = Problems.query.filter_by(pid=solve.pid).first()
 			multiplier = 1
 			if solve.bonus != -1:
-				multiplier += bonuses[solve.bonus-1]/100.0
+				multiplier += bonuses[problem.bonus][solve.bonus-1]/100.0
 			points += round(problem.value*multiplier)
 		return points
 
@@ -152,6 +159,7 @@ class Problems(db.Model):
 	threshold = db.Column(db.Integer)
 	weightmap = db.Column(db.PickleType)
 	grader = db.Column(db.Text)
+	bonus = db.Column(db.Integer)
 
 	def __init__(self, pid, title, category, description, value, hint="", autogen=False, bonus=0, threshold=0, weightmap={}):
 		self.pid = pid
@@ -163,6 +171,7 @@ class Problems(db.Model):
 		self.autogen = autogen
 		self.threshold = threshold
 		self.weightmap = weightmap
+		self.bonus = bonus
 
 class Files(db.Model):
 	fid = db.Column(db.Integer, primary_key=True)

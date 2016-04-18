@@ -9,6 +9,8 @@ var create_problem = function() {
 	var data = $("#new_problem_form").serializeObject();
 	var grader_contents = ace.edit("new_grader").getValue();
 	data["grader_contents"] = grader_contents;
+	var bonus = $("#bonus").val();
+	data["bonus"] = bonus;
 	$(input).attr("disabled", "disabled");
 	api_call("POST", "/api/problem/add", data, function(result) {
 		if (result["success"] == 1) {
@@ -31,10 +33,13 @@ var create_problem = function() {
 var update_problem = function(form_id) {
 	var input = "#" + form_id + " input";
 	var data = $("#" + form_id).serializeObject();
-	pid = data["pid"];
+	var pid = data["pid"];
 
 	var grader_contents = ace.edit(pid + "_grader").getValue();
 	data["grader_contents"] = grader_contents;
+	var bonus = $("#" + pid + "_bonus").val();
+	console.log(bonus);
+	data["bonus"] = bonus;
 
 	$(input).attr("disabled", "disabled");
 	api_call("POST", "/api/problem/update", data, function(result) {
@@ -47,6 +52,7 @@ var update_problem = function(form_id) {
 				$(input).removeAttr("disabled");
 			});
 		}
+		console.log(result);
 	}, function(jqXHR, status, error) {
 		var result = jqXHR["responseText"];
 		display_message(pid + "_status", "danger", "Error " + jqXHR["status"] + ": " + result["message"], function() {

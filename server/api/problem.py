@@ -24,6 +24,7 @@ def problem_add():
 	hint = request.form["hint"]
 	value = request.form["value"]
 	grader_contents = request.form["grader_contents"]
+	bonus = request.form["bonus"]
 	pid = utils.generate_string()
 	while Problems.query.filter_by(pid=pid).first():
 		pid = utils.generate_string()
@@ -37,7 +38,7 @@ def problem_add():
 	except Exception, e:
 		raise WebException("There is a syntax error in the grader: %s" % e)
 
-	problem = Problems(pid, title, category, description, value, hint=hint)
+	problem = Problems(pid, title, category, description, value, hint=hint, bonus=bonus)
 	db.session.add(problem)
 	db.session.commit()
 
@@ -92,6 +93,7 @@ def problem_update():
 	hint = request.form["hint"]
 	value = request.form["value"]
 	grader_contents = request.form["grader_contents"]
+	bonus = request.form["bonus"]
 	try:
 		exec(grader_contents)
 	except Exception, e:
@@ -104,6 +106,7 @@ def problem_update():
 		problem.description = description
 		problem.hint = hint
 		problem.value = value
+		problem.bonus = bonus
 
 		grader = open(problem.grader, "w")
 		grader.write(grader_contents)
