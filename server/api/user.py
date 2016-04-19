@@ -132,7 +132,7 @@ def user_status():
 		"success": 1,
 		"logged_in": logged_in,
 		"admin": is_admin(),
-		"competition": is_admin(),
+		"competition": utils.is_ctf_time(),
 		"in_team": in_team(get_user().first()),
 		"username": session["username"] if logged_in else "",
 	}

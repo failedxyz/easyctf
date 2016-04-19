@@ -3,9 +3,9 @@
 	<div ng-if="settings">
 		<div id="settings_msg"/>
 		<form class="form-horizontal" onsubmit="update_settings(); return false;" id="update_settings_form">
-			<input class="form-control" name="ctf_begin" value="{{ settings['ctf_begin'] }}"/>
+			<input class="form-control" name="ctf_begin" placeholder="CTF Start time (seconds)" value="{{ settings['ctf_begin'] }}" required/>
 			<br>
-			<input class="form-control" name="ctf_end" value="{{ settings['ctf_end'] }}"/>
+			<input class="form-control" name="ctf_end" placeholder="CTF End time (seconds)" value="{{ settings['ctf_end'] }}"required/>
 			<br>
 			<input type="submit" class="btn btn-success" value="Update"/>
 		</form>

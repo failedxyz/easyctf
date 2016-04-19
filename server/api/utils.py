@@ -100,3 +100,19 @@ def generate_identicon(email, filename):
 
 	image.save(open("pfp/%s.png" % filename, "w"), "PNG")
 	return
+
+def is_ctf_time():
+	import settings
+	start = settings.get("ctf_begin")
+	end = settings.get("ctf_end")
+	start = [int(start), 0][start is None]
+	end = [int(end), 0][end is None]
+	time = get_time_since_epoch()
+
+	if start and end:
+		return start < time < end
+
+	if start < time and end == 0:
+		return True
+
+	return False
