@@ -28,10 +28,11 @@
 <script>
 var update_highlighting = function() {
     var language = $("#language").val();
-    if (language != "python3") {
-        var editor = ace.edit("editor");
-        editor.getSession().setMode("ace/mode/" + language);
+    if (language == "python3") {
+        language = "python";
     }
+    var editor = ace.edit("editor");
+    editor.getSession().setMode("ace/mode/" + language);
 }
 
 var submit = function() {
