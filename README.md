@@ -15,37 +15,3 @@ If you have Vagrant installed, setting up the platform should be a piece of cake
 If you have any issues during installation, file an issue.
 
 ## Notes
-
-####reCAPTCHA
-
-Do not worry if you see "ERROR: Invalid domain for site key", the reCAPTCHA expects to be hosted on the domain "easyctf.com" and will not function properly until it is.
-
-Site Key: *6Lc4xhMTAAAAAIaiF3yEWGbHRaGgMg4FHor61p1G*
-
-Secret Key: *6Lc4xhMTAAAAACFaG2NyuKoMdZQtSa_1LI76BCEu*
-
-**Resources** : Flask, MySQL, AngularJS
-
-
-Main Pages:
-- <b>index.html</b>
-- <b>login.html</b>
-- <b>register.html</b>
-- <b>about.html</b>
-- <b>scoreboard.html</b>
-- <b>problems.html</b>
-- account.html
-- <b>programming.html</b>
-- <b>chat.html</b>
-- forgot_password.html
-- logout.html
-- <b>rules.html</b>
-- team.html
-- <b>shell.html</b>
-- <b>updates.html</b>
-- resetpassword.html
-
-Misc Pages:
-- <b>Admin/submission page</b>
-
-Color Scheme: #62AC5B | #0080FF
