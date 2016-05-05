@@ -1,1 +1,0 @@
-Help! I started growing this array culture, but it outgrew its petri dish! Using standard array syntax (either JavaScript or Python), indicate which element of the array contains the value ${value}.
