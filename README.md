@@ -1,0 +1,3 @@
+# EasyCTF 2016
+
+Problems folder. Make a folder with your problem in it. Format coming soon... 

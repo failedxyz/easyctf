@@ -1,0 +1,12 @@
+{
+	"pid": "survey",
+	"title": "Survey",
+	"hint": "No hint!",
+	"category": "Miscellaneous",
+	"autogen": false,
+	"programming": false,
+	"value": 20,
+	"bonus": 0,
+	"threshold": 0,
+	"weightmap": { }
+}
