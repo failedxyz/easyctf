@@ -1,6 +1,6 @@
 This is a high-level programming challenge. Given a set of vertices corresponding to the map below, your program must output the shortest path from `a` to `z`.
 
-![image](`{dijkstra_map_svg}`)
+![image](${dijkstra_map_svg})
 
 The length of the line segments is randomized such that the length (`l`) satisfies `20 <= l <= 120`.
 
