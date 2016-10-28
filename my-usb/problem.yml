@@ -1,0 +1,9 @@
+title: My USB
+hint: Sorry, no hint.
+category: Forensics
+autogen: false
+programming: false
+value: 150
+files:
+  - usb.img
+  
