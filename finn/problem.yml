@@ -1,0 +1,9 @@
+author: usrv
+hint: In hindsight, numerical pins make really bad passwords . . . especially if they are pop culture references
+category: Forensics
+autogen: false
+programming: false
+value: 200
+files:
+  - finn.png
+  - help.txt
