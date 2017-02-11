@@ -30,4 +30,4 @@ BR
 BR
 RB
 
-Output: 6
+Output: 7
