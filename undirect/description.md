@@ -1,0 +1,1 @@
+Seems like we got ourselves stuck in a [redirect loop](http://undirect.web.easyctf.com). Help me undirect myself from its clutches and get the flag!
