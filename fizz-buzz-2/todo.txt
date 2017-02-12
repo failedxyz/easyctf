@@ -1,0 +1,7 @@
+I still need to do the execution grader, and probably introduce some sort of limits to prevent the contestant from having a print "1,2,fizz,4,buzz..." type program. A length limit would probably be sufficient.
+
+I also need to add a program validator, that checks for the characters "i", "I", and "?".
+
+We will need to disable "eval()", "exec()", globals (in python), etc.
+
+Backup hint: `Don't use the characters "i", "I", and "?".`
