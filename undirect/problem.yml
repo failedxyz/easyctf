@@ -1,9 +1,7 @@
 author: mzhang
 title: Undirect
 hint: How can you find out more about what the server is really sending back?
-category: Forensics
+category: Web
 autogen: false
 programming: false
 value: 100
-files:
-  - gibberish.png
