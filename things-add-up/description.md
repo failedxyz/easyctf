@@ -5,7 +5,7 @@ Output goes to STDOUT - `cout`, `print`, and `System.out`. Your program will be 
 ours for each testcase, this problem will be marked solved.
 
 We'll start with a simple challenge. Each testcase has two lines of input. The first will contain an integer `N`. The second will contain a
-series of integers `a_1, a_2, ..., a_N`. You are to output the sum of all that series - that is, `a_1 + a_2 + ... + a_n`. Good luck!
+series of integers `a_1, a_2, ..., a_N`. You are to output the sum of that series - that is, `a_1 + a_2 + ... + a_n`. Good luck!
 
 #### Input Constraints
 
