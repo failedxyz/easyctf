@@ -11,11 +11,11 @@ The first line contains three integers `A B N`. The second line contains a serie
 
 #### Input Constraints
 
-`0 < N < 16`
+`0 < N <= 16`
 
-`0 < A < B < 10000000`
+`0 < A < B <= 10000000`
 
-`0 < d_i < 10000000`
+`0 < d_i <= 10000000`
 
 #### Sample Input
 
