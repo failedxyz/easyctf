@@ -1,9 +1,0 @@
-author: usrv
-title: QR
-hint: There is a better way to do this problem than paint, but hey, your choice.
-category: Forensics
-autogen: false
-programming: false
-value: 50
-files:
-  - qr.png
