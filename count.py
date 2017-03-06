@@ -20,6 +20,7 @@ for problem_name in problem_names:
 		pass
 		# print traceback.format_exc()
 
+problems.sort(key=lambda p: p.get("value"), reverse=True)
 print "Grand Total: %d" % len(problems)
 print "Category Breakdown:"
 
@@ -29,4 +30,4 @@ for category, count in categories:
 	print "  %s: %s" % (category, count)
 	for problem in problems:
 		if problem.get("category") != category: continue
-		print "    %s" % problem.get("title")
+		print "    %s [%s]" % (problem.get("title"), problem.get("value"))
