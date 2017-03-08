@@ -3,7 +3,7 @@ author: wiresboy
 category: Forensics
 autogen: false
 programming: false
-value: 180
+value: 330
 hint: Is there another kind of Oboe?
 files:
   - qr.bmp
