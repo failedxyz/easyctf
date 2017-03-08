@@ -36,7 +36,7 @@ def getspace(size):
 def generate(string, debug=False):
 	size = 0
 	binstring = bin(int(string.encode("hex"), 16)).strip("0b")
-	while size < 2 or getspace(size + 1) < len(binstring):
+	while size < 3 or getspace(size + 1) - 8 < len(binstring):
 		size += 1
 	n = getspace(size)
 	# print size, len(binstring)

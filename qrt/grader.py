@@ -305,7 +305,7 @@ def generate_image(string, debug=False):
 				draw_triangle(im, points, cell, size)
 	return im
 
-FLAG = "are_triangles_more_secure_than_squares?_%s}"
+FLAG = "are_triangles_more_secure_than_squares?_%s"
 
 def get_salt(random):
 	salt = "".join([random.choice("0123456789abcdef") for i in range(8)])
