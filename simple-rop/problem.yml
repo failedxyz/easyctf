@@ -1,0 +1,7 @@
+title: Simple Rop
+category: Binary Exploitation
+value: 75
+author: r3ndom
+autogen: false
+files:
+  - simple-rop.c
