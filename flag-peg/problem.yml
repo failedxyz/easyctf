@@ -4,6 +4,6 @@ hint: You're not looking deep enough
 category: Forensics
 autogen: false
 programming: false
-value: 50
+value: 150
 files:
   - heresaflag.jpg

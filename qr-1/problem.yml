@@ -1,9 +1,9 @@
-title: QR 2
+title: QR 1
 author: wiresboy
 category: Forensics
 autogen: false
 programming: false
-value: 330
-hint: Is there another kind of Oboe?
+value: 100
+hint: Is the image only black and white?
 files:
-  - qr2.bmp
+  - qr1.bmp

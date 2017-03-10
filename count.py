@@ -20,13 +20,17 @@ for problem_name in problem_names:
 		pass
 		# print traceback.format_exc()
 
-print "Grand Total: %d" % len(problems)
-print "Category Breakdown:"
+problems.sort(key=lambda p: p.get("value"), reverse=True)
+print("Grand Total: %d" % len(problems))
+print("Category Breakdown:")
+
+maxtitle = max(map(lambda p: len(p.get("title")), problems)) + 3
+maxauthor = max(map(lambda p: len(p.get("author")), problems)) + 3
 
 c = Counter(map(lambda p: p.get("category", ""), problems))
 categories = sorted(c.items(), key=lambda c: c[1], reverse=True)
 for category, count in categories:
-	print "  %s: %s" % (category, count)
+	print("  %s: %s" % (category, count))
 	for problem in problems:
 		if problem.get("category") != category: continue
-		print "    %s" % problem.get("title")
+		print("    %s %s %sp" % (problem.get("title") + " " * (maxtitle - len(problem.get("title"))), problem.get("author") + " " * (maxauthor - len(problem.get("author"))), problem.get("value")))

@@ -1,9 +1,0 @@
-title: Dijkstra
-author: ztaylor54
-hint: You might consider reading up on shortest-path algorithms.
-category: Programming
-autogen: false
-programming: false
-value: 450
-files:
-  - dijkstra_map.svg
