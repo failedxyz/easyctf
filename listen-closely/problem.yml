@@ -4,6 +4,6 @@ hint: 1, 16, 8000
 category: Cryptography
 autogen: false
 programming: false
-value: 50
+value: 300
 files:
   - listenclosely.wav
