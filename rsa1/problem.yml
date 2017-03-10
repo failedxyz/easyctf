@@ -1,9 +1,7 @@
 author: blockingthesky
-title: RSA 3
+title: RSA 1
 hint: You might want to read up on how RSA works.
 category: Cryptography
 autogen: false
 programming: false
-value: 70
-files:
-  - rsa3
+value: 30
