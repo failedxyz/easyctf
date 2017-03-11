@@ -1,11 +1,10 @@
-author: blockingthesky
-title: Things Add Up
+author: arxenix
+title: library
 category: Programming
 autogen: false
 programming: true
-value: 15
+value: 75
 
-grader_language: python
 test_cases: 10
 time_limit: 1000
 memory_limit: 256000
