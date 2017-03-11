@@ -1,0 +1,19 @@
+<<<<<<< HEAD
+title: RSA 1
+author: neptunia
+hint: Go google RSA if you're stuck.
+category: Cryptography
+autogen: true
+programming: false
+value: 25
+=======
+author: blockingthesky
+title: RSA 3
+hint: You might want to read up on how RSA works.
+category: Cryptography
+autogen: false
+programming: false
+value: 70
+files:
+  - rsa3
+>>>>>>> 93577ddee37a489cf0aa1a4b987d23a3bc3d2657
