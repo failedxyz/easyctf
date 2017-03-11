@@ -1,0 +1,1 @@
+I just intercepted some odd [messages.txt](${messages}). It appears to be a Diffie-hellman protocol, but my math isn't good enough to figure out what the final shared key is. Help! (The answer is a number. There is no `easyctf{}`)
