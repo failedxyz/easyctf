@@ -28,3 +28,7 @@ Output:
 ```
 1
 ```
+
+Explanation: 
+
+If you understand the word 'ok', you can understand the word 'blah'. If you understand 'ok' and 'blah', you can understand 'iz'. 'iz', and 'ok' lets you understand 'yiq'. 'yiq', 'iz', and 'blah' let you understand 'arggiq'.
