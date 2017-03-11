@@ -1,1 +1,1 @@
-What is this file saying? Help me.
+My friend sent me this file and told me to git gud.
