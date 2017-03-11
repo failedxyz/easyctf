@@ -1,0 +1,9 @@
+author: GenericNickname
+title: Easy RE
+hint: There's only one place the flag could be.
+category: Reverse Engineering
+autogen: false
+programming: false
+value: 25
+files:
+  - easy-re
