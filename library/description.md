@@ -2,10 +2,10 @@ Your librarian has a 2-row bookshelf that can contain N books in each row. She w
 
 Input: the integer, N (1<=N<=2^1024)
 
-Output: the number of ways you can place red-colored books and blue-colored books onto the bookshelf. Since this number might be really big, output it mod 10^9+7.
+Output: the number of ways you can place red-colored books and blue-colored books onto a N-column bookshelf. Since this number might be really big, output it mod 10^9+7.
 
 Example:
-Input: 3
+Input: 2
 
 Your valid bookshelf layouts are:
 ```
