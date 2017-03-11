@@ -1,3 +1,9 @@
+# Very easy problem. Compute a few values w/ brute force or something, then check OEIS.
+# Part of: https://oeis.org/A001333
+# Tells us:  f(n) = (1/4) * Trace( [[0,0,1,0],[0,1,0,1],[1,0,2,0],[0,2,0,1]] )
+# just write a program to compute this quickly 
+# this sol takes something like ~O(log n) i think?
+
 x = input() + 1
 
 mat = [[0,0,1,0],[0,1,0,1],[1,0,2,0],[0,2,0,1]]
