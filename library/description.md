@@ -4,11 +4,11 @@ Input: the integer, N (1<=N<=2^1024)
 
 Output: the number of ways you can place red-colored books and blue-colored books onto the bookshelf. Since this number might be really big, output it mod 10^9+7.
 
-Ex: N=3
-
-
+Example:
 Input: 3
 
+Your valid bookshelf layouts are:
+```
 BB
 BB
 
@@ -29,5 +29,6 @@ BR
 
 BR
 RB
-
+```
+Therefore, 
 Output: 7
