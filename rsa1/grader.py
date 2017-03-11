@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from cStringIO import StringIO
 
 flag = "wh3n_y0u_h4ve_p&q_RSA_iz_ez"
@@ -48,9 +47,3 @@ def grade(random, key):
     if key.find("%s_%s" % (flag, salt)) >= 0:
         return True, "Correct!"
     return False, "Nope."
-=======
-def grade(autogen, key):
-    if key.find("tw0_v3ry_merrry_tw1n_pr1m35!!_417c0d") != -1:
-        return True, "Really Superb! Applause!"
-    return False, "RIP"
->>>>>>> 93577ddee37a489cf0aa1a4b987d23a3bc3d2657
