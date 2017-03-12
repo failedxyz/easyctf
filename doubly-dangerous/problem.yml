@@ -4,6 +4,6 @@ hint: How are floating-point numbers represented?
 category: Binary Exploitation
 autogen: false
 programming: false
-value: 75
+value: 110
 files:
   - doubly_dangerous
