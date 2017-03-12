@@ -1,5 +1,5 @@
-On the shell there is a folder `<insert location>`.
+On the shell there is a folder `/problems/simple-rop`.
 
 Read flag.txt
 
-[Source](${simple-rop.c})
+[Source](${simple_rop_c})
