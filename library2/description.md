@@ -3,6 +3,7 @@ Your librarian is back again with another challenge for you. She recently acquir
 Input:
 
 ```
+N (number of words in the dictionary)
 word1: list of words in word1 definition
 word2: list of words in word2 definition
 ... etc
@@ -17,6 +18,7 @@ Ex:
 
 Input:
 ```
+5
 arggiq: blah iz yiq
 blah: ok
 iz: ok blah
@@ -28,3 +30,7 @@ Output:
 ```
 1
 ```
+
+Explanation: 
+
+If you understand the word 'ok', you can understand the word 'blah'. If you understand 'ok' and 'blah', you can understand 'iz'. 'iz', and 'ok' lets you understand 'yiq'. 'yiq', 'iz', and 'blah' let you understand 'arggiq'.

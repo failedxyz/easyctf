@@ -8,17 +8,20 @@ from collections import Counter
 problem_names = os.listdir(os.path.dirname(os.path.abspath(__file__)))
 problems = []
 
+failed = []
+
 for problem_name in problem_names:
+	folder = os.path.dirname(os.path.abspath(__file__)) + os.sep + problem_name
+	if not (os.path.exists(folder) and os.path.isdir(folder)): continue
 	try:
-		metadata_file = os.path.dirname(os.path.abspath(__file__)) + os.sep + problem_name + os.sep + "problem.yml"
+		metadata_file = folder + os.sep + "problem.yml"
 		with open(metadata_file, "r") as f:
 			metadata_raw = f.read()
 			metadata = yaml.load(metadata_raw)
 			if "category" in metadata:
 				problems.append(metadata)
 	except:
-		pass
-		# print traceback.format_exc()
+		failed.append(problem_name)
 
 problems.sort(key=lambda p: p.get("value"), reverse=True)
 print("Grand Total: %d" % len(problems))
@@ -34,3 +37,8 @@ for category, count in categories:
 	for problem in problems:
 		if problem.get("category") != category: continue
 		print("    %s %s %sp" % (problem.get("title") + " " * (maxtitle - len(problem.get("title"))), problem.get("author") + " " * (maxauthor - len(problem.get("author"))), problem.get("value")))
+
+print("\nThe following problems failed to parse.")
+for title in failed:
+	if title in [".git"]: continue
+	print("    %s" % title)

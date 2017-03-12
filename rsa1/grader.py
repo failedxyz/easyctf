@@ -39,7 +39,7 @@ def generate_ciphertext(random):
 
 def generate(random):
     return dict(files={
-        "ciphertext_rsa1.txt": generate_ciphertext
+        "ciphertext.txt": generate_ciphertext
     })
 
 def grade(random, key):

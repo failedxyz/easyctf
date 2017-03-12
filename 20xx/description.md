@@ -1,1 +1,1 @@
-What is this file saying? Help me.
+My friend sent me [this file](${20xx_dtm}) and told me to git gud.
