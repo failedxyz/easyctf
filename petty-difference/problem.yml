@@ -4,7 +4,7 @@ hint: No hint
 category: Forensics
 autogen: false
 programming: false
-value: 50
+value: 75
 files:
   - file1.txt
   - file2.txt
