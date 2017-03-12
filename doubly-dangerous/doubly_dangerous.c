@@ -1,13 +1,17 @@
 //compile with:
 //gcc -m32 -std=c99 -Wall -fno-stack-protector doubly_dangerous.c -o doubly_dangerous
 
+#define _GNU_SOURCE
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/types.h>
 
 void give_flag() {
     FILE *f = fopen("flag.txt", "r");
+    gid_t gid = getegid();
+    setresgid(gid, gid, gid);
     if (f != NULL) {
         char c;
 
