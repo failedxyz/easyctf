@@ -1,6 +1,8 @@
 //compile with:
 //gcc -m32 -std=c99 -Wall -fno-stack-protector doubly_dangerous.c -o doubly_dangerous
 
+//sol: input "A"*40+"\x00\x80\x34\x41"
+
 #define _GNU_SOURCE
 #include <stdlib.h>
 #include <unistd.h>
