@@ -6,4 +6,4 @@ autogen: false
 programming: false
 value: 50
 files:
-	- messages.txt
+  - messages.txt
