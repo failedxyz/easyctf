@@ -9,6 +9,7 @@ problem_names = os.listdir(os.path.dirname(os.path.abspath(__file__)))
 problems = []
 
 failed = []
+total = 0
 
 for problem_name in problem_names:
 	folder = os.path.dirname(os.path.abspath(__file__)) + os.sep + problem_name
@@ -36,7 +37,10 @@ for category, count in categories:
 	print("  %s: %s" % (category, count))
 	for problem in problems:
 		if problem.get("category") != category: continue
+		total += int(problem.get("value"))
 		print("    %s %s %sp" % (problem.get("title") + " " * (maxtitle - len(problem.get("title"))), problem.get("author") + " " * (maxauthor - len(problem.get("author"))), problem.get("value")))
+
+print ("\nTOTAL VALUE: %d" % total)
 
 print("\nThe following problems failed to parse.")
 for title in failed:
