@@ -1,0 +1,9 @@
+author: GenericNickname
+title: Hash On Hash
+hint: Thankfully
+category: Cryptography
+autogen: false
+programming: false
+value:  100
+files:
+  - hexstrings.txt
