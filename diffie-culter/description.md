@@ -1,1 +1,1 @@
-I just intercepted some more odd messages.txt. It appears to be a Diffie-hellman protocol, but my math isn't good enough to figure out what the final shared key is. Help! (The answer is a number. There is no easyctf{})
+I just intercepted some more odd [messages.txt](${messages_txt}). It appears to be a Diffie-hellman protocol, but my math isn't good enough to figure out what the final shared key is. Help! (The answer is a number. There is no easyctf{})
