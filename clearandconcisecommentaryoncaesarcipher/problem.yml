@@ -1,0 +1,9 @@
+title: Caesar on Steroids
+author: nicebowlofsoup
+hint: Practice!
+category: Cryptography
+autogen: false
+programming: false
+value: 20
+files:
+  - ClearAndConciseCommentaryonCaesarCipher.pdf
