@@ -5,3 +5,4 @@ author: r3ndom
 autogen: false
 files:
   - simple-rop.c
+  - simple-rop
