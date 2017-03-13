@@ -1,1 +1,1 @@
-My friend sent me [this file](${20xx_dtm}) and told me to git gud.
+My friend sent me [this file](${_20xx_dtm}) and told me to git gud.
