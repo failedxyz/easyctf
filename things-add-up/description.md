@@ -15,10 +15,12 @@ series of integers `a_1, a_2, ..., a_N`. You are to output the sum of that serie
 
 #### Sample Input
 
-```5
+```
+5
 1 2 3 4 5
 ```
 
 #### Sample Output
 
-`15`
+```
+15```
