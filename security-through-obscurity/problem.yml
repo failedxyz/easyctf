@@ -4,7 +4,7 @@ hint: Maybe google would help.
 category: Cryptography
 autogen: false
 programming: false
-value: 450
+value: 150
 files:
   - encrypt.sage
   - publickey_and_ciphertext.txt
