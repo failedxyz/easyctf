@@ -128,7 +128,7 @@ past_trash:
 	retn
 
 b_val dd 0x4039999a
-base_txt db 'Please enter the best number', ENDL, 0
+base_txt db 'Please enter the best number, round to 6 significant figures.', ENDL, 0
 a_val dd 0x40d00000
 scanf_txt db '%f', 0
 final_val dd 0xc092e6a0
