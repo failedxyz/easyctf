@@ -5,6 +5,8 @@ We received two files, one listing men and the other women. Each line contains a
 
 For example, the entry "Joe 4, 5, 3, 1, 2" means that Joe would most prefer the 4th entry on the opposite list, and least prefer the 2nd.
 
-We have heard that there is one pairing which will be together in all possible stable matchings, please discover who this couple is and provide their names as "<male_name>,<female_name>"
+We have heard that there are some pairings that will be together in all possible stable matchings, please find them. However, because there are quite a bit of them, please submit your solution as the following:
+
+MD5 hash of `(male_1,female_1)(male_2,female_2)...(male_n,female_n)`, where the pairings are sorted alphabetically by male names. For example, `(Bob,Susie)(Jim,Carol)(Tom,Emma)` would be submitted as `b0d75104ce4b3a7d892f745fd515fea4`.
 
 Here are the lists of preferences:[male preferences](${male_prefs_txt}), [female preferences](${female_prefs_txt}).
