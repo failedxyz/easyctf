@@ -38,11 +38,11 @@ def generate_ciphertext(random):
 
 def generate(random):
     return dict(files={
-        "ciphertext.txt": generate_ciphertext
+        "ciphertext2.txt": generate_ciphertext
     })
 
 def grade(random, key):
-    n, salt = get_problem(random)
+    p, q, e, salt = get_problem(random)
     if key.find("%s_%s" % (flag, salt)) >= 0:
         return True, "Correct!"
     return False, "Nope."
