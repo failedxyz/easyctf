@@ -23,7 +23,7 @@ def get_problem(random):
     # add Probable Prime function later
     p = probprime(random.randint(10**20,9*10**20))
     q = probprime(random.randint(10**20,9*10**20))
-    e = 3
+    e = 65537
     salt = "".join([random.choice("0123456789abcdef") for i in range(4)])
     return (p, q, e, salt)
 
