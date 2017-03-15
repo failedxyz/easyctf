@@ -8,5 +8,5 @@ programming: true
 
 grader_language: python
 test_cases: 8
-time_limit: 1000
+time_limit: 1
 memory_limit: 256000
