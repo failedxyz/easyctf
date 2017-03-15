@@ -1,0 +1,9 @@
+author: arxenix
+title: RSA 4
+hint: Why won't it decrypt?
+category: Cryptography
+autogen: false
+programming: false
+value: 200
+files:
+  - rsa4
