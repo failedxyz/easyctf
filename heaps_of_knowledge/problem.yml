@@ -3,3 +3,5 @@ category: Binary Exploitation
 value: 420
 author: arxenix
 autogen: false
+files:
+  - heaps_of_knowledge
