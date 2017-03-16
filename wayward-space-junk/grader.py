@@ -7,7 +7,7 @@ def generate(random):
 def grade(autogen, answer):
 	key = "".join([autogen.choice("0123456789abcdef") for i in range(32)])
 	autogen.seed("super%secretkeylalalala" % key)
-	flag = "".join([random.choice("012456789abcdef") for i in range(32)])
+	flag = "".join([random.choice("0123456789abcdef") for i in range(32)])
 	if answer.find(flag) != -1:
 		return True, "Correct!"
 	return False, "Nope, try again."
