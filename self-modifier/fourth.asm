@@ -22,14 +22,14 @@ include 'std.inc'
 ; 3 - 5,7 - '_'
 ; 5 - 7,11 - 'e'
 ; 7 - 11,13 - 'x'
-; 11 - 13,17 - 't'
+; 11 - 13,17 - 'z'
 ; 13 - 17,19 - '}'
 ; 17 - 19,23 - '}'
 ; 19 - 23,29 - '}'
 
-; 3 * 7 * 11 * 17 = 3927
-; answer "2 4 6 12"
-; flag _xt}
+; 2 * 7 * 11 * 17 = 0x74e
+; answer "0 4 8 13"
+; flag -ez}
 
 start:
 	push edi
@@ -50,7 +50,7 @@ start:
 	jnz .lp
 
 	mov eax, dword [esi+super_val]
-	cmp eax, 3927
+	cmp eax, 0x74e
 	jnz .bad
 	jmp .finish
 
@@ -116,7 +116,7 @@ above_handler:
 
 eleven:
 	dd thirteen,seventeen
-	db 't',11
+	db 'z',11
 
 mul_handler:
 	movzx eax, byte [ebp+9]

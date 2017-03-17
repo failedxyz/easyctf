@@ -92,7 +92,7 @@ fail:
 	mov eax, 0
 	ret
 
-to_match db 'ezpr', 0
+to_match db 'xtnq', 0
 
 idiot:
 	lea ecx, [esi+idiot_text]
@@ -104,7 +104,7 @@ idiot:
 	dec esp
 	ret
 
-alphabet db '{m}krzyjfwngpshteoialduqxvcb|', 0
+alphabet db 'hqxfbntvirwml{cap|z}sjeodygku', 0
 ;            abcdefghijklmnopqrstuvwxyz{|}
-; flag is "qfme"
+; flag is "cgfb"
 resv_stuff 512-$
