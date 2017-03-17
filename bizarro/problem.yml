@@ -4,5 +4,6 @@ category: Forensics
 autogen: false
 programming: false
 value: 400
+hint: Red herrings are always a touchy subject.
 files:
   - crpt.png
