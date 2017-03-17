@@ -117,10 +117,10 @@ past_trash:
 	pop edx
 
 	mov eax, dword [esi+temp_val]
-	; 0x61375a7b = little endian of '{Z7a'
-	; 0x61375a7b ^ 0x3fab396d which is the value of the correct input 1.33769
+	; 0x336a687b = little endian of '{hj3'
+	; 0x336a687b ^ 0x3fab396d which is the value of the correct input 1.33769
 	; is equal to 0x5e9c6316
-	xor eax, 0x5e9c6316
+	xor eax, 0xcc15116
 	mov dword [edi], eax
 	xor eax, eax
 	mov dword [esi+temp_val], eax

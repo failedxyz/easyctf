@@ -62,10 +62,10 @@ printLoop:
 
 	mov ecx, dword [esi+inputVal]
 	pop edi
-	; 433695873 is the answer
-	; (struct.unpack('<I', b'_ok_')[0] ^ 0x19d9ac81)
-	; This part of the flag is _ok_ ^ the 35th value in the pattern.
-	xor ecx, 0x46b2c3de
+	; 797691075 is the answer
+	; (struct.unpack('<I', b'-0p9')[0] ^ 0x2f8bccc3)
+	; This part of the flag is -0p9 ^ the 36th value in the pattern.
+	xor ecx, 0x16fbfcee
 	mov dword [edi], ecx
 
 	push edi
@@ -80,7 +80,7 @@ printLoop:
 
 	ret
 
-pattern_text db 'What is the 35th number (index 34) in the following sequence?', 0
+pattern_text db 'What is the 36th number (index 35) in the following sequence?', 0
 format_text db '%d ', 0
 
 ; ecx = arg
