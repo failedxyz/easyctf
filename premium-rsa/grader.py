@@ -76,10 +76,11 @@ def get_problem(random):
 def generate_ciphertext(random):
     n, e, cut, deez, salt = get_problem(random)
     encoded = int(("easyctf{%s%s}" % (flag, salt)).encode('hex'),16)
-    ciphertext =  'n: '+str(n)+'\n'
-    ciphertext += 'e: '+str(e)+'\n'
+    ciphertext =  'n: '+hex(n))+'\n'
+    ciphertext += 'e: '+hex(e)+'\n'
     ciphertext += 'd: [??? '+str(cut)+' REDACTED BITS ???]'+str(deez)+'\n'
-    ciphertext += 'c: '+str(pow(encoded, e, n))+'\n'
+    ciphertext += 'c: '+hex(pow(encoded, e, n))+'\n'
+
 
     return StringIO(ciphertext)
 
