@@ -2,7 +2,6 @@ from cStringIO import StringIO
 import os, random
 from Crypto.Util import number
 
-flag = randleetify("i_probably_shouldnta_leeked_d",random)
 
 def egcd(a, b):
     if a == 0:
@@ -57,6 +56,7 @@ def randleetify(s, random):
                     i[c] = i[c].upper()
         return ''.join(i)
 
+flag = randleetify("i_probably_shouldnta_leeked_d",random)
 
 def get_problem(random):
     n_length = 2048
