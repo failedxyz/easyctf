@@ -1,1 +1,1 @@
-[My cats]($kittycat_avi) are cuter than yours :)
+[My cats](${kittycat_avi}) are cuter than yours :)
