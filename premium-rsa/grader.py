@@ -1,5 +1,5 @@
 from cStringIO import StringIO
-import os, random
+import os
 from Crypto.Util import number
 
 
