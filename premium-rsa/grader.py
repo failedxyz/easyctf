@@ -2,6 +2,7 @@ from cStringIO import StringIO
 import os
 from Crypto.Util import number
 
+flag = "wow_"
 
 def egcd(a, b):
     if a == 0:
@@ -56,8 +57,6 @@ def randleetify(s, random):
                     i[c] = i[c].upper()
         return ''.join(i)
 
-flag = randleetify("i_probably_shouldnta_leeked_d",random)
-
 def get_problem(random):
     n_length = 2048
 
@@ -70,7 +69,7 @@ def get_problem(random):
     cut = len(bin(d).strip('0b').strip('L'))//2 - 2
     given = bin(d).strip('0b').strip('L')[cut:]
     deez = hex(int(given,2)).zfill(len(given)/4)
-    salt = random.choice("!?.")
+    salt = randleetify("i_probably_shouldnta_leeked_d",random)
     return (n, e, cut, deez, salt)
 
 def generate_ciphertext(random):
@@ -91,6 +90,6 @@ def generate(random):
 
 def grade(random, key):
     n, e, deez, salt = get_problem(random)
-    if key.find("%s_%s" % (flag, salt)) >= 0:
+    if key.find("%s%s" % (flag, salt)) >= 0:
         return True, "Correct!"
     return False, "Nope."
