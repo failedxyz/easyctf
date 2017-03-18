@@ -89,7 +89,7 @@ def generate(random):
     })
 
 def grade(random, key):
-    n, e, deez, salt = get_problem(random)
+    n, e, cut, deez, salt = get_problem(random)
     if key.find("%s%s" % (flag, salt)) >= 0:
         return True, "Correct!"
     return False, "Nope."
