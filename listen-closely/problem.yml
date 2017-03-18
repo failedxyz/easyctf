@@ -1,6 +1,6 @@
 author: GenericNickname
 title: Listen Closely
-hint: 1, 16, 8000
+hint: 1, 16, 8000. After you use those, the problem is strictly crypto.
 category: Cryptography
 autogen: false
 programming: false
