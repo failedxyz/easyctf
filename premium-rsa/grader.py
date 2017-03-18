@@ -21,41 +21,40 @@ def modinv(a, m):
 def randleetify(s, random):
     i = list(s)
     for c in range(len(i)):
-        if random.random() > 0.5:
-            if i[c] == 'i':
-                if random.random() > 0.66:
-                    i[c] = '1'
-                elif random.random() > 0.33:
-                    i[c] = 'I'
-            elif i[c] == 'o':
-                if random.random() > 0.66:
-                    i[c] = '0'
-                elif random.random() > 0.33:
-                    i[c] = 'O'
-            elif i[c] == 'a':
-                if random.random() > 0.66:
-                    i[c] = '4'
-                elif random.random() > 0.33:
-                    i[c] = 'A'
-            elif i[c] == 'l':
-                if random.random() > 0.66:
-                    i[c] = '1'
-                elif random.random() > 0.33:
-                    i[c] = 'L'
-            elif i[c] == 's':
-                if random.random() > 0.66:
-                    i[c] = '5'
-                elif random.random() > 0.33:
-                    i[c] = 'S'
-            elif i[c] == 'e':
-                if random.random() > 0.66:
-                    i[c] = '3'
-                elif random.random() > 0.33:
-                    i[c] = 'E'
-            elif i[c].isalpha():
-                if random.random() > 0.5:
-                    i[c] = i[c].upper()
-        return ''.join(i)
+        if i[c] == 'i':
+            if random.random() > 0.66:
+                i[c] = '1'
+            elif random.random() > 0.33:
+                i[c] = 'I'
+        elif i[c] == 'o':
+            if random.random() > 0.66:
+                i[c] = '0'
+            elif random.random() > 0.33:
+                i[c] = 'O'
+        elif i[c] == 'a':
+            if random.random() > 0.66:
+                i[c] = '4'
+            elif random.random() > 0.33:
+                i[c] = 'A'
+        elif i[c] == 'l':
+            if random.random() > 0.66:
+                i[c] = '1'
+            elif random.random() > 0.33:
+                i[c] = 'L'
+        elif i[c] == 's':
+            if random.random() > 0.66:
+                i[c] = '5'
+            elif random.random() > 0.33:
+                i[c] = 'S'
+        elif i[c] == 'e':
+            if random.random() > 0.66:
+                i[c] = '3'
+            elif random.random() > 0.33:
+                i[c] = 'E'
+        elif i[c].isalpha():
+            if random.random() > 0.5:
+                i[c] = i[c].upper()
+    return ''.join(i)
 
 def get_problem(random):
     n_length = 2048
