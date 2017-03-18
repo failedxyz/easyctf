@@ -67,7 +67,7 @@ def get_problem(random):
     e = 65537
     phi = (p-1)*(q-1)
     d = modinv(e, phi)
-    cut = len(bin(d).strip('0b').strip('L'))//2
+    cut = len(bin(d).strip('0b').strip('L'))//2 - 2
     given = bin(d).strip('0b').strip('L')[cut:]
     deez = hex(int(given,2)).zfill(len(given)/4)
     salt = random.choice("!?.")
