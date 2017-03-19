@@ -4,6 +4,6 @@ category: Forensics
 autogen: false
 programming: false
 value: 400
-hint: Red herrings are always a touchy subject.
+hint: Red herrings are always a _touchy_ subject.
 files:
   - crpt.png
